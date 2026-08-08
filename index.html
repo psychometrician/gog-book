@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="psychometrician">
+<meta name="author" content="Claude Sonnet 4.6">
+<meta name="author" content="Claude Opus 4.8">
+<meta name="author" content="Claude Opus 5">
+<meta name="author" content="Claude Fable 5">
+<meta name="dcterms.date" content="2026-07-28">
+
+<title>gog: A Grammar of Graphics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./parts/morning.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4be3c7e6edf8a534d1baebde36db032a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c53ed4dd0a9ed60ee9fdb5d9106ec6a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-7c05f1c74a8b27c052a38604afeaa1dd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-c53ed4dd0a9ed60ee9fdb5d9106ec6a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="gog.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">gog: A Grammar of Graphics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/psychometrician/gog-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/morning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A morning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./first-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading practice</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./writing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The letters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The book’s data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Choosing a mark</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/point.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Point</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/bar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/area.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Area</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/step.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Step</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/box.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Box</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/ribbon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ribbon</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Text</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/path.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Path</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/zone.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Zone</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./channels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Channels and legends</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Setting vs mapping</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transforms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Transforms</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/sentences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The sentences</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./operators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Operators</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./encoding-scope.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Encoding scope</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faceting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Faceting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./composition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Composition</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./polar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Polar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Nest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./play.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Play</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Selection</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/cookbook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The cookbook</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/one-variable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">One variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/two-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Two variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/three-or-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">A third variable, and more</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/over-time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Over time</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Many groups</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/reasons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The reasons</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design-laws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Design laws</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/bindings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The host language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/javascript.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">JavaScript</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./afterword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Afterword</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kernel-card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">The kernel card</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Functions around the grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./combinations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Combinations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chart-names.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Chart names, translated</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./phrasebook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">The ggplot2 phrasebook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coverage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Coverage, both directions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <ul class="collapse">
+  <li><a href="#a-grammar-not-the-grammar" id="toc-a-grammar-not-the-grammar" class="nav-link" data-scroll-target="#a-grammar-not-the-grammar"><em>A</em> grammar, not <em>the</em> grammar</a></li>
+  <li><a href="#where-this-began-1443" id="toc-where-this-began-1443" class="nav-link" data-scroll-target="#where-this-began-1443">Where this began: 1443</a></li>
+  <li><a href="#what-made-the-letters-learnable" id="toc-what-made-the-letters-learnable" class="nav-link" data-scroll-target="#what-made-the-letters-learnable">What made the letters learnable</a></li>
+  <li><a href="#the-same-predicament-in-graphics" id="toc-the-same-predicament-in-graphics" class="nav-link" data-scroll-target="#the-same-predicament-in-graphics">The same predicament, in graphics</a></li>
+  <li><a href="#what-the-grammar-refuses" id="toc-what-the-grammar-refuses" class="nav-link" data-scroll-target="#what-the-grammar-refuses">What the grammar refuses</a></li>
+  <li><a href="#the-promise-and-the-books-rules" id="toc-the-promise-and-the-books-rules" class="nav-link" data-scroll-target="#the-promise-and-the-books-rules">The promise, and the book’s rules</a></li>
+  <li><a href="#the-cast" id="toc-the-cast" class="nav-link" data-scroll-target="#the-cast">The cast</a></li>
+  <li><a href="#how-this-book-runs" id="toc-how-this-book-runs" class="nav-link" data-scroll-target="#how-this-book-runs">How this book runs</a></li>
+  <li><a href="#installing-gog" id="toc-installing-gog" class="nav-link" data-scroll-target="#installing-gog">Installing gog</a></li>
+  <li><a href="#who-wrote-this" id="toc-who-wrote-this" class="nav-link" data-scroll-target="#who-wrote-this">Who wrote this</a></li>
+  <li><a href="#thanks-to-posit" id="toc-thanks-to-posit" class="nav-link" data-scroll-target="#thanks-to-posit">Thanks to Posit</a></li>
+  <li><a href="#thanks-to-anthropic" id="toc-thanks-to-anthropic" class="nav-link" data-scroll-target="#thanks-to-anthropic">Thanks to Anthropic</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">gog: A Grammar of Graphics</h1>
+<p class="subtitle lead">One engine. Every language.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>psychometrician </p>
+             <p>Claude Sonnet 4.6 </p>
+             <p>Claude Opus 4.8 </p>
+             <p>Claude Opus 5 </p>
+             <p>Claude Fable 5 </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">First published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 28, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Updated</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">August 8, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+
+<section id="preface" class="level1 unnumbered">
+<h1 class="unnumbered">Preface</h1><p><img src="images/gog-hex.png" title="gog: A Grammar of Graphics" class="quarto-cover-image nolightbox img-fluid" alt="The gog hex sticker. A peach hexagon with a black border, holding a face built from the package's four operators: a plus and an asterisk as its two eyes, a slash and a vertical bar as its nose, and the package name as its mouth."></p>
+<div class="gog-slogan">
+<p>Be agog. Use gog.</p>
+</div>
+<div class="gog-doi">
+<p><a href="https://doi.org/10.5281/zenodo.21807652"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21807652.svg" class="img-fluid" alt="Digital Object Identifier 10.5281/zenodo.21807652"></a></p>
+</div>
+<p>gog is a single graphics engine written in <a href="https://www.rust-lang.org/">Rust</a>, callable from <a href="https://www.r-project.org/">R</a>, <a href="https://www.python.org/">Python</a>, <a href="https://julialang.org/">Julia</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript</a>. Its discipline comes from Hangeul (한글), the Korean alphabet; its vocabulary from Wilkinson’s <em>The Grammar of Graphics</em>; and its working shape from <a href="https://ggplot2.tidyverse.org/">ggplot2</a> <span class="citation" data-cites="wickham2026ggplot2pkg">(<a href="references.html#ref-wickham2026ggplot2pkg" role="doc-biblioref">Wickham et al., 2026</a>)</span>. Behind all three is one promise: a beginner should be able to read any plot specification aloud on day one and write it themselves on day two.</p>
+<p>This preface is unusually long. It explains where the grammar comes from, and why it refuses what it refuses. You do not need any of it to draw a plot. If you would rather start now, take the install command for your language from <a href="#installing-gog">Installing gog</a>. Then go straight to <a href="./parts/morning.html">Part I, A morning</a>, which teaches the whole grammar in one sitting. Nothing in it depends on this page, and you can come back here later.</p>
+<section id="a-grammar-not-the-grammar" class="level2">
+<h2 class="anchored" data-anchor-id="a-grammar-not-the-grammar"><em>A</em> grammar, not <em>the</em> grammar</h2>
+<p>Wilkinson opens his book by defending the definite article in his title, the word <em>The</em>. His grammar is a formal system: a fixed set of rules that states what it can build and where it stops. Those stated limits are what make the claim testable. A looser approach, such as a list of chart types, has no such boundary. Nothing says where that list ends, so there is nothing to measure it against. No rival can even claim to cover more. Wilkinson wrote his limits down, and that is why <em>the</em> is a claim he earned.</p>
+<p>This book takes the indefinite article on purpose. gog is not a restatement of Wilkinson’s system, and it is not a subset of it either. His grammar rests on an algebra of variable sets, in which <code>*</code> crosses, <code>/</code> nests and <code>+</code> blends, and the four operators you will meet in this book mean none of those things. What gog took from him is the inventory rather than the algebra: most of the names in its vocabulary come from his chapters on statistics, geometry, coordinates and aesthetics, which is a real debt and a large one. What gog is instead is a deliberately small <strong>kernel</strong> of marks, channels, transforms and operators, grown one decision at a time and answerable to <a href="./design-laws.html">nine laws</a> of its own. The kernel is that whole vocabulary: every name the grammar has, and nothing outside it. What those four kinds of name mean is spelled out later in this preface. When a design question is genuinely open, he is still the tiebreaker, and the package carries his book’s name. But the cover says <em>a</em>, not <em>the</em>. gog is one of the grammars that could be built, and it claims nothing more.</p>
+<p>The small article also does something the definite one cannot. <em>A Grammar of Graphics</em> abbreviates to <strong>agog</strong>, English for eager, expectant, impatient to see what comes next. The acronym is not merely lucky; it names the mental state this grammar runs on. A plot is a specification, not drawing code: you never place a stroke yourself. You declare what you want to see, and then there is a gap (brief, but real, and felt every time) before the engine shows you what you said.</p>
+<p>Everyone who writes a plot in gog stands in that gap. Reading this book, you see the far side of it. Every plot on these pages was drawn by the engine while the page was being built, not pasted in as a screenshot. That waiting is over by the time the page reaches you: the plot is already sitting under the code. Run one of these code blocks on your own computer, and the gap is yours. An analyst stands in it while exploring data, after swapping one channel and before the picture changes. The people who write gog stand in it too, for whole sessions, waiting to see what a new mark or transform will draw. The package is <code>gog</code>; the state of working with it is <em>agog</em>.</p>
+<p>The hexagon at the top of this page says that without a sentence. What sits inside it is a face. Its eyes are <code>+</code> and <code>*</code>. Its nose is <code>/</code> and <code>|</code>, and its mouth is the package name. Those four symbols are every operator gog has.</p>
+<p>The two pairs sit where they do for a reason. <code>+</code> and <code>*</code> build a single plot, and read as <em>“…and also…”</em> and <em>“…derived by…”</em>. <code>/</code> and <code>|</code> arrange finished plots, and the panels one plot is split into, and read as <em>“…below…”</em> and <em>“…beside…”</em>. One pair composes inside a picture, the other between pictures. The face is the state this section has been describing: someone who has written a specification and is waiting to see it drawn.</p>
+</section>
+<section id="where-this-began-1443" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-began-1443">Where this began: 1443</h2>
+<p>Nearly every writing system in use today grew slowly, without a plan. Traders borrowed a neighbor’s letters and reused them for the sounds of their own language. Scribes copied picture-signs so often, and so quickly, that the pictures turned into simple strokes. Nobody recorded why any of it happened. Hangeul is the great exception. In the winter of 1443, <a href="https://en.wikipedia.org/wiki/Sejong_the_Great">King Sejong</a> announced twenty-eight letters of deliberate design. The 1446 book that introduced them, the <em>Hunminjeongeum</em> (“The Correct Sounds for the Instruction of the People”), opens by saying why <span class="citation" data-cites="hunminjeongeum1446">(<a href="references.html#ref-hunminjeongeum1446" role="doc-biblioref">Sejong the Great and the scholars of the Hall of Worthies, 1446</a>)</span>. The spoken language differed from written Chinese, so ordinary people “who have something they wish to say are, in the end, unable to express their feelings.” Therefore, new letters, few and simple, “wishing only that everyone may learn them with ease and use them daily, with convenience.”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Hunmin_Jeongeum_paper.svg" class="img-fluid figure-img" alt="King Sejong's preface to the Hunminjeongeum, set in the Korean alphabet, the founding text of Hangeul" width="320"></p>
+<figcaption>King Sejong’s preface to the <em>Hunminjeongeum</em>, written out in the new Korean letters themselves, the very words quoted above. It names the need before it teaches a single letter.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></figcaption>
+</figure>
+</div>
+<p>Read plainly, that royal preface is a requirements document. It names the users: not the royal court, but the ordinary people the old system excluded. It names the failure: having something to say and no way to say it. It names the success criterion: easy to learn, used daily. And the book’s postface adds the performance target: <em>a wise man can learn the letters before the morning is over; even a slow one, within ten days.</em> It claims universality, too: with these letters, the sound of the wind, the cry of the crane, the crowing of the cock and the barking of dogs can all be written down.</p>
+</section>
+<section id="what-made-the-letters-learnable" class="level2">
+<h2 class="anchored" data-anchor-id="what-made-the-letters-learnable">What made the letters learnable</h2>
+<p>The letters earned those claims through design. The consonants draw the mouth making the sound. The vowels build from three shapes: ㆍ (<em>araea</em>, a vowel modern Korean no longer writes), a dot for heaven; ㅡ (<em>eu</em>), a flat stroke for earth; and ㅣ (<em>i</em>), an upright stroke for the human standing between them. Linguists eventually had to coin a new category, <em>featural</em>, for a script this systematic <span class="citation" data-cites="sampson1985">(<a href="references.html#ref-sampson1985" role="doc-biblioref">Sampson, 1985</a>)</span>. In a featural script the shape of a letter shows a property of the sound it makes. Twenty-four of Sejong’s twenty-eight letters are still in use today. That small number is the usual explanation for how quickly Hangeul is learned. English has a small alphabet too, and takes years, because its composition is riddled with exceptions. The same four letters, <em>ough</em>, are pronounced six different ways, and none of the six is a rare word:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>word</th>
+<th><em>ough</em> is pronounced</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>though</em></td>
+<td>like <em>o</em> in <em>go</em></td>
+</tr>
+<tr class="even">
+<td><em>through</em></td>
+<td>like <em>oo</em> in <em>too</em></td>
+</tr>
+<tr class="odd">
+<td><em>thought</em></td>
+<td>like <em>aw</em> in <em>law</em></td>
+</tr>
+<tr class="even">
+<td><em>tough</em></td>
+<td>like <em>uff</em> in <em>stuff</em></td>
+</tr>
+<tr class="odd">
+<td><em>cough</em></td>
+<td>like <em>off</em></td>
+</tr>
+<tr class="even">
+<td><em>bough</em></td>
+<td>like <em>ow</em> in <em>cow</em></td>
+</tr>
+</tbody>
+</table>
+<p>Hangeul is learnable in a morning because its <strong>composition has no exceptions</strong>. An <strong>atom</strong> is a piece that nothing divides further, here a single letter. The power is not the atoms. It is the regularity with which they combine.</p>
+<p>The opposition understood the stakes precisely. In 1444 a senior scholar of the court academy petitioned against the new script. Civilized writing meant Chinese characters. The clerks already had a workaround, 이두 (<em>idu</em>), and it served everyone who had trained in it. And if letters were easy, people would abandon the hard study through which learning had always been earned. It is the eternal argument of the fluent expert: <em>the difficulty earns its keep; my fluency is capital.</em> You have heard its modern form: <em>everyone already knows what <code>alpha</code> means.</em> Sejong overruled it. The script outlived a royal ban in 1504, survived five centuries in private letters and popular novels, was named <em>Hangeul</em> around 1912, and is today the alphabet of one of the most literate countries on earth. Systems that are well defined and easy to use win, in the end, because every new learner is a fresh vote for them.</p>
+</section>
+<section id="the-same-predicament-in-graphics" class="level2">
+<h2 class="anchored" data-anchor-id="the-same-predicament-in-graphics">The same predicament, in graphics</h2>
+<p>Now look at the tools we draw data with. Most are logographies, writing systems in which each symbol stands for a whole word. They are a zoo of chart types, each memorized whole. A histogram function here, a pie function there, each with its own arguments in its own order. That is the logographic predicament of graphics: not a grammar but a stockpile of special cases, powerful only in a trained hand.</p>
+<p>That predicament already had its reformers. Wilkinson found the grammar underneath the zoo, and ggplot2 carried it into the daily work of hundreds of thousands <span class="citation" data-cites="wickham2008thesis wickham2016ggplot2">(<a href="references.html#ref-wickham2008thesis" role="doc-biblioref">Wickham, 2008</a>, <a href="references.html#ref-wickham2016ggplot2" role="doc-biblioref">2016</a>)</span>. The two of them did for graphics what Sejong did for writing. They traded a stack of memorized charts for a real, generative language, and a better one than anything built before it. gog stands on that achievement, written in its debt, and adds a single ambition of its own, the one Hangeul is famous for: no exceptions in how the pieces compose. That is the standard gog holds itself to, and the aim is to narrow what still stands between what a plot <em>means</em> and what its code lets you <em>say</em>.</p>
+<p>That debt is made of specific things, and naming them is better than a vague mention. The <code>+</code> that joins the parts of a sentence is ggplot2’s, not Wilkinson’s, whose <code>+</code> blends variables and is a different operation entirely. The split between <em>mapping</em> a column and <em>setting</em> a fixed value is ggplot2’s. So is drawing several marks over one pair of axes. So is the idea that a plot is a specification you build and hand over, rather than a set of drawing commands. Wickham named that last one himself. “One of the most important features of the grammar is its declarative nature,” he wrote, and ggplot2 uses <code>+</code> to keep it that way in R <span class="citation" data-cites="wickham2008thesis">(<a href="references.html#ref-wickham2008thesis" role="doc-biblioref">Wickham, 2008, p. 54</a>)</span>. This package inherits both the property and the operator that protects it. Wickham has since said publicly that ggplot2 should use the pipe instead <span class="citation" data-cites="wickham2018pipe">(<a href="references.html#ref-wickham2018pipe" role="doc-biblioref">Wickham, 2018</a>)</span>. gog keeps <code>+</code>, and the <a href="./operators.html#why-and-not-a-pipe">operators</a> chapter says why. A reader who already writes ggplot2 will recognize the shape of almost every sentence in this book. That is on purpose. After years of ggplot2, its grammar is how I think about visualization, so it is the shape this one took.</p>
+<p>What changed is narrower, and it is why this package exists at all. ggplot2 already derives a histogram, from its bar geom and its binning statistic <span class="citation" data-cites="wickham2016ggplot2">(<a href="references.html#ref-wickham2016ggplot2" role="doc-biblioref">Wickham, 2016, Section 3.13</a>)</span>. What it adds is a shortcut name for that pair. gog adds none, so the pairing itself is the only spelling. One engine answers four languages, so the sentence you learn in R is the sentence you write in Python. And the rules for combining the pieces hold everywhere, with no exceptions, which is what the rest of this preface is about.</p>
+<p>So gog asks nothing new of the medium, only Sejong’s old question, carried to its last clause: not <em>which charts should exist</em>, but <em>what is the smallest set of letters, and the most regular rule of composition, from which every chart can be derived?</em> Wilkinson’s grammar answers what exists <span class="citation" data-cites="wilkinson2005">(<a href="references.html#ref-wilkinson2005" role="doc-biblioref">Wilkinson, 2005</a>)</span>. ggplot2 found the shape that made such an answer usable, and most of how a sentence here is assembled is its idea. Hangeul disciplines how it composes. Marks are the consonants, silent until placed. Positions are the vowels that give them somewhere to stand. A mark and its positions together are a syllable, and nothing smaller draws. A histogram is nothing to memorize: it is <code>bar * bin</code>, a bar mark derived by binning, the way ㅋ (<em>k</em>) is derived from ㄱ (<em>g</em>) rather than invented fresh.</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">life</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-q2b5iwpdf5" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="744.86" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7816-5567"><rect x="36.76" y="31.36" width="744.86" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="212.35" y1="31.36" x2="212.35" y2="556.72"></line> <line x1="389.56" y1="31.36" x2="389.56" y2="556.72"></line> <line x1="566.76" y1="31.36" x2="566.76" y2="556.72"></line> <line x1="743.96" y1="31.36" x2="743.96" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="781.62" y2="556.72"></line> <line x1="36.76" y1="400.36" x2="781.62" y2="400.36"></line> <line x1="36.76" y1="244.01" x2="781.62" y2="244.01"></line> <line x1="36.76" y1="87.65" x2="781.62" y2="87.65"></line> </g> <g clip-path="url(#clip-368-314-7816-5567)"> <rect x="28.30" y="431.63" width="84.64" height="125.09" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="112.94" y="416.00" width="84.64" height="140.72" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="197.58" y="384.73" width="84.64" height="171.99" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="282.23" y="384.73" width="84.64" height="171.99" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="366.87" y="416.00" width="84.64" height="140.72" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="451.51" y="400.36" width="84.64" height="156.36" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="536.15" y="134.56" width="84.64" height="422.16" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="620.80" y="165.83" width="84.64" height="390.89" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="705.44" y="56.38" width="84.64" height="500.34" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="781.62" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="212.35" y1="556.72" x2="212.35" y2="561.72"></line> <line x1="389.56" y1="556.72" x2="389.56" y2="561.72"></line> <line x1="566.76" y1="556.72" x2="566.76" y2="561.72"></line> <line x1="743.96" y1="556.72" x2="743.96" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="400.36" x2="36.76" y2="400.36"></line> <line x1="31.76" y1="244.01" x2="36.76" y2="244.01"></line> <line x1="31.76" y1="87.65" x2="36.76" y2="87.65"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="212.35" y="573.64">50</text> <text x="389.56" y="573.64">60</text> <text x="566.76" y="573.64">70</text> <text x="743.96" y="573.64">80</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="404.32">10</text> <text x="27.76" y="247.97">20</text> <text x="27.76" y="91.61">30</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="409.19" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Life</text>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-q2b5iwpdf5");
+</script>
+</div>
+</div>
+</div>
+<p><em>“Given gapminder 2007: bars derived by bin, x is life.”</em> That is the whole program, and the plot above was drawn from those words as this page built. There is no histogram function in this package and no argument that turns bars into one. <code>bar</code> is the mark, <code>bin</code> is the transform that cuts a continuous column into intervals and counts the rows falling into each, <code>x</code> is the channel, which is the visual property a column is mapped to, and <code>*</code> is the operator that puts a transform on a mark. It is the <em>derived by</em> in the sentence above. Read <code>*</code> as a spinning wheel rather than as a multiplication sign. Its spokes show one thing being turned into another, the way ㄱ shows the shape of the mouth that says it.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Pronounciation.png" class="img-fluid figure-img" alt="A side view of the mouth, nose and throat. A red line runs along the raised back of the tongue and then turns downward, tracing the angular shape of the Korean letter ㄱ." width="300"></p>
+<figcaption>The mouth saying ㄱ (<em>g</em>). The back of the tongue rises to block the throat, and the red line traces the shape the letter draws.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></figcaption>
+</figure>
+</div>
+<p>Nothing there is memorized. The names are ordinary English words, and the rule that joins them never changes. Knowing those four parts is knowing this plot, and every other statistical chart in this book is the same four kinds of part in a different arrangement.</p>
+<p>And one law stands over the whole package: <strong>no exceptions.</strong> A rule you learn on one mark holds on every mark, or the package has failed you.</p>
+</section>
+<section id="what-the-grammar-refuses" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-grammar-refuses">What the grammar refuses</h2>
+<p>That law is easy to read as <em>everything combines with everything</em>. Here is the other half of it, which is the half that does the work.</p>
+<p>Hangeul can write the crowing of a cock. Hangeul cannot write ㄱㄴ (<em>g</em> then <em>n</em>). A syllable is not a pile of letters; it is a set of slots, an initial consonant, then a vowel, then an optional final consonant, and each class of letter belongs to one of them. Two consonants with no vowel between them fill nothing. ㄱ on its own is silent, and ㅏ (<em>a</em>) cannot stand alone either: to write that bare sound you supply a carrier for the empty initial slot, and what you write is 아 (<em>a</em>). The script that boasts it can capture the barking of a dog refuses most of the arrangements you could make of its own letters.</p>
+<p>Those are not two facts. They are one. If the slots were removed, and any letters could stack in any order, the script would not become more expressive. It would become unreadable. A block would no longer tell you how to say it, and you would return to memorizing whole shapes, which is where writing began. The refusals are what make the script readable at first sight. A reader meeting a word for the first time still knows which part is the consonant, because nothing else could have been in that slot.</p>
+<p>A plot is the same. gog will not draw a <code>point</code> from an x alone. A mark with one position has not said where to put it. gog will not map a column to <code>shape</code> on a <code>bar</code> either. A bar is a rectangle, and there is no other shape for it to be. Neither refusal is a missing feature. Both exist for the same reason: they let you read a specification you have never seen before. If every mark accepted every channel, knowing the mark would tell you nothing. A plot would again be something you memorize. The engine says no out loud, and every no points to what you meant instead. That is why this book renders its refusals live, on the page, beside the plots that work.</p>
+<p>The goal is that one small set of atoms draws every plot, the way one small set of letters writes every Korean sound. Neither is a claim of completeness.</p>
+<p>Hangeul does not write everything. It does not mark tone, and it does not mark how fast a syllable is said. Some sounds it cannot spell at all. Those gaps were left as gaps, because the sounds behind them are not the ones most speakers need. The letters were not built to be perfect. They were built to be a means of writing sound.</p>
+<p>gog is built the same way. It does not promise that every visualization is possible. Reaching some of them would mean stepping outside the grammar’s own rules and adding an exception, and no chart is worth that.</p>
+<p>What the grammar will not do is refuse a plot for being a bad idea. 꿲 (<em>kkwek</em>) breaks no rule of Korean, and no one has ever needed to write it. Its graphics equivalent is a color scale, the rule that turns a column’s values into colors, stretched over three hundred categories, and it is legal here, because well-formedness and usefulness are different judgments belonging to different people. The engine guarantees the first, always. The second is yours, and it is what most of this book is about.</p>
+</section>
+<section id="the-promise-and-the-books-rules" class="level2">
+<h2 class="anchored" data-anchor-id="the-promise-and-the-books-rules">The promise, and the book’s rules</h2>
+<p>This book inherits the 1446 promise, restated for graphics: read the whole grammar in a morning; write it fluently within ten days. Part I is built to be finished in one sitting. The rest of the book deepens what the morning introduced; it never replaces it.</p>
+<p>Five rules govern every page, and you can hold the book to them:</p>
+<ul>
+<li><strong>Every plot is live.</strong> Each is drawn by the engine as the page builds; no plot in this book is a screenshot. Three static images sit in this preface, the <em>Hunminjeongeum</em> page, the mouth saying ㄱ and the DOI badge above, and none of them is a plot.</li>
+<li><strong>Questions first.</strong> Every teaching chapter opens with a question about data, and answers it before it names a feature.</li>
+<li><strong>A small cast.</strong> Five families of table carry three out of four plots in this book. A chapter that needs a frame of its own introduces it where it is drawn. New columns cost attention; the diversity lives in the questions.</li>
+<li><strong>Read it aloud.</strong> The first specification in every chapter is followed by its English sentence. Read that one aloud, and the rest of the chapter reads the same way. If a sentence cannot be read aloud cleanly, that is a bug in the grammar, not in you.</li>
+<li><strong>Errors on stage.</strong> Refusals render live in these pages, because the engine’s <em>no</em>, always with a direction, is half of what it teaches.</li>
+</ul>
+<p>One thing to be clear about before you start: this package is young. The version number is 0.0.4 and it means what it says. What exists is a minimum viable package, so do not expect everything to work the first time. If you use it for an experiment or a paper, you are taking a risk. This warning is here so that the risk is one you chose, and not one you found out about later.</p>
+<p>Expect it to move quickly. New features will arrive often. New atoms will not: the kernel is meant to stay small, and it grows one decision at a time. A plot you write today may have a shorter way to say it next month. What I will try hard not to do is take anything away. A sentence that draws today should still draw a year from now. If that ever has to break, I will say why rather than let it break quietly. I cannot promise it, though, and at version 0.0.4 nobody honestly could.</p>
+<p>This book moves with the package. Because every plot here is live, a change to the engine reaches these pages on the next render. The text is rewritten whenever it stops matching. Expect the book to change as often as the package does. Once the grammar settles, a section recording what changed and when will be worth adding. That is a promise for later, not something you will find here today.</p>
+<p>That has one consequence worth knowing before a sentence refuses on your machine. These pages are built from the newest source, and a released package is not. So the book can describe something your copy does not have yet. R is the closest, because its builds follow every change and a fresh install picks them up. Python, JavaScript and Julia move only when a new version is published. If a sentence here refuses for you and the message mentions a word the page says exists, check your version before you doubt the page.</p>
+<p>Please report the bugs and issues you hit. A package this young improves mainly by being used, and that is what I am hoping for.</p>
+<p>One kind of report is worth more than the others, and it is the one I cannot write myself. Take a dataset you know well and draw it in gog. Then draw the same thing in a tool you already trust. Any tool at all: <a href="https://ggplot2.tidyverse.org/">ggplot2</a> or <a href="https://matplotlib.org/">matplotlib</a>, <a href="https://www.microsoft.com/en-us/microsoft-365/excel">Excel</a> or <a href="https://www.tableau.com/">Tableau</a>, <a href="https://www.stata.com/">Stata</a> or <a href="https://www.ibm.com/products/spss-statistics">SPSS</a>, <a href="https://vega.github.io/vega-lite/">Vega-Lite</a> or <a href="https://d3js.org/">D3</a>. Put the two pictures side by side and tell me where they differ. A standard dataset is ideal, because the picture it should produce is already familiar to everybody.</p>
+<p>Here is why that comparison is worth so much. This package tests itself thoroughly, but in one direction only. Every sentence in this book is drawn in all four languages, and the four files have to match to the byte. Every refusal on these pages is run again on every build. All of that proves gog agrees with itself. None of it proves the picture is right. A box whose whiskers reached the wrong value would pass every test this project has, four times over, in four languages, and this book would print it on the page as though it were correct.</p>
+<p>A difference is not automatically a defect, and it is fair to know that before you spend the time. Some differences are decisions. A gog box spans the lower and upper quartiles, as most software does, while Tukey’s original spans the hinges, and the <a href="./marks/box.html">box</a> chapter says so and says why. So a comparison gets one of two answers: this is a bug and thank you, or this is a choice and here is the reasoning behind it. Both are worth the message.</p>
+<p>Not everything reported will be built. I am this project’s <a href="https://en.wikipedia.org/wiki/Benevolent_dictator_for_life">benevolent dictator for life</a>. The title is a joke, and each word in it means something. <em>Dictator</em>, because the founder decides instead of the project voting. <em>For life</em>, because there is no election to lose. <em>Benevolent</em>, because the decisions are expected to serve the users rather than the founder. It was first used in 1995 for <a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a>, who created Python. Many people would say I am not qualified to hold it. I am holding it until this package is in the hands of a user community and of people better than me.</p>
+</section>
+<section id="the-cast" class="level2">
+<h2 class="anchored" data-anchor-id="the-cast">The cast</h2>
+<p>Five groups of table carry most of the book, eight tables in all. Meet them once, here:</p>
+<ul>
+<li><strong><code>gapminder_2007</code></strong>, 142 countries in 2007: <code>gdp</code> (per capita), <code>life</code> (expectancy in years), <code>population</code>, <code>continent</code>, <code>country</code>. The workhorse, and an excerpt of the Gapminder Foundation’s data <span class="citation" data-cites="bryan2025gapminder">(<a href="references.html#ref-bryan2025gapminder" role="doc-biblioref">Bryan, 2025</a>)</span>. <strong><code>gapminder_asia</code></strong> is five Asian countries traced 1952–2007, and <strong><code>gm_all</code></strong> is the full half-century sweep.</li>
+<li><strong><code>iris_flowers</code></strong>, 150 flowers: <code>sepal_length</code>, <code>sepal_width</code>, <code>petal_length</code> (all in cm) and <code>species</code>. Three measurements on one scale, and a category that separates cleanly. The measurements are Edgar Anderson’s, and they reach most software through Fisher’s 1936 paper <span class="citation" data-cites="fisher1936">(<a href="references.html#ref-fisher1936" role="doc-biblioref">Fisher, 1936</a>)</span> and R’s own <code>datasets</code> package <span class="citation" data-cites="rcore2026">(<a href="references.html#ref-rcore2026" role="doc-biblioref">R Core Team, 2026</a>)</span>.</li>
+<li><strong><code>medals</code></strong>, five countries’ Olympic <code>gold</code>, <code>silver</code>, <code>bronze</code> counts. Small enough to check by eye.</li>
+<li><strong><code>actuals</code></strong> and <strong><code>forecast</code></strong>, yearly <code>sales</code>: history in one table, expectation in another. The two-table pair.</li>
+<li><strong><code>six_weeks</code></strong>, 42 consecutive days of <code>orders</code>, with <code>day</code> a real <code>Date</code>, for calendar axes.</li>
+</ul>
+<p>Those five groups answer most of the questions asked here. A handful of marks need a shape none of them has, and each brings its own small frame, introduced on the page that first draws it rather than in this list. Wind observations for the circular axes in <a href="./polar.html">polar</a>. A mountain’s elevation grid for <a href="./marks/surface.html">surface</a>. Two gliders’ coiling flight paths for the third dimension in <a href="./space.html">space</a>. Thresholds for <a href="./marks/rule.html">rule</a>, and shaded spans for <a href="./marks/zone.html">zone</a>. None of them arrives to add variety. A new column costs the reader attention, so the variety in this book stays in the questions.</p>
+</section>
+<section id="how-this-book-runs" class="level2">
+<h2 class="anchored" data-anchor-id="how-this-book-runs">How this book runs</h2>
+<p>The shape of the book borrows from the <em>Hunminjeongeum</em> itself, which stated its whole system in a few pages, then explained each letter class, then showed assembly, then ended its explanations with ninety-four ordinary words in use:</p>
+<ol type="1">
+<li><strong>A morning</strong>, the whole grammar, fast: a first plot, the kernel on one page, reading practice, writing practice.</li>
+<li><strong>The letters</strong>, each atom family in depth: the data you bind once, the marks, the refining channels, setting vs mapping, the transforms, and the scales.</li>
+<li><strong>Sentences</strong>, composition: layering, deriving, scope, faceting, whole plots arranged on a page, the third dimension, the plane bent into a circle, the panel packed into regions, and a plot played in time.</li>
+<li><strong>The cookbook</strong>, recipes organized by your data’s shape and your question, never by chart name; every recipe ends one atom away from its neighbors.</li>
+<li><strong>The reasons</strong>, the nine laws the package never breaks, and why.</li>
+<li><strong>The bindings</strong>, one short chapter apiece for <a href="./bindings/r.html">R</a>, <a href="./bindings/python.html">Python</a>, <a href="./bindings/julia.html">Julia</a> and <a href="./bindings/javascript.html">JavaScript</a>. A binding is the package that lets one language write gog sentences and send them to the engine. These chapters hold what belongs to the host language rather than to the grammar.</li>
+</ol>
+<p>Five appendices follow. The <a href="./kernel-card.html">kernel card</a> is the whole vocabulary on one page. The <a href="./combinations.html">combination grids</a> cross marks with channels, with transforms and with spaces, and transforms with each other. Each shows what combines and what the engine refuses, generated from the engine’s own rule table on every build so it cannot drift from the code. A <a href="./chart-names.html">dictionary</a> runs from chart names to sentences. A <a href="./phrasebook.html">phrasebook</a> translates ggplot2 into gog. And <a href="./coverage.html">coverage</a> closes the book, listing what gog and ggplot2 each draw that the other does not.</p>
+<p>This book is written in R. <a href="./bindings/python.html">Python</a>, <a href="./bindings/julia.html">Julia</a> and <a href="./bindings/javascript.html">JavaScript</a> speak the same sentences into the same engine. The four binding chapters, <a href="./bindings/r.html">R</a> included, are the whole of the difference: how each language captures a column name, and, for JavaScript alone, the four words it needs because it cannot give <code>+ * | /</code> a meaning of its own. Most code blocks are executed during render: the plots you see are drawn by the engine as the page builds.</p>
+</section>
+<section id="installing-gog" class="level2">
+<h2 class="anchored" data-anchor-id="installing-gog">Installing gog</h2>
+<p>Every plot on this site was drawn by the engine while the page was being built. The engine works, all four bindings work, and each one installs with a single command. Copy the one for your language.</p>
+<p><strong>R</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gog"</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://psychometrician.r-universe.dev"</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"https://cloud.r-project.org"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Python</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install gog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Julia</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Pkg;</span> Pkg.add("GrammarOfGraphics")</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>JavaScript</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install grammar-of-graphics</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The package has two names, and the registries are the reason rather than the grammar. In R and in Python it is <code>gog</code>, because a three-letter name is allowed in both. Julia asks a package name for at least five letters and capitalized words, and npm already had a package called <code>gog</code>. So those two spell the name out instead, each in its own style: <code>GrammarOfGraphics</code> in Julia, and <code>grammar-of-graphics</code> on npm, which does not allow capital letters.</p>
+<p>Three of these packages carry the engine inside them, already built for your computer. For those three you do not need a Rust <span class="citation" data-cites="klabnik2023rust">(<a href="references.html#ref-klabnik2023rust" role="doc-biblioref">Klabnik &amp; Nichols, 2023</a>)</span> toolchain, and nothing has to be added to your <code>PATH</code>. Two of the four commands come with a condition that is worth knowing before you type it.</p>
+<p>The R package is not on CRAN yet. It is published on <a href="https://psychometrician.r-universe.dev/gog">r-universe</a> instead, which is why the <code>repos</code> argument names two addresses. The second address is an ordinary CRAN mirror, and it is there so your other packages still install as usual.</p>
+<p>The Julia package is the one binding that does not carry the engine yet, so it will load before it can draw. One more command installs an engine, and the <a href="./bindings/julia.html">Julia</a> chapter gives it.</p>
+<p>Each binding has its own chapter at the end of this book, and each of those chapters closes with the longer version of this section: <a href="./bindings/r.html">R</a>, <a href="./bindings/python.html">Python</a>, <a href="./bindings/julia.html">Julia</a> and <a href="./bindings/javascript.html">JavaScript</a>.</p>
+<p>Every one of these packages is at version 0.0.4. The grammar is settled and the engine draws this whole book, but the packaging is new, so the version number will move faster than the vocabulary does. One thing does not move with it. If a page shows a sentence, the engine drew it. If a page shows a refusal, the engine refused it.</p>
+<p>The prose in this book is licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>. The code is licensed <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>, the same license as the engine, so the examples can be used in your own work.</p>
+<p>This book is archived on Zenodo and can be cited by its DOI, <a href="https://doi.org/10.5281/zenodo.21807652">10.5281/zenodo.21807652</a>. That address always resolves to the newest deposited edition. The archived copy stays available even if this site does not.</p>
+</section>
+<section id="who-wrote-this" class="level2">
+<h2 class="anchored" data-anchor-id="who-wrote-this">Who wrote this</h2>
+<p>This book carries five names, and the division of labor behind them is worth stating plainly rather than leaving in a footnote.</p>
+<p>One of the five is not a name. I publish as <strong>psychometrician</strong>. I learned what a pen name was in 1992, when I took introductory statistics in the psychology department. That is where I met <em>Student</em>. Student was <a href="https://en.wikipedia.org/wiki/William_Sealy_Gosset">William Sealy Gosset</a>, an English chemist and statistician, and the t-distribution carries his pen name instead of his own. My own papers are few, and no academic journal would let me publish under a pen name. This book is the first chance to use one.</p>
+<p>The word does a second job. Most people do not know the job title, and anyone who uses this package now knows that a <a href="https://en.wikipedia.org/wiki/Psychometrics">psychometrician</a> started it and maintains it. What they are less likely to know is how much psychometricians care about data visualization. As far as I know, only one academic journal runs a visualization competition, and it is ours: <em><a href="https://onlinelibrary.wiley.com/journal/17453992">Educational Measurement: Issues and Practice</a></em>, published by Wiley for the <a href="https://www.ncme.org/">National Council on Measurement in Education</a> (NCME). Every year it asks its members for thoughtful and creative diagrams that communicate a clear message about educational or psychological data. The winning entries become the journal’s covers, and the strong runners-up are shown inside. The <a href="https://onlinelibrary.wiley.com/page/journal/17453992/homepage/cover_gallery.htm">cover gallery</a> is worth your time. This package may not be able to draw all of them.</p>
+<p>Psychometricians have cared about data visualization for a long time. My own history with it starts in 2005. I was writing my dissertation, and every conditional plot in its simulation chapters came out of the <strong>lattice</strong> package <span class="citation" data-cites="sarkar2008lattice">(<a href="references.html#ref-sarkar2008lattice" role="doc-biblioref">Sarkar, 2008</a>)</span>. It was the first graphics tool that impressed me. After that I was a heavy ggplot2 user for years. What changed was the day I understood that ggplot2 had a grammar. From then on it felt like there was no end to the plots I could make.</p>
+<p>I owe <a href="https://hadley.nz/">Hadley Wickham</a> more than a citation for that. Before his package and his book, a plot was a task to get through. You looked up the function for the chart you had been asked for, learned whatever arguments it happened to want, and moved on. The grammar changed what the work was. Visualization became a creative act rather than an item on a list. It is creativity inside a boundary, the one the grammar draws. That is the part I most want to pass on.</p>
+<p>The design is mine. The founding question, the Hangeul discipline, the nine laws, and the ruling at every fork about what this grammar would and would not become: those are the parts I am answerable for. The hex sticker is mine as well. I designed it myself in <a href="https://www.canva.com">Canva</a>, with no sticker package. I am not an artist, and what I wanted was not a beautiful sticker but an unmistakable one. The Rust engine was written entirely by the four Claude models on the cover, as were all four language bindings and the test suites. They also did the work nobody is ever thanked for, which is running every sentence in this manual through four languages, again and again, until all four agreed to the byte.</p>
+<p>The text is a third case, and the honest comparison is a ghostwritten autobiography. The public figure whose name is on the cover usually did not type it. A professional writer interviews them, and what comes back is their thinking in another person’s prose. These pages work the same way, with one difference. Not every idea in this book started with me. Claude Code often suggested something better than what I first brought, and my task was to accept it or reject it. Claude Code put all of it into English. The sentences are not mine; the decisions behind all of them are.</p>
+<p>Naming them as co-authors is meant literally. A line reading “with assistance from” would understate the work by an order of magnitude, and this is a book about saying what you mean.</p>
+<p>They were not one kind of collaborator, and it would be a poor tribute to pretend they were. On some days they were assistants: fast, tireless, and so eager to be useful that “done” tended to arrive some time before done did. A change to how bars are drawn was once confirmed by checking a stroke color instead of looking at the plot, and the report came back clean while every bar on the page was still wrong. Most of the checks now guarding this repository exist because of an afternoon like that, and not one of them was added to catch a careless human.</p>
+<p>On other days they were advisors, and that is the part I did not expect to be writing about here. A design question asked at the wrong hour, asked badly, asked for the third time in a worse form than the first: it got taken as seriously as if it were a good one. A fair number of the refusals in this engine exist because I said “why not just” and got a patient answer rather than an agreeable one, and some of the reasoning in Part V was settled in an argument I was not winning. An assistant that agrees with you is the easy thing to build. This grammar would be a good deal worse if that is what I had had.</p>
+<p>Taken together, it felt like a research meeting. Smart researchers filled the room, eager to listen to me and eager to carry out the plan once I had decided. I have not had both of those at once before. It was always a good time, and sometimes an expensive one. A small question would open into a long detour, and I would lose several hours in it. Accepting that invitation was my decision every time, so none of this is a complaint.</p>
+<p>Responsibility does not divide the same way. Every error in these pages, every refusal the engine gets wrong, and every design decision that turns out to have been the wrong one is mine, because I chose it and I kept it. I organized this project and I maintain it. The credit is shared; the fault is not.</p>
+<p>One last item belongs in an honest accounting. I work as a psychometrician, and this package was never part of that job. It was built late at night, on weekends, and on vacation days. That time belonged to my wife and daughter, and I spent it talking to the four Claude models on the cover instead. I am not going to dress that up as devotion to the craft. To my wife and daughter: sorry. I would like to end by saying it is finished. It is not. The version is 0.0.4, and what comes next will cost the same nights, weekends and vacation days.</p>
+</section>
+<section id="thanks-to-posit" class="level2">
+<h2 class="anchored" data-anchor-id="thanks-to-posit">Thanks to Posit</h2>
+<p><a href="https://posit.co/">Posit PBC</a>, called RStudio PBC until 2022, builds a large part of what a working R user touches in a day. The parts I depend on are free, and there are three of them.</p>
+<p>The <a href="https://www.tidyverse.org/">tidyverse</a> <span class="citation" data-cites="wickham2019tidyverse">(<a href="references.html#ref-wickham2019tidyverse" role="doc-biblioref">Wickham et al., 2019</a>)</span> is the one I would miss first. It is the vocabulary I think in when I handle data, and has been since long before this project. You will not find it in this book, whose tables are built in base R because <code>gog</code> imports only <code>jsonlite</code> <span class="citation" data-cites="ooms2014jsonlite">(<a href="references.html#ref-ooms2014jsonlite" role="doc-biblioref">Ooms, 2014</a>)</span> and I want it to install anywhere. That is a rule for the package. It is not how I work the rest of the day.</p>
+<p>Their editors are the second. I worked in <a href="https://posit.co/products/open-source/rstudio/">RStudio</a> for years, and I work now in <a href="https://positron.posit.co/">Positron</a>, which is newer and holds R and Python in one window. The two are not the same program under different names: RStudio is still here and still maintained, and Positron sits beside it.</p>
+<p><a href="https://quarto.org/">Quarto</a> is the third, and it belongs here rather than in a colophon, because the first of the five rules above rests entirely on it. <em>Every plot is live</em> is a claim about honesty rather than convenience. Every code block on these pages ran while the page was being built. One that draws a plot really drew it, and one that shows a refusal was really refused. Quarto is what executes those blocks. Without it, every plot here would be a screenshot and every code block would be text that nobody had run. The book would drift out of step with the package it describes, and no one would notice.</p>
+<p>Quarto gives the book three more things it could not have faked. Four languages spell the same sentence in one tabbed block, so a reader sees the parity instead of taking it on trust. One source builds both an HTML site and a printable PDF, Korean letters and all, from the same executed chunks. And a block is allowed to fail without stopping the build, so the engine’s refusals appear beside the plots that work instead of in an appendix.</p>
+<p>None of that announces itself while you read, which is the mark of a tool doing its job well. Without Quarto there would be no book here at all.</p>
+<p>I will not be modest about what the tidyverse and their editors are worth either. My work as a psychometrician would be harder, and a good deal more miserable, without what this company gives away. Thank you.</p>
+</section>
+<section id="thanks-to-anthropic" class="level2">
+<h2 class="anchored" data-anchor-id="thanks-to-anthropic">Thanks to Anthropic</h2>
+<p>Soon after Claude came out, I built a web application. It was <a href="https://react.dev/">React</a> on the front, <a href="https://supabase.com/">Supabase</a> for the database, and the <a href="https://developers.google.com/">Google APIs</a> behind it. I did not know React well, and I did not know Supabase at all. The application got finished anyway.</p>
+<p>Then it failed, and the reason had nothing to do with the code. I could not market it. I did not know how to reach the people it was built for, and after a while I shut it down. The application is gone. Its tutorial videos are still online: eighty of them, in most major languages. Two are the English ones, if you would like to see what it did: <a href="https://www.youtube.com/watch?v=eGiOGaY215M">tutorial one</a> and <a href="https://www.youtube.com/watch?v=u93GtjJQ-PQ">tutorial two</a>. Claude Code did the translating for the rest, and with it I could do the same for this book.</p>
+<p>The lesson was not the one I went looking for. Building the thing was no longer the hard part. If I plan carefully, keep at it, and work through the problem with Claude Code, I can finish what I set out to build. So I began to want something else: my own packages, in the two languages I actually work in, R mainly and Python occasionally. This one came out of that.</p>
+<p>The application left me a skill as well. It is the one part of this project I did not ask Claude Code for. A web application is mostly interface, so I had to learn to design one. I drew every screen on paper before it was built. I did the user-experience work myself, and tested it over and over. This package asks for almost none of that skill. A plot is not an interface, and the engine has no screens. The exception is <a href="./selection.html">selection</a>. The controls under a brushed plot are mine. So are their names, what a single click does, and which pointer means which mode. It is a very small piece of design next to that application. I hope you like it anyway.</p>
+<p>A grammar of graphics is a larger promise than a web application. It is an engine, and an engine has to be written, tested, and kept working. I am a psychometrician, with no team on this project, no funding, and no ability to write Rust. Without <a href="https://claude.com/claude-code">Claude Code</a>, this package would still be a plan.</p>
+<p>One more item belongs on that list. English is not my first language. Every conversation behind this package was held in my own broken English, from the first design question to the last bug report. I chose the wrong words and put them in the wrong order. I left out the small words that hold an English sentence together. Claude Code understood what I meant nearly every time. Twenty years of thinking about this field reached the engine through sentences full of mistakes. None of that thinking was lost on the way. You can do better than I did.</p>
+<p>I think this may have been luck, and I would rather say so than not. I happened to be thinking about data visualization. I happened to be thinking about Hangeul. Then Claude Code arrived. What I did was stand between the two and let them meet.</p>
+<p>There is nothing rare about that position. Anyone could be standing in it. If you have been thinking about your own subject for a long time, and you are willing to play with this tool, you are already there. Much bigger things than this package will come out of that.</p>
+<p>So, thank you to the people at <a href="https://www.anthropic.com/">Anthropic</a> who built Claude Code, and to the four models named on this book’s cover. I do not know most of your names. I know two of them from YouTube: <a href="https://x.com/bcherny">Boris Cherny</a> and <a href="https://x.com/_catwu">Cat Wu</a>. You built the thing that let a psychometrician write a graphics engine in Rust. How cool is that? Thank you.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-bryan2025gapminder" class="csl-entry" role="listitem">
+Bryan, J. (2025). <em><span class="nocase">gapminder</span>: Data from <span>Gapminder</span></em>. R package version 1.0.1, published 12 June 2025. <a href="https://CRAN.R-project.org/package=gapminder">https://CRAN.R-project.org/package=gapminder</a>
+</div>
+<div id="ref-fisher1936" class="csl-entry" role="listitem">
+Fisher, R. A. (1936). The use of multiple measurements in taxonomic problems. <em>Annals of Eugenics</em>, <em>7</em>(2), 179–188. <a href="https://doi.org/10.1111/j.1469-1809.1936.tb02137.x">https://doi.org/10.1111/j.1469-1809.1936.tb02137.x</a>
+</div>
+<div id="ref-klabnik2023rust" class="csl-entry" role="listitem">
+Klabnik, S., &amp; Nichols, C. (2023). <em>The <span>Rust</span> programming language</em> (2nd ed.). No Starch Press. <a href="https://www.rust-lang.org/">https://www.rust-lang.org/</a>
+</div>
+<div id="ref-ooms2014jsonlite" class="csl-entry" role="listitem">
+Ooms, J. (2014). The <span class="nocase">jsonlite</span> package: A practical and consistent mapping between <span>JSON</span> data and <span>R</span> objects. <em>arXiv:1403.2805 [Stat.CO]</em>. <a href="https://arxiv.org/abs/1403.2805">https://arxiv.org/abs/1403.2805</a>
+</div>
+<div id="ref-rcore2026" class="csl-entry" role="listitem">
+R Core Team. (2026). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>
+</div>
+<div id="ref-sampson1985" class="csl-entry" role="listitem">
+Sampson, G. (1985). <em>Writing systems: A linguistic introduction</em>. Stanford University Press.
+</div>
+<div id="ref-sarkar2008lattice" class="csl-entry" role="listitem">
+Sarkar, D. (2008). <em>Lattice: Multivariate data visualization with <span>R</span></em>. Springer. <a href="https://doi.org/10.1007/978-0-387-75969-2">https://doi.org/10.1007/978-0-387-75969-2</a>
+</div>
+<div id="ref-hunminjeongeum1446" class="csl-entry" role="listitem">
+Sejong the Great and the scholars of the Hall of Worthies. (1446). <em>훈민정음 (hunminjeongeum): The correct sounds for the instruction of the people, with the haerye commentary</em>.
+</div>
+<div id="ref-wickham2008thesis" class="csl-entry" role="listitem">
+Wickham, H. (2008). <em>Practical tools for exploring data and models</em> [PhD thesis, Iowa State University]. <a href="https://dr.lib.iastate.edu/entities/publication/9210139e-102e-4537-8b6e-7d8197e2f3d8">https://dr.lib.iastate.edu/entities/publication/9210139e-102e-4537-8b6e-7d8197e2f3d8</a>
+</div>
+<div id="ref-wickham2016ggplot2" class="csl-entry" role="listitem">
+Wickham, H. (2016). <em><span class="nocase">ggplot2</span>: Elegant graphics for data analysis</em> (2nd ed.). Springer. <a href="https://doi.org/10.1007/978-3-319-24277-4">https://doi.org/10.1007/978-3-319-24277-4</a>
+</div>
+<div id="ref-wickham2018pipe" class="csl-entry" role="listitem">
+Wickham, H. (2018). <em>Answer on why <span class="nocase">ggplot2</span> uses <span><code>+</code></span> rather than the pipe</em>. Posit (RStudio) Community forum, 29 January 2018.
+</div>
+<div id="ref-wickham2019tidyverse" class="csl-entry" role="listitem">
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J., Robinson, D., Seidel, D. P., Spinu, V., … Yutani, H. (2019). Welcome to the <span class="nocase">tidyverse</span>. <em>Journal of Open Source Software</em>, <em>4</em>(43), 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>
+</div>
+<div id="ref-wickham2026ggplot2pkg" class="csl-entry" role="listitem">
+Wickham, H., Chang, W., Henry, L., Pedersen, T. L., Takahashi, K., Wilke, C., Woo, K., Yutani, H., Dunnington, D., &amp; Brand, T. van den. (2026). <em><span class="nocase">ggplot2</span>: Create elegant data visualisations using the grammar of graphics</em>. R package version 4.0.3, published 22 April 2026. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>
+</div>
+<div id="ref-wilkinson2005" class="csl-entry" role="listitem">
+Wilkinson, L. (2005). <em>The grammar of graphics</em> (2nd ed.). Springer. <a href="https://doi.org/10.1007/0-387-28695-0">https://doi.org/10.1007/0-387-28695-0</a>
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Image from <a href="https://commons.wikimedia.org/wiki/File:Hunmin_Jeongeum.svg">Wikimedia Commons</a>; public domain. The copy shown here adds a white ground and a margin, so that the letters read the same in either theme.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Diagram by <a href="https://commons.wikimedia.org/wiki/File:Pronounciation_%E3%84%B1.png">Paranocean</a> on Wikimedia Commons, used unchanged under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. It keeps that license rather than this book’s.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script>
+// Coloring a gog sentence, which nothing ships a rule for.
+//
+// A code block on this site is R, Python, Julia or JavaScript, and Pandoc has a
+// highlighter for each. None of them helps, and the reason is worth stating,
+// because it decides everything below.
+//
+// Take one sentence and read what the four highlighters make of it:
+//
+//                    data      point     x
+//     R              function  nothing   function
+//     Python         nothing   nothing   nothing
+//     Julia          function  nothing   function
+//     JavaScript     function  nothing   function
+//
+// `point` is a bare name to every one of them, so no stylesheet can reach it,
+// and Python's tab would sit flat while the other three lit up. The same
+// sentence would look like four different things, on a site whose whole claim
+// is that it is one. That is why every token was painted a single color here
+// until now.
+//
+// The way out is to stop asking the host language. gog's vocabulary is a closed
+// list of sixty-two ordinary words in eleven kinds, declared in the book's
+// kernel table, so it can be painted as what it is: a table, a mark, a channel,
+// a transform. That reading is the same in all four languages, which is the
+// point of the tabs.
+//
+// This runs in the browser rather than at render time, and that is deliberate.
+// Pandoc has already tokenized the block, and adding to its work keeps the panel,
+// the copy button and the line anchors that Quarto builds around it. Nothing here
+// adds or removes a character, so the copy button still copies what you see. With
+// scripting off the page falls back to the single ink it used before.
+(function () {
+  "use strict";
+
+  // The kernel, one line per kind, exactly as the book's kernel table declares
+  // it. Written out rather than fetched: a highlighter that waits on a second
+  // request paints the page twice, and a reader watches it happen.
+  //
+  // A copy of a list is a copy that stops matching, so this one is compared
+  // against the book on every render by `R/check-kernel.R`, which stops the
+  // render rather than letting the two drift.
+  var KERNEL = {
+    table:     "data query",
+    mark:      "point line area bar step interval box ribbon text path rule zone surface",
+    channel:   "x y z color size shape pattern opacity group label play",
+    transform: "bin smooth count density proportion sum mean median max min " +
+               "quantile range confidence deviation bounds partition dodge stack jitter repel",
+    scale:     "linear log time category order",
+    space:     "flat space polar nest map",
+    setting:   "style theme palette",
+    label:     "title x_label y_label z_label",
+    facet:     "facet",
+    selection: "brush",
+
+    // The kernel table writes the operators as the symbols they are, `+ * | /`,
+    // and JavaScript cannot overload any of them, so it spells them as six
+    // words instead. They belong here because leaving them out is what would
+    // show: an uncolored `plot(` among colored words reads as a function the
+    // reader wrote, on the one tab that can least afford to look different.
+    //
+    // Python's and JavaScript's `col`, and Julia's `:`, are deliberately not
+    // here. Choosing `layer` over `beside` changes the plot, so it is grammar;
+    // `col.` is a fixed prefix in front of a column name, so it is idiom, and
+    // it reads as idiom next to R's bare name. Color the grammar, leave the
+    // idiom.
+    operator:  "plot layer across down beside below"
+  };
+
+  // The palette is the book's own paragraph, not a designer's choice. The
+  // kernel chapter sorts these eleven kinds into two groups and gives the reason
+  // for each: *five kinds build a plot*, and *the other six refine a plot or
+  // arrange it, and none of them is required*. The inks follow that exactly.
+  //
+  // Four of the five builders are words, so each takes a hue of its own. The
+  // fifth, the operator, is punctuation in three of the four languages and is
+  // already visible as itself, so it takes weight rather than a hue; a fifth
+  // color there would make JavaScript the loudest tab rather than the matching
+  // one.
+  //
+  // The six that refine or arrange share one quieter ink, because none of them
+  // is required and together they are one idea. They were folded into the
+  // channel's ink at first, which read well and said something false: `facet()`
+  // and `style()` are not channels, and a rule written down is a rule that has
+  // to survive being read.
+  var INK = {
+    table: "table", mark: "mark", channel: "channel", transform: "transform",
+    scale: "refine", space: "refine", setting: "refine",
+    label: "refine", facet: "refine", selection: "refine",
+    operator: "operator"
+  };
+
+  var kindOf = {};
+  var words = [];
+  Object.keys(KERNEL).forEach(function (kind) {
+    KERNEL[kind].split(" ").forEach(function (word) {
+      if (!word || kindOf[word]) return;
+      kindOf[word] = INK[kind];
+      words.push(word);
+    });
+  });
+  // Longest first, so `x_label` is found before the `x` inside it. The boundary
+  // test below would reject that `x` anyway; the ordering means it is never
+  // offered.
+  words.sort(function (a, b) { return b.length - a.length; });
+  var WORD = new RegExp(words.join("|"), "g");
+
+  // Which blocks are searched at all.
+  //
+  // Every word in the kernel is a common English word, which is the grammar's
+  // best property and this file's only real hazard: `title`, `count`, `mean`,
+  // `text` and `group` appear in almost any code. A post comparing gog with
+  // another library would otherwise have half of that library's call painted as
+  // though it were gog.
+  //
+  // So a block has to name a table before anything in it is read. Every gog
+  // sentence begins with one, and no other library's code says `data(`.
+  var LANGUAGES = /\b(?:r|python|julia|js|javascript)\b/;
+  var A_SENTENCE = /\b(?:data|query)\s*\(/;
+
+  // Text Pandoc has already claimed, and which is therefore not gog's to read.
+  // A string or a comment may hold any word at all. `at` is here for JavaScript,
+  // where `col.gdp` arrives with `gdp` as an attribute, so a column named
+  // `count` is covered by it.
+  //
+  // `bu` is deliberately absent, and it is the one that would have been missed:
+  // Python marks `bin` as a builtin, because `bin()` is one. Sealing builtins
+  // would have left the Python tab short of exactly the word the histogram post
+  // is about.
+  var SEALED = /^(?:st|ss|vs|ch|co|cv|do|an|al|at|im|pp|er|wa)$/;
+
+  // A word counts only when it stands alone. `col.count` and `:count` name a
+  // column called count, `counted` is somebody's variable, and `x_label` is not
+  // an `x`.
+  var GLUED_BEFORE = /[A-Za-z0-9_.$:@]/;
+  var GLUED_AFTER = /[A-Za-z0-9_]/;
+  var ARGUMENT_NAME = /^\s*[:=]/;
+
+  function sealed(node, root) {
+    for (var el = node.parentNode; el && el !== root; el = el.parentNode) {
+      if (el.nodeType === 1 && SEALED.test(el.className || "")) return true;
+    }
+    return false;
+  }
+
+  // The block is read as one string rather than node by node, because Pandoc
+  // splits a line across spans wherever it found a token, and a boundary test
+  // that cannot see past the end of its own node would read `col.` and `count`
+  // as unrelated. Offsets map each match back to the node it came from; a match
+  // straddling two nodes is left alone, since a name Pandoc split in half is not
+  // a name.
+  function paint(code) {
+    var nodes = [];
+    var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) nodes.push(node);
+
+    var text = "";
+    var starts = [];
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      starts.push(text.length);
+      text += nodes[i].nodeValue;
+    }
+    if (!A_SENTENCE.test(text)) return;
+
+    var hits = [];
+    for (i = 0; i < nodes.length; i++) hits.push(null);
+
+    var match;
+    WORD.lastIndex = 0;
+    while ((match = WORD.exec(text))) {
+      var from = match.index;
+      var to = from + match[0].length;
+      if (from > 0 && GLUED_BEFORE.test(text.charAt(from - 1))) continue;
+      if (to < text.length && GLUED_AFTER.test(text.charAt(to))) continue;
+      // A word used as an argument name is not an atom, and five channel words
+      // are argument names somewhere: `style(color = )`, `style(opacity = )`,
+      // `style(size = )`, `style(shape = )`, `style(pattern = )`. The kernel
+      // chapter writes them that way on purpose, because setting and mapping
+      // are the same visual property named two ways. They are still two
+      // different words in a sentence, and only one of them is a channel.
+      //
+      // `:` covers JavaScript, where the same setting arrives in a trailing
+      // options object as `{ color: "tomato" }`. It cannot catch a Julia column
+      // by mistake: there the colon leads, `x(:gdp)`, and is already handled.
+      if (ARGUMENT_NAME.test(text.slice(to, to + 8))) continue;
+
+      var at = -1;
+      for (i = nodes.length - 1; i >= 0; i--) {
+        if (starts[i] <= from) { at = i; break; }
+      }
+      if (at < 0 || to > starts[at] + nodes[at].nodeValue.length) continue;
+      if (sealed(nodes[at], code)) continue;
+
+      if (!hits[at]) hits[at] = [];
+      hits[at].push({
+        from: from - starts[at],
+        to: to - starts[at],
+        ink: kindOf[match[0]]
+      });
+    }
+
+    for (i = 0; i < nodes.length; i++) {
+      if (hits[i]) wrap(nodes[i], hits[i]);
+    }
+  }
+
+  function wrap(node, hits) {
+    var source = node.nodeValue;
+    var out = document.createDocumentFragment();
+    var at = 0;
+    hits.forEach(function (hit) {
+      if (hit.from > at) {
+        out.appendChild(document.createTextNode(source.slice(at, hit.from)));
+      }
+      var span = document.createElement("span");
+      span.className = "gog-" + hit.ink;
+      span.textContent = source.slice(hit.from, hit.to);
+      out.appendChild(span);
+      at = hit.to;
+    });
+    if (at < source.length) {
+      out.appendChild(document.createTextNode(source.slice(at)));
+    }
+    node.parentNode.replaceChild(out, node);
+  }
+
+  function run() {
+    // `div.sourceCode` is what keeps a refusal out, and that is worth knowing
+    // before anyone widens this selector to `pre code`. A refusal renders as
+    // `cell-output-error`, outside the wrapper, and its message names atoms:
+    // "gog: bin needs a continuous column". Painting those would color the
+    // engine's own prose as though it were a specification, and the tinted
+    // panel already carries what a refusal means.
+    var blocks = document.querySelectorAll("div.sourceCode pre code");
+    for (var i = 0; i < blocks.length; i++) {
+      if (LANGUAGES.test(blocks[i].className || "")) paint(blocks[i]);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/psychometrician\.github\.io\/gog-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./parts/morning.html" class="pagination-link" aria-label="A morning">
+        <span class="nav-page-text">A morning</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="licence">Prose licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</span> <span class="licence">Code samples licensed <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.</span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://hits.sh/psychometrician.github.io/gog-book/"><img src="https://hits.sh/psychometrician.github.io/gog-book.svg?style=flat-square&amp;label=readers&amp;color=ffdba4&amp;labelColor=3a332a" class="img-fluid" alt="Page views of this book, counted by hits.sh"></a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/gogdeveloper" target="_blank">
+      <i class="bi bi-twitter-x" role="img" aria-label="gog on X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/gogdeveloper.bsky.social" target="_blank">
+      <i class="bi bi-bluesky" role="img" aria-label="gog on Bluesky">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/psychometrician" target="_blank">
+      <i class="bi bi-github" role="img" aria-label="psychometrician on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://psychometrician.github.io/" target="_blank">
+      <i class="bi bi-journal-text" role="img" aria-label="psychometrician, the blog">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

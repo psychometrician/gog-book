@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Writing practice – gog: A Grammar of Graphics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./parts/letters.html" rel="next">
+<link href="./reading.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4be3c7e6edf8a534d1baebde36db032a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c53ed4dd0a9ed60ee9fdb5d9106ec6a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-7c05f1c74a8b27c052a38604afeaa1dd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-c53ed4dd0a9ed60ee9fdb5d9106ec6a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="gog.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parts/morning.html">A morning</a></li><li class="breadcrumb-item"><a href="./writing.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">gog: A Grammar of Graphics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/psychometrician/gog-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/morning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A morning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./first-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading practice</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./writing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The letters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The book’s data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Choosing a mark</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/point.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Point</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/bar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/area.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Area</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/step.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Step</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/box.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Box</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/ribbon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ribbon</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Text</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/path.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Path</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/zone.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Zone</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./channels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Channels and legends</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Setting vs mapping</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transforms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Transforms</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/sentences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The sentences</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./operators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Operators</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./encoding-scope.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Encoding scope</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faceting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Faceting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./composition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Composition</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./polar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Polar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Nest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./play.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Play</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Selection</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/cookbook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The cookbook</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/one-variable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">One variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/two-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Two variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/three-or-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">A third variable, and more</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/over-time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Over time</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Many groups</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/reasons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The reasons</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design-laws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Design laws</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/bindings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The host language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/javascript.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">JavaScript</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./afterword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Afterword</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kernel-card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">The kernel card</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Functions around the grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./combinations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Combinations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chart-names.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Chart names, translated</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./phrasebook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">The ggplot2 phrasebook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coverage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Coverage, both directions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#which-continents-live-longest" id="toc-which-continents-live-longest" class="nav-link active" data-scroll-target="#which-continents-live-longest"><span class="header-section-number">4.1</span> Which continents live longest?</a></li>
+  <li><a href="#how-do-petal-lengths-differ-by-species" id="toc-how-do-petal-lengths-differ-by-species" class="nav-link" data-scroll-target="#how-do-petal-lengths-differ-by-species"><span class="header-section-number">4.2</span> How do petal lengths differ by species?</a></li>
+  <li><a href="#where-is-the-worlds-wealth-and-its-health" id="toc-where-is-the-worlds-wealth-and-its-health" class="nav-link" data-scroll-target="#where-is-the-worlds-wealth-and-its-health"><span class="header-section-number">4.3</span> Where is the world’s wealth, and its health?</a></li>
+  <li><a href="#when-the-engine-says-no" id="toc-when-the-engine-says-no" class="nav-link" data-scroll-target="#when-the-engine-says-no"><span class="header-section-number">4.4</span> When the engine says no</a></li>
+  <li><a href="#the-morning-checkpoint" id="toc-the-morning-checkpoint" class="nav-link" data-scroll-target="#the-morning-checkpoint"><span class="header-section-number">4.5</span> The morning checkpoint</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parts/morning.html">A morning</a></li><li class="breadcrumb-item"><a href="./writing.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>How does a question about your data turn into a specification? Reading was recognition; writing is recall. Psychologists use those two words for two kinds of remembering. Recognition starts from something in front of you, and asks only whether you have seen it before. That is what the last chapter did: it gave you finished sentences and asked what they say. Recall starts from nothing in front of you, and asks you to produce the thing itself. It is the harder of the two, and it is what writing a specification asks of you.</p>
+<p>This chapter builds three sentences from three questions, the way you will actually work: start with the smallest legal sentence, look, refine. Then it introduces the other half of writing: what happens when a sentence is wrong, and why gog’s refusals are the fastest teacher in the book.</p>
+<section id="which-continents-live-longest" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="which-continents-live-longest"><span class="header-section-number">4.1</span> Which continents live longest?</h2>
+<p>Start by looking at everything, the smallest sentence that shows the data:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(continent) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data(gapminder_2007) <span class="op">+</span> point <span class="op">+</span> x(col.continent) <span class="op">+</span> y(col.life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> point <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> point<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">life</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-ct4gblazfw" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="728.91" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7657-5567"><rect x="36.76" y="31.36" width="728.91" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="109.65" y1="31.36" x2="109.65" y2="556.72"></line> <line x1="255.43" y1="31.36" x2="255.43" y2="556.72"></line> <line x1="401.21" y1="31.36" x2="401.21" y2="556.72"></line> <line x1="547.00" y1="31.36" x2="547.00" y2="556.72"></line> <line x1="692.78" y1="31.36" x2="692.78" y2="556.72"></line> <line x1="36.76" y1="528.54" x2="765.67" y2="528.54"></line> <line x1="36.76" y1="417.44" x2="765.67" y2="417.44"></line> <line x1="36.76" y1="306.35" x2="765.67" y2="306.35"></line> <line x1="36.76" y1="195.25" x2="765.67" y2="195.25"></line> <line x1="36.76" y1="84.16" x2="765.67" y2="84.16"></line> </g> <g clip-path="url(#clip-368-314-7657-5567)"> <circle cx="109.65" cy="486.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="123.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="169.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="498.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="136.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="692.78" cy="70.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="86.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="132.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="261.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="90.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="342.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="244.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="141.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="409.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="168.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="161.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="391.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="422.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="309.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="412.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="76.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="475.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="410.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="100.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="162.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="163.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="249.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="456.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="358.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="97.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="436.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="131.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="103.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="123.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="102.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="364.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="170.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="139.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="180.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="174.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="399.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="328.12" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="384.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="91.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="76.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="342.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="312.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="90.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="306.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="89.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="192.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="350.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="457.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="296.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="193.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="59.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="158.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="64.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="254.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="188.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="184.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="311.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="96.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="75.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="78.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="166.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="167.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="371.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="225.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="99.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="110.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="173.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="499.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="465.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="151.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="312.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="436.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="148.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="367.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="260.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="164.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="126.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="230.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="144.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="182.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="505.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="283.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="385.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="264.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="86.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="692.78" cy="81.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="163.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="341.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="452.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="81.98" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="132.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="245.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="133.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="175.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="179.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="176.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="133.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="105.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="98.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="123.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="459.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="244.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="164.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="272.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="150.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="500.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="84.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="143.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="107.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="437.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="424.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="73.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="168.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="322.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="74.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="65.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="149.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="101.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="389.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="188.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="323.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="197.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="151.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="175.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="400.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="255.43" cy="90.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="103.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="124.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.00" cy="153.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="148.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="157.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.65" cy="276.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="502.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="401.21" cy="489.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="109.65" y1="556.72" x2="109.65" y2="561.72"></line> <line x1="255.43" y1="556.72" x2="255.43" y2="561.72"></line> <line x1="401.21" y1="556.72" x2="401.21" y2="561.72"></line> <line x1="547.00" y1="556.72" x2="547.00" y2="561.72"></line> <line x1="692.78" y1="556.72" x2="692.78" y2="561.72"></line> <line x1="31.76" y1="528.54" x2="36.76" y2="528.54"></line> <line x1="31.76" y1="417.44" x2="36.76" y2="417.44"></line> <line x1="31.76" y1="306.35" x2="36.76" y2="306.35"></line> <line x1="31.76" y1="195.25" x2="36.76" y2="195.25"></line> <line x1="31.76" y1="84.16" x2="36.76" y2="84.16"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="109.65" y="573.64">Asia</text> <text x="255.43" y="573.64">Europe</text> <text x="401.21" y="573.64">Africa</text> <text x="547.00" y="573.64">Americas</text> <text x="692.78" y="573.64">Oceania</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="532.50">40</text> <text x="27.76" y="421.40">50</text> <text x="27.76" y="310.31">60</text> <text x="27.76" y="199.21">70</text> <text x="27.76" y="88.12">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="401.21" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Continent</text>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-ct4gblazfw");
+</script>
+</div>
+</div>
+</div>
+<p><em>“Points, x is continent, y is life.”</em> Informative, but the question asked for a comparison of <em>typical</em> values, not a cloud. Derive the summary, swap the mark’s derivation, keep everything else:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> mean <span class="sc">+</span> <span class="fu">x</span>(continent) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> mean <span class="op">+</span> x(col.continent) <span class="op">+</span> y(col.life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> mean <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> mean)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">y</span>(col<span class="op">.</span><span class="at">life</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-2f6qx9n28m" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="728.91" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7657-5567"><rect x="36.76" y="31.36" width="728.91" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="36.76" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="36.76" y1="432.75" x2="765.67" y2="432.75"></line> <line x1="36.76" y1="308.78" x2="765.67" y2="308.78"></line> <line x1="36.76" y1="184.81" x2="765.67" y2="184.81"></line> <line x1="36.76" y1="60.84" x2="765.67" y2="60.84"></line> </g> <g clip-path="url(#clip-368-314-7657-5567)"> <rect x="51.34" y="118.31" width="116.63" height="438.41" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="197.12" y="75.41" width="116.63" height="481.31" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="342.90" y="217.00" width="116.63" height="339.72" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="488.68" y="100.46" width="116.63" height="456.26" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="634.47" y="56.38" width="116.63" height="500.34" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="109.65" y1="556.72" x2="109.65" y2="561.72"></line> <line x1="255.43" y1="556.72" x2="255.43" y2="561.72"></line> <line x1="401.21" y1="556.72" x2="401.21" y2="561.72"></line> <line x1="547.00" y1="556.72" x2="547.00" y2="561.72"></line> <line x1="692.78" y1="556.72" x2="692.78" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="432.75" x2="36.76" y2="432.75"></line> <line x1="31.76" y1="308.78" x2="36.76" y2="308.78"></line> <line x1="31.76" y1="184.81" x2="36.76" y2="184.81"></line> <line x1="31.76" y1="60.84" x2="36.76" y2="60.84"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="109.65" y="573.64">Asia</text> <text x="255.43" y="573.64">Europe</text> <text x="401.21" y="573.64">Africa</text> <text x="547.00" y="573.64">Americas</text> <text x="692.78" y="573.64">Oceania</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="436.71">20</text> <text x="27.76" y="312.74">40</text> <text x="27.76" y="188.77">60</text> <text x="27.76" y="64.80">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="401.21" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Continent</text>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-2f6qx9n28m");
+</script>
+</div>
+</div>
+</div>
+<p>Comparison wants order. <code>order()</code> sorts a categorical axis by a value, something no bare column can say:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> mean <span class="sc">+</span> <span class="fu">x</span>(continent) <span class="sc">+</span> <span class="fu">y</span>(life) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(life, <span class="at">desc =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> mean <span class="op">+</span> x(col.continent) <span class="op">+</span> y(col.life) <span class="op">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  order(col.life, desc <span class="op">=</span> <span class="va">True</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> mean <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>life) <span class="op">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(<span class="op">:</span>life, desc <span class="op">=</span> <span class="cn">true</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> mean)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">y</span>(col<span class="op">.</span><span class="at">life</span>)<span class="op">,</span> <span class="fu">order</span>(col<span class="op">.</span><span class="at">life</span><span class="op">,</span> { <span class="dt">desc</span><span class="op">:</span> <span class="kw">true</span> }))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-iboku9ih14" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="732.1" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7689-5567"><rect x="36.76" y="31.36" width="732.1" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="36.76" y1="556.72" x2="768.86" y2="556.72"></line> <line x1="36.76" y1="432.75" x2="768.86" y2="432.75"></line> <line x1="36.76" y1="308.78" x2="768.86" y2="308.78"></line> <line x1="36.76" y1="184.81" x2="768.86" y2="184.81"></line> <line x1="36.76" y1="60.84" x2="768.86" y2="60.84"></line> </g> <g clip-path="url(#clip-368-314-7689-5567)"> <rect x="490.66" y="118.31" width="117.14" height="438.41" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="197.82" y="75.41" width="117.14" height="481.31" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="637.08" y="217.00" width="117.14" height="339.72" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="344.24" y="100.46" width="117.14" height="456.26" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="51.40" y="56.38" width="117.14" height="500.34" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="768.86" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="109.97" y1="556.72" x2="109.97" y2="561.72"></line> <line x1="256.39" y1="556.72" x2="256.39" y2="561.72"></line> <line x1="402.81" y1="556.72" x2="402.81" y2="561.72"></line> <line x1="549.23" y1="556.72" x2="549.23" y2="561.72"></line> <line x1="695.65" y1="556.72" x2="695.65" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="432.75" x2="36.76" y2="432.75"></line> <line x1="31.76" y1="308.78" x2="36.76" y2="308.78"></line> <line x1="31.76" y1="184.81" x2="36.76" y2="184.81"></line> <line x1="31.76" y1="60.84" x2="36.76" y2="60.84"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="109.97" y="573.64">Oceania</text> <text x="256.39" y="573.64">Europe</text> <text x="402.81" y="573.64">Americas</text> <text x="549.23" y="573.64">Asia</text> <text x="695.65" y="573.64">Africa</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="436.71">20</text> <text x="27.76" y="312.74">40</text> <text x="27.76" y="188.77">60</text> <text x="27.76" y="64.80">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="402.81" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Continent</text>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-iboku9ih14");
+</script>
+</div>
+</div>
+</div>
+<p>Three steps, and each step <em>added</em> a word or swapped one: no rewriting, no second syntax. That is what compositionality buys you in practice.</p>
+</section>
+<section id="how-do-petal-lengths-differ-by-species" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="how-do-petal-lengths-differ-by-species"><span class="header-section-number">4.2</span> How do petal lengths differ by species?</h2>
+<p>The one-variable question first, then the split:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="sc">+</span> bar <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(petal_length)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data(iris_flowers) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.petal_length)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="op">+</span> bar <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>petal_length)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(iris_flowers)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">petal_length</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-z037v315l1" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="748.05" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7848-5567"><rect x="36.76" y="31.36" width="748.05" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="157.93" y1="31.36" x2="157.93" y2="556.72"></line> <line x1="417.27" y1="31.36" x2="417.27" y2="556.72"></line> <line x1="676.61" y1="31.36" x2="676.61" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="784.81" y2="556.72"></line> <line x1="36.76" y1="443.01" x2="784.81" y2="443.01"></line> <line x1="36.76" y1="329.29" x2="784.81" y2="329.29"></line> <line x1="36.76" y1="215.58" x2="784.81" y2="215.58"></line> <line x1="36.76" y1="101.86" x2="784.81" y2="101.86"></line> </g> <g clip-path="url(#clip-368-314-7848-5567)"> <rect x="28.26" y="56.38" width="85.01" height="500.34" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="113.27" y="488.49" width="85.01" height="68.23" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="283.28" y="488.49" width="85.01" height="68.23" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="368.28" y="363.41" width="85.01" height="193.31" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="453.29" y="204.21" width="85.01" height="352.51" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="538.29" y="317.92" width="85.01" height="238.80" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="623.30" y="340.66" width="85.01" height="216.06" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="708.30" y="488.49" width="85.01" height="68.23" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="784.81" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="157.93" y1="556.72" x2="157.93" y2="561.72"></line> <line x1="417.27" y1="556.72" x2="417.27" y2="561.72"></line> <line x1="676.61" y1="556.72" x2="676.61" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="443.01" x2="36.76" y2="443.01"></line> <line x1="31.76" y1="329.29" x2="36.76" y2="329.29"></line> <line x1="31.76" y1="215.58" x2="36.76" y2="215.58"></line> <line x1="31.76" y1="101.86" x2="36.76" y2="101.86"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="157.93" y="573.64">2</text> <text x="417.27" y="573.64">4</text> <text x="676.61" y="573.64">6</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="446.97">10</text> <text x="27.76" y="333.25">20</text> <text x="27.76" y="219.54">30</text> <text x="27.76" y="105.82">40</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="410.78" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Petal Length</text>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-z037v315l1");
+</script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="sc">+</span> bar <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(petal_length) <span class="sc">+</span> <span class="fu">color</span>(species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data(iris_flowers) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.petal_length) <span class="op">+</span> color(col.species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="op">+</span> bar <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>petal_length) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(iris_flowers)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">petal_length</span>)<span class="op">,</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">species</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-gz1aesevim" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="610.25" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-6470-5567"><rect x="36.76" y="31.36" width="610.25" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="135.61" y1="31.36" x2="135.61" y2="556.72"></line> <line x1="347.17" y1="31.36" x2="347.17" y2="556.72"></line> <line x1="558.74" y1="31.36" x2="558.74" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="443.01" x2="647.01" y2="443.01"></line> <line x1="36.76" y1="329.29" x2="647.01" y2="329.29"></line> <line x1="36.76" y1="215.58" x2="647.01" y2="215.58"></line> <line x1="36.76" y1="101.86" x2="647.01" y2="101.86"></line> </g> <g clip-path="url(#clip-368-314-6470-5567)"> <rect x="29.83" y="56.38" width="69.35" height="500.34" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="99.17" y="488.49" width="69.35" height="68.23" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="237.87" y="488.49" width="69.35" height="68.23" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="307.21" y="363.41" width="69.35" height="193.31" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="376.56" y="272.43" width="69.35" height="284.29" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="445.90" y="533.98" width="69.35" height="22.74" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="376.56" y="488.49" width="69.35" height="68.23" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="445.90" y="340.66" width="69.35" height="216.06" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="515.25" y="340.66" width="69.35" height="216.06" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="584.60" y="488.49" width="69.35" height="68.23" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="135.61" y1="556.72" x2="135.61" y2="561.72"></line> <line x1="347.17" y1="556.72" x2="347.17" y2="561.72"></line> <line x1="558.74" y1="556.72" x2="558.74" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="443.01" x2="36.76" y2="443.01"></line> <line x1="31.76" y1="329.29" x2="36.76" y2="329.29"></line> <line x1="31.76" y1="215.58" x2="36.76" y2="215.58"></line> <line x1="31.76" y1="101.86" x2="36.76" y2="101.86"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="135.61" y="573.64">2</text> <text x="347.17" y="573.64">4</text> <text x="558.74" y="573.64">6</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="446.97">10</text> <text x="27.76" y="333.25">20</text> <text x="27.76" y="219.54">30</text> <text x="27.76" y="105.82">40</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="341.88" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Petal Length</text> <rect x="671.01" y="31.36" width="113.80" height="97.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="681.01" y="50.72" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Species</text> <line x1="671.01" y1="55.72" x2="784.81" y2="55.72" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="687.01" y="65.72" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="75.68">setosa</text> <rect x="687.01" y="85.72" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="95.68">versicolor</text> <rect x="687.01" y="105.72" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="115.68">virginica</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-gz1aesevim");
+</script>
+</div>
+</div>
+</div>
+<p>And if the overlap bothers you, the outline form is one mark away; the staircase silhouette holds each bin’s height as an unfilled stroke, so the three species never paint over each other:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="sc">+</span> step <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(petal_length) <span class="sc">+</span> <span class="fu">color</span>(species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data(iris_flowers) <span class="op">+</span> step <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.petal_length) <span class="op">+</span> color(col.species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="op">+</span> step <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>petal_length) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(iris_flowers)<span class="op">,</span> <span class="fu">layer</span>(step<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">petal_length</span>)<span class="op">,</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">species</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-1voa7tqcti" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="610.25" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-6470-5567"><rect x="36.76" y="31.36" width="610.25" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="135.61" y1="31.36" x2="135.61" y2="556.72"></line> <line x1="347.17" y1="31.36" x2="347.17" y2="556.72"></line> <line x1="558.74" y1="31.36" x2="558.74" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="443.01" x2="647.01" y2="443.01"></line> <line x1="36.76" y1="329.29" x2="647.01" y2="329.29"></line> <line x1="36.76" y1="215.58" x2="647.01" y2="215.58"></line> <line x1="36.76" y1="101.86" x2="647.01" y2="101.86"></line> </g> <g clip-path="url(#clip-368-314-6470-5567)"> <polyline points="29.83,556.72 29.83,56.38 99.17,56.38 99.17,488.49 168.52,488.49 168.52,556.72 237.87,556.72 237.87,556.72 307.21,556.72 307.21,556.72 376.56,556.72 376.56,556.72 445.90,556.72 445.90,556.72 515.25,556.72 515.25,556.72 584.60,556.72 584.60,556.72 653.94,556.72 653.94,556.72" stroke="#4e79a7" fill="none" stroke-width="1.5" stroke-opacity="1.000" stroke-linejoin="miter" stroke-linecap="butt"></polyline> <polyline points="29.83,556.72 29.83,556.72 99.17,556.72 99.17,556.72 168.52,556.72 168.52,556.72 237.87,556.72 237.87,488.49 307.21,488.49 307.21,363.41 376.56,363.41 376.56,272.43 445.90,272.43 445.90,533.98 515.25,533.98 515.25,556.72 584.60,556.72 584.60,556.72 653.94,556.72 653.94,556.72" stroke="#f28e2b" fill="none" stroke-width="1.5" stroke-opacity="1.000" stroke-linejoin="miter" stroke-linecap="butt"></polyline> <polyline points="29.83,556.72 29.83,556.72 99.17,556.72 99.17,556.72 168.52,556.72 168.52,556.72 237.87,556.72 237.87,556.72 307.21,556.72 307.21,556.72 376.56,556.72 376.56,488.49 445.90,488.49 445.90,340.66 515.25,340.66 515.25,340.66 584.60,340.66 584.60,488.49 653.94,488.49 653.94,556.72" stroke="#e15759" fill="none" stroke-width="1.5" stroke-opacity="1.000" stroke-linejoin="miter" stroke-linecap="butt"></polyline> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="135.61" y1="556.72" x2="135.61" y2="561.72"></line> <line x1="347.17" y1="556.72" x2="347.17" y2="561.72"></line> <line x1="558.74" y1="556.72" x2="558.74" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="443.01" x2="36.76" y2="443.01"></line> <line x1="31.76" y1="329.29" x2="36.76" y2="329.29"></line> <line x1="31.76" y1="215.58" x2="36.76" y2="215.58"></line> <line x1="31.76" y1="101.86" x2="36.76" y2="101.86"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="135.61" y="573.64">2</text> <text x="347.17" y="573.64">4</text> <text x="558.74" y="573.64">6</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="446.97">10</text> <text x="27.76" y="333.25">20</text> <text x="27.76" y="219.54">30</text> <text x="27.76" y="105.82">40</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="341.88" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Petal Length</text> <rect x="671.01" y="31.36" width="113.80" height="97.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="681.01" y="50.72" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Species</text> <line x1="671.01" y1="55.72" x2="784.81" y2="55.72" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="687.01" y="65.72" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="75.68">setosa</text> <rect x="687.01" y="85.72" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="95.68">versicolor</text> <rect x="687.01" y="105.72" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="115.68">virginica</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-1voa7tqcti");
+</script>
+</div>
+</div>
+</div>
+<p>The transform never changed. <code>bin</code> cut the same intervals all three times; only the geometry drawing them moved. A derivation you learn once works under every mark that can carry it.</p>
+</section>
+<section id="where-is-the-worlds-wealth-and-its-health" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="where-is-the-worlds-wealth-and-its-health"><span class="header-section-number">4.3</span> Where is the world’s wealth, and its health?</h2>
+<p>The full sentence from the first chapter, written in one breath this time:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-4" role="tab" aria-controls="tabset-7-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> point <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">x</span>(gdp, <span class="at">scale =</span> <span class="st">"log"</span>) <span class="sc">+</span> <span class="fu">y</span>(life) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(continent) <span class="sc">+</span> <span class="fu">size</span>(population) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"The health and wealth of nations, 2007"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(data(gapminder_2007) <span class="op">+</span> point <span class="op">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  x(col.gdp, scale <span class="op">=</span> <span class="st">"log"</span>) <span class="op">+</span> y(col.life) <span class="op">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  color(col.continent) <span class="op">+</span> size(col.population) <span class="op">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  title(<span class="st">"The health and wealth of nations, 2007"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> point <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>gdp, scale <span class="op">=</span> <span class="st">"log"</span>) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>life) <span class="op">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">size</span>(<span class="op">:</span>population) <span class="op">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"The health and wealth of nations, 2007"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-7-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> point<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">gdp</span><span class="op">,</span> { <span class="dt">scale</span><span class="op">:</span> <span class="st">"log"</span> })<span class="op">,</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">y</span>(col<span class="op">.</span><span class="at">life</span>)<span class="op">,</span> <span class="fu">color</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">size</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"The health and wealth of nations, 2007"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-4fa4bcua7t" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="54.879999999999995" width="616.63" height="501.84000000000003" fill="#f5f5f8"></rect> <clippath id="clip-368-549-6534-5567"><rect x="36.76" y="54.879999999999995" width="616.63" height="501.84000000000003"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="203.48" y1="54.88" x2="203.48" y2="556.72"></line> <line x1="452.62" y1="54.88" x2="452.62" y2="556.72"></line> <line x1="36.76" y1="529.80" x2="653.39" y2="529.80"></line> <line x1="36.76" y1="423.68" x2="653.39" y2="423.68"></line> <line x1="36.76" y1="317.56" x2="653.39" y2="317.56"></line> <line x1="36.76" y1="211.44" x2="653.39" y2="211.44"></line> <line x1="36.76" y1="105.31" x2="653.39" y2="105.31"></line> </g> <g clip-path="url(#clip-368-549-6534-5567)"> <circle cx="200.69" cy="489.18" r="3.22" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="396.20" cy="143.27" r="3.02" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="401.30" cy="187.02" r="3.23" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="373.14" cy="500.82" r="3.08" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="479.15" cy="154.98" r="3.27" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="586.41" cy="92.21" r="3.14" fill="#59a14f" fill-opacity="0.820"></circle> <circle cx="591.60" cy="107.13" r="3.05" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="570.75" cy="151.64" r="3.00" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="239.20" cy="274.45" r="4.03" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="584.05" cy="111.25" r="3.07" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="243.03" cy="352.28" r="3.05" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="348.55" cy="258.62" r="3.06" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="420.71" cy="159.95" r="3.03" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="477.37" cy="415.95" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="442.01" cy="186.07" r="4.30" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="459.74" cy="179.55" r="3.05" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="224.73" cy="399.33" r="3.10" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="112.17" cy="428.14" r="3.06" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="261.76" cy="320.50" r="3.10" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="280.73" cy="419.12" r="3.12" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="592.17" cy="98.38" r="3.23" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="165.81" cy="479.49" r="3.03" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="261.15" cy="416.77" r="3.07" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="482.43" cy="120.67" r="3.11" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="376.73" cy="180.01" r="12.00" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="414.13" cy="180.78" r="3.30" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="201.97" cy="262.88" r="3.00" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="64.79" cy="461.23" r="3.44" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="343.05" cy="367.20" r="3.02" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="448.71" cy="118.24" r="3.03" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="250.53" cy="441.42" r="3.12" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="493.71" cy="150.44" r="3.03" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="440.59" cy="123.64" r="3.08" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="541.95" cy="142.61" r="3.07" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="589.03" cy="123.02" r="3.04" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="282.85" cy="372.84" r="3.00" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="397.80" cy="187.72" r="3.06" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="412.05" cy="158.44" r="3.09" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="389.52" cy="197.24" r="3.55" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="392.33" cy="191.51" r="3.05" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="473.73" cy="406.92" r="3.00" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="155.42" cy="338.36" r="3.03" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="163.45" cy="392.41" r="3.52" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="582.48" cy="112.61" r="3.03" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="573.17" cy="98.34" r="3.42" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="482.71" cy="352.21" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="172.74" cy="323.42" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="579.05" cy="111.62" r="3.56" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="234.14" cy="317.32" r="3.15" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="562.23" cy="110.80" r="3.07" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="381.57" cy="208.69" r="3.08" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="197.09" cy="359.93" r="3.07" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="144.39" cy="462.01" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="223.35" cy="307.84" r="3.06" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="340.51" cy="209.34" r="3.05" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="601.87" cy="81.88" r="3.05" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="516.27" cy="176.01" r="3.07" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="591.76" cy="86.67" r="3.00" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="300.53" cy="267.70" r="10.58" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="340.28" cy="204.54" r="4.52" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="468.73" cy="201.21" r="3.47" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="365.52" cy="322.39" r="3.19" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="604.43" cy="117.15" r="3.03" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="554.00" cy="97.41" r="3.04" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="566.20" cy="99.52" r="3.40" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="418.88" cy="184.19" r="3.02" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="577.30" cy="77.69" r="3.87" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="366.69" cy="184.53" r="3.04" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="244.66" cy="380.06" r="3.24" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="253.86" cy="240.12" r="3.16" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="544.37" cy="119.93" r="3.33" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="620.77" cy="130.91" r="3.02" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="457.50" cy="190.29" r="3.03" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="252.24" cy="502.30" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="108.19" cy="469.55" r="3.02" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="472.86" cy="169.50" r="3.04" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="208.21" cy="323.47" r="3.13" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="173.69" cy="441.69" r="3.09" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="476.34" cy="166.43" r="3.17" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="207.99" cy="376.28" r="3.08" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="267.26" cy="273.37" r="3.02" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="462.51" cy="181.71" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="472.14" cy="145.69" r="3.74" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="325.75" cy="245.36" r="3.02" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="444.23" cy="163.23" r="3.00" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="348.50" cy="199.08" r="3.23" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="182.49" cy="507.71" r="3.13" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="197.24" cy="295.60" r="3.32" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="373.45" cy="392.84" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="212.93" cy="277.39" r="3.20" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="593.59" cy="107.84" r="3.11" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="552.56" cy="103.15" r="3.03" fill="#59a14f" fill-opacity="0.820"></circle> <circle cx="312.91" cy="180.67" r="3.04" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="151.69" cy="350.81" r="3.09" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="279.23" cy="457.01" r="3.92" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="625.36" cy="103.23" r="3.03" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="539.47" cy="151.58" r="3.02" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="307.11" cy="259.37" r="4.15" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="450.53" cy="152.68" r="3.02" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="358.05" cy="192.84" r="3.04" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="420.17" cy="196.36" r="3.19" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="329.01" cy="193.52" r="3.62" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="499.27" cy="152.40" r="3.26" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="530.34" cy="125.50" r="3.07" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="523.92" cy="118.62" r="3.03" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="423.92" cy="143.07" r="3.00" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="461.03" cy="185.16" r="3.15" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="187.54" cy="463.56" r="3.06" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="254.22" cy="258.89" r="3.00" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="536.22" cy="181.97" r="3.19" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="261.68" cy="285.06" r="3.08" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="450.28" cy="168.97" r="3.07" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="187.48" cy="502.55" r="3.04" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="620.40" cy="105.61" r="3.03" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="520.22" cy="161.95" r="3.04" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="555.04" cy="127.32" r="3.01" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="195.17" cy="443.22" r="3.06" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="444.41" cy="430.69" r="3.30" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="567.15" cy="95.33" r="3.27" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="352.66" cy="186.01" r="3.14" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="306.96" cy="332.88" r="3.29" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="366.54" cy="533.91" r="3.01" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="584.58" cy="95.93" r="3.06" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="595.65" cy="87.26" r="3.05" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="358.35" cy="167.47" r="3.13" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="566.76" cy="122.29" r="3.16" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="214.52" cy="396.97" r="3.26" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="420.89" cy="204.90" r="3.44" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="190.01" cy="334.33" r="3.04" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="516.27" cy="213.36" r="3.01" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="415.45" cy="169.80" r="3.07" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="434.50" cy="192.58" r="3.48" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="209.41" cy="407.32" r="3.20" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="582.47" cy="111.42" r="3.41" fill="#f28e2b" fill-opacity="0.820"></circle> <circle cx="610.32" cy="123.97" r="5.05" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="459.04" cy="143.69" r="3.02" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="466.95" cy="171.67" r="3.18" fill="#76b7b2" fill-opacity="0.820"></circle> <circle cx="300.06" cy="166.35" r="3.58" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="323.26" cy="175.12" r="3.03" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="292.69" cy="288.93" r="3.15" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="229.44" cy="504.50" r="3.08" fill="#e15759" fill-opacity="0.820"></circle> <circle cx="121.71" cy="492.80" r="3.08" fill="#e15759" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="653.39" y2="556.72"></line> <line x1="36.76" y1="54.88" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="203.48" y1="556.72" x2="203.48" y2="561.72"></line> <line x1="452.62" y1="556.72" x2="452.62" y2="561.72"></line> <line x1="31.76" y1="529.80" x2="36.76" y2="529.80"></line> <line x1="31.76" y1="423.68" x2="36.76" y2="423.68"></line> <line x1="31.76" y1="317.56" x2="36.76" y2="317.56"></line> <line x1="31.76" y1="211.44" x2="36.76" y2="211.44"></line> <line x1="31.76" y1="105.31" x2="36.76" y2="105.31"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="203.48" y="573.64">1K</text> <text x="452.62" y="573.64">10K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="533.76">40</text> <text x="27.76" y="427.64">50</text> <text x="27.76" y="321.52">60</text> <text x="27.76" y="215.40">70</text> <text x="27.76" y="109.27">80</text> </g> <text x="345.07" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">The health and wealth of nations, 2007</text> <text x="36.76" y="48.88" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="345.07" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text> <rect x="677.39" y="54.88" width="101.04" height="137.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="687.39" y="74.24" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Continent</text> <line x1="677.39" y1="79.24" x2="778.43" y2="79.24" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="693.39" y="89.24" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="717.39" y="99.20">Asia</text> <rect x="693.39" y="109.24" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="717.39" y="119.20">Europe</text> <rect x="693.39" y="129.24" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="717.39" y="139.20">Africa</text> <rect x="693.39" y="149.24" width="12.00" height="12.00" fill="#76b7b2" fill-opacity="0.82" rx="2"></rect> <text x="717.39" y="159.20">Americas</text> <rect x="693.39" y="169.24" width="12.00" height="12.00" fill="#59a14f" fill-opacity="0.82" rx="2"></rect> <text x="717.39" y="179.20">Oceania</text> </g> <rect x="677.39" y="204.24" width="101.04" height="108.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="687.39" y="223.60" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Population</text> <line x1="677.39" y1="228.60" x2="778.43" y2="228.60" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <circle cx="699.39" cy="244.60" r="3.00" fill="#3c3c46" fill-opacity="0.60"></circle> <text x="717.39" y="248.56">199.6K</text> <circle cx="699.39" cy="265.10" r="7.50" fill="#3c3c46" fill-opacity="0.60"></circle> <text x="717.39" y="269.06">659.4M</text> <circle cx="699.39" cy="290.60" r="12.00" fill="#3c3c46" fill-opacity="0.60"></circle> <text x="717.39" y="294.56">1.3B</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-4fa4bcua7t");
+</script>
+</div>
+</div>
+</div>
+<p><em>“Given gapminder 2007: points, x is gdp on a log scale, y is life, color by continent, size by population, titled.”</em> Six atoms past the minimum, and still one sentence with no new grammar in it.</p>
+</section>
+<section id="when-the-engine-says-no" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="when-the-engine-says-no"><span class="header-section-number">4.4</span> When the engine says no</h2>
+<p>You will write wrong sentences. Everyone does. gog’s design promise is that a wrong sentence is refused <em>with a direction</em>, never absorbed into a silently wrong picture. Meet the refusals you are most likely to see this week.</p>
+<p>Forgetting to bind the table. The sentence must start with the data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>gapminder_2007 <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: a plot starts with `data()`, which names the table — columns are bare names and the nearest named table wins, so the name matters. Write `data(gapminder_2007) + point + ...`.</code></pre>
+</div>
+</div>
+<p>Quoting a column name, a habit from other packages. The refusal says which fix it wants:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(<span class="st">"gdp"</span>) <span class="sc">+</span> <span class="fu">y</span>(<span class="st">"life"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `x("gdp")` is quoted, so it names a column called `gdp` — and there is no such column. Column names are written bare: `x(gdp)`. If you meant a fixed value rather than a column, that is `style()`.
+gog: `y("life")` is quoted, so it names a column called `life` — and there is no such column. Column names are written bare: `y(life)`. If you meant a fixed value rather than a column, that is `style()`.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>Mapping a channel to a column that cannot answer its question. <code>size</code> encodes magnitude, and a category has none:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life) <span class="sc">+</span> <span class="fu">size</span>(continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `size(continent)` maps a categorical (text) column, but `size` on `point` needs a continuous (numeric) column. Use `color`, `shape`, or `pattern` to distinguish categories.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>Asking a transform to read a column you never named:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> mean <span class="sc">+</span> <span class="fu">x</span>(continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `bar` needs `y()` but none is set. Add `y(&lt;column&gt;)` — a bar cannot be drawn without it.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>Binning a category. <code>bin</code> cuts a continuous axis, and the refusal points at the atom that does count categories:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `bin` cuts a continuous axis into intervals, and `x(continent)` is categorical — a category is one slot, with no width to cut. To tally rows per category, `count` is the transform that does it: `bar * count`.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>Each message names the rule and the way forward. Nothing rendered behind your back; nothing was dropped to make the picture come out. When you hit a refusal outside this list, read it the same way: it is the grammar telling you which law your sentence broke, and the fix is in the message.</p>
+<p>Every refusal closes with a second offer, to set <code>GOG_STRICT=0</code> and draw the plot anyway. That is an environment variable, and what it does to each kind of refusal (along with the one line that sets it in R, Python, Julia and JavaScript) is <a href="./design-laws.html#drawing-it-anyway">Drawing it anyway</a>. For now, take the first offer: at this stage the refusals are the lesson.</p>
+</section>
+<section id="the-morning-checkpoint" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="the-morning-checkpoint"><span class="header-section-number">4.5</span> The morning checkpoint</h2>
+<p>If you started this part in one sitting, check yourself against its promise:</p>
+<ul>
+<li>Read any sentence in this book aloud before looking at its plot.</li>
+<li>Given a question (<em>distribution? comparison? relationship? change over time?</em>), name the mark and transform that answer it.</li>
+<li>Predict whether a sentence will render or refuse, and roughly what the refusal will say.</li>
+</ul>
+<p>If that mostly works, the morning did its job. Part II gives every letter its full chapter; or jump straight to <a href="./cookbook/one-variable.html">the cookbook</a> and start answering your own questions, following the links back whenever a recipe uses a word you want more of.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Coloring a gog sentence, which nothing ships a rule for.
+//
+// A code block on this site is R, Python, Julia or JavaScript, and Pandoc has a
+// highlighter for each. None of them helps, and the reason is worth stating,
+// because it decides everything below.
+//
+// Take one sentence and read what the four highlighters make of it:
+//
+//                    data      point     x
+//     R              function  nothing   function
+//     Python         nothing   nothing   nothing
+//     Julia          function  nothing   function
+//     JavaScript     function  nothing   function
+//
+// `point` is a bare name to every one of them, so no stylesheet can reach it,
+// and Python's tab would sit flat while the other three lit up. The same
+// sentence would look like four different things, on a site whose whole claim
+// is that it is one. That is why every token was painted a single color here
+// until now.
+//
+// The way out is to stop asking the host language. gog's vocabulary is a closed
+// list of sixty-two ordinary words in eleven kinds, declared in the book's
+// kernel table, so it can be painted as what it is: a table, a mark, a channel,
+// a transform. That reading is the same in all four languages, which is the
+// point of the tabs.
+//
+// This runs in the browser rather than at render time, and that is deliberate.
+// Pandoc has already tokenized the block, and adding to its work keeps the panel,
+// the copy button and the line anchors that Quarto builds around it. Nothing here
+// adds or removes a character, so the copy button still copies what you see. With
+// scripting off the page falls back to the single ink it used before.
+(function () {
+  "use strict";
+
+  // The kernel, one line per kind, exactly as the book's kernel table declares
+  // it. Written out rather than fetched: a highlighter that waits on a second
+  // request paints the page twice, and a reader watches it happen.
+  //
+  // A copy of a list is a copy that stops matching, so this one is compared
+  // against the book on every render by `R/check-kernel.R`, which stops the
+  // render rather than letting the two drift.
+  var KERNEL = {
+    table:     "data query",
+    mark:      "point line area bar step interval box ribbon text path rule zone surface",
+    channel:   "x y z color size shape pattern opacity group label play",
+    transform: "bin smooth count density proportion sum mean median max min " +
+               "quantile range confidence deviation bounds partition dodge stack jitter repel",
+    scale:     "linear log time category order",
+    space:     "flat space polar nest map",
+    setting:   "style theme palette",
+    label:     "title x_label y_label z_label",
+    facet:     "facet",
+    selection: "brush",
+
+    // The kernel table writes the operators as the symbols they are, `+ * | /`,
+    // and JavaScript cannot overload any of them, so it spells them as six
+    // words instead. They belong here because leaving them out is what would
+    // show: an uncolored `plot(` among colored words reads as a function the
+    // reader wrote, on the one tab that can least afford to look different.
+    //
+    // Python's and JavaScript's `col`, and Julia's `:`, are deliberately not
+    // here. Choosing `layer` over `beside` changes the plot, so it is grammar;
+    // `col.` is a fixed prefix in front of a column name, so it is idiom, and
+    // it reads as idiom next to R's bare name. Color the grammar, leave the
+    // idiom.
+    operator:  "plot layer across down beside below"
+  };
+
+  // The palette is the book's own paragraph, not a designer's choice. The
+  // kernel chapter sorts these eleven kinds into two groups and gives the reason
+  // for each: *five kinds build a plot*, and *the other six refine a plot or
+  // arrange it, and none of them is required*. The inks follow that exactly.
+  //
+  // Four of the five builders are words, so each takes a hue of its own. The
+  // fifth, the operator, is punctuation in three of the four languages and is
+  // already visible as itself, so it takes weight rather than a hue; a fifth
+  // color there would make JavaScript the loudest tab rather than the matching
+  // one.
+  //
+  // The six that refine or arrange share one quieter ink, because none of them
+  // is required and together they are one idea. They were folded into the
+  // channel's ink at first, which read well and said something false: `facet()`
+  // and `style()` are not channels, and a rule written down is a rule that has
+  // to survive being read.
+  var INK = {
+    table: "table", mark: "mark", channel: "channel", transform: "transform",
+    scale: "refine", space: "refine", setting: "refine",
+    label: "refine", facet: "refine", selection: "refine",
+    operator: "operator"
+  };
+
+  var kindOf = {};
+  var words = [];
+  Object.keys(KERNEL).forEach(function (kind) {
+    KERNEL[kind].split(" ").forEach(function (word) {
+      if (!word || kindOf[word]) return;
+      kindOf[word] = INK[kind];
+      words.push(word);
+    });
+  });
+  // Longest first, so `x_label` is found before the `x` inside it. The boundary
+  // test below would reject that `x` anyway; the ordering means it is never
+  // offered.
+  words.sort(function (a, b) { return b.length - a.length; });
+  var WORD = new RegExp(words.join("|"), "g");
+
+  // Which blocks are searched at all.
+  //
+  // Every word in the kernel is a common English word, which is the grammar's
+  // best property and this file's only real hazard: `title`, `count`, `mean`,
+  // `text` and `group` appear in almost any code. A post comparing gog with
+  // another library would otherwise have half of that library's call painted as
+  // though it were gog.
+  //
+  // So a block has to name a table before anything in it is read. Every gog
+  // sentence begins with one, and no other library's code says `data(`.
+  var LANGUAGES = /\b(?:r|python|julia|js|javascript)\b/;
+  var A_SENTENCE = /\b(?:data|query)\s*\(/;
+
+  // Text Pandoc has already claimed, and which is therefore not gog's to read.
+  // A string or a comment may hold any word at all. `at` is here for JavaScript,
+  // where `col.gdp` arrives with `gdp` as an attribute, so a column named
+  // `count` is covered by it.
+  //
+  // `bu` is deliberately absent, and it is the one that would have been missed:
+  // Python marks `bin` as a builtin, because `bin()` is one. Sealing builtins
+  // would have left the Python tab short of exactly the word the histogram post
+  // is about.
+  var SEALED = /^(?:st|ss|vs|ch|co|cv|do|an|al|at|im|pp|er|wa)$/;
+
+  // A word counts only when it stands alone. `col.count` and `:count` name a
+  // column called count, `counted` is somebody's variable, and `x_label` is not
+  // an `x`.
+  var GLUED_BEFORE = /[A-Za-z0-9_.$:@]/;
+  var GLUED_AFTER = /[A-Za-z0-9_]/;
+  var ARGUMENT_NAME = /^\s*[:=]/;
+
+  function sealed(node, root) {
+    for (var el = node.parentNode; el && el !== root; el = el.parentNode) {
+      if (el.nodeType === 1 && SEALED.test(el.className || "")) return true;
+    }
+    return false;
+  }
+
+  // The block is read as one string rather than node by node, because Pandoc
+  // splits a line across spans wherever it found a token, and a boundary test
+  // that cannot see past the end of its own node would read `col.` and `count`
+  // as unrelated. Offsets map each match back to the node it came from; a match
+  // straddling two nodes is left alone, since a name Pandoc split in half is not
+  // a name.
+  function paint(code) {
+    var nodes = [];
+    var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) nodes.push(node);
+
+    var text = "";
+    var starts = [];
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      starts.push(text.length);
+      text += nodes[i].nodeValue;
+    }
+    if (!A_SENTENCE.test(text)) return;
+
+    var hits = [];
+    for (i = 0; i < nodes.length; i++) hits.push(null);
+
+    var match;
+    WORD.lastIndex = 0;
+    while ((match = WORD.exec(text))) {
+      var from = match.index;
+      var to = from + match[0].length;
+      if (from > 0 && GLUED_BEFORE.test(text.charAt(from - 1))) continue;
+      if (to < text.length && GLUED_AFTER.test(text.charAt(to))) continue;
+      // A word used as an argument name is not an atom, and five channel words
+      // are argument names somewhere: `style(color = )`, `style(opacity = )`,
+      // `style(size = )`, `style(shape = )`, `style(pattern = )`. The kernel
+      // chapter writes them that way on purpose, because setting and mapping
+      // are the same visual property named two ways. They are still two
+      // different words in a sentence, and only one of them is a channel.
+      //
+      // `:` covers JavaScript, where the same setting arrives in a trailing
+      // options object as `{ color: "tomato" }`. It cannot catch a Julia column
+      // by mistake: there the colon leads, `x(:gdp)`, and is already handled.
+      if (ARGUMENT_NAME.test(text.slice(to, to + 8))) continue;
+
+      var at = -1;
+      for (i = nodes.length - 1; i >= 0; i--) {
+        if (starts[i] <= from) { at = i; break; }
+      }
+      if (at < 0 || to > starts[at] + nodes[at].nodeValue.length) continue;
+      if (sealed(nodes[at], code)) continue;
+
+      if (!hits[at]) hits[at] = [];
+      hits[at].push({
+        from: from - starts[at],
+        to: to - starts[at],
+        ink: kindOf[match[0]]
+      });
+    }
+
+    for (i = 0; i < nodes.length; i++) {
+      if (hits[i]) wrap(nodes[i], hits[i]);
+    }
+  }
+
+  function wrap(node, hits) {
+    var source = node.nodeValue;
+    var out = document.createDocumentFragment();
+    var at = 0;
+    hits.forEach(function (hit) {
+      if (hit.from > at) {
+        out.appendChild(document.createTextNode(source.slice(at, hit.from)));
+      }
+      var span = document.createElement("span");
+      span.className = "gog-" + hit.ink;
+      span.textContent = source.slice(hit.from, hit.to);
+      out.appendChild(span);
+      at = hit.to;
+    });
+    if (at < source.length) {
+      out.appendChild(document.createTextNode(source.slice(at)));
+    }
+    node.parentNode.replaceChild(out, node);
+  }
+
+  function run() {
+    // `div.sourceCode` is what keeps a refusal out, and that is worth knowing
+    // before anyone widens this selector to `pre code`. A refusal renders as
+    // `cell-output-error`, outside the wrapper, and its message names atoms:
+    // "gog: bin needs a continuous column". Painting those would color the
+    // engine's own prose as though it were a specification, and the tinted
+    // panel already carries what a refusal means.
+    var blocks = document.querySelectorAll("div.sourceCode pre code");
+    for (var i = 0; i < blocks.length; i++) {
+      if (LANGUAGES.test(blocks[i].className || "")) paint(blocks[i]);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/psychometrician\.github\.io\/gog-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./reading.html" class="pagination-link" aria-label="Reading practice">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading practice</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./parts/letters.html" class="pagination-link" aria-label="The letters">
+        <span class="nav-page-text">The letters</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="licence">Prose licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</span> <span class="licence">Code samples licensed <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.</span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://hits.sh/psychometrician.github.io/gog-book/"><img src="https://hits.sh/psychometrician.github.io/gog-book.svg?style=flat-square&amp;label=readers&amp;color=ffdba4&amp;labelColor=3a332a" class="img-fluid" alt="Page views of this book, counted by hits.sh"></a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/gogdeveloper" target="_blank">
+      <i class="bi bi-twitter-x" role="img" aria-label="gog on X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/gogdeveloper.bsky.social" target="_blank">
+      <i class="bi bi-bluesky" role="img" aria-label="gog on Bluesky">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/psychometrician" target="_blank">
+      <i class="bi bi-github" role="img" aria-label="psychometrician on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://psychometrician.github.io/" target="_blank">
+      <i class="bi bi-journal-text" role="img" aria-label="psychometrician, the blog">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
