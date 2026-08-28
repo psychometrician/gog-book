@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>44&nbsp; Many groups – gog: A Grammar of Graphics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../parts/reasons.html" rel="next">
+<link href="../cookbook/over-time.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4be3c7e6edf8a534d1baebde36db032a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a24f5478c4e8fbb5a1f6d61d9f2bc96b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-412d429836bc2c0989d64c15587b75d3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-a24f5478c4e8fbb5a1f6d61d9f2bc96b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../gog.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../parts/cookbook.html">The cookbook</a></li><li class="breadcrumb-item"><a href="../cookbook/groups.html"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Many groups</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">gog: A Grammar of Graphics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/psychometrician/gog-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/morning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A morning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../first-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading practice</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../writing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The letters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The book’s data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Choosing a mark</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/point.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Point</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/bar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/area.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Area</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/step.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Step</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/box.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Box</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/ribbon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ribbon</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Text</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/path.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Path</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/zone.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Zone</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/edge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Edge</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../scales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Scales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../channels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Channels and legends</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Setting vs mapping</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../transforms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Transforms</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/sentences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The sentences</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../operators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Operators</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../encoding-scope.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Encoding scope</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faceting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Faceting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../composition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Composition</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Cluster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../polar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Polar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../nest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Nest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../globe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Globe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../network.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Network</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../play.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Play</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Selection</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/cookbook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The cookbook</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/one-variable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">One variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/two-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Two variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/three-or-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">A third variable, and more</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/over-time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Over time</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/groups.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Many groups</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/reasons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The reasons</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../design-laws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Design laws</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/bindings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The host language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/javascript.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">JavaScript</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../afterword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Afterword</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../kernel-card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">The kernel card</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Functions around the grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../combinations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Combinations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chart-names.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Chart names, translated</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phrasebook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">The ggplot2 phrasebook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../coverage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Coverage, both directions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#how-do-the-groups-distributions-compare" id="toc-how-do-the-groups-distributions-compare" class="nav-link active" data-scroll-target="#how-do-the-groups-distributions-compare"><span class="header-section-number">44.1</span> How do the groups’ distributions compare?</a></li>
+  <li><a href="#and-when-the-overlap-gets-worse" id="toc-and-when-the-overlap-gets-worse" class="nav-link" data-scroll-target="#and-when-the-overlap-gets-worse"><span class="header-section-number">44.2</span> And when the overlap gets worse?</a></li>
+  <li><a href="#split-but-dont-decorate" id="toc-split-but-dont-decorate" class="nav-link" data-scroll-target="#split-but-dont-decorate"><span class="header-section-number">44.3</span> Split, but don’t decorate</a></li>
+  <li><a href="#one-panel-per-group" id="toc-one-panel-per-group" class="nav-link" data-scroll-target="#one-panel-per-group"><span class="header-section-number">44.4</span> One panel per group</a></li>
+  <li><a href="#two-grouping-variables-at-once" id="toc-two-grouping-variables-at-once" class="nav-link" data-scroll-target="#two-grouping-variables-at-once"><span class="header-section-number">44.5</span> Two grouping variables at once</a></li>
+  <li><a href="#which-group-is-biggest" id="toc-which-group-is-biggest" class="nav-link" data-scroll-target="#which-group-is-biggest"><span class="header-section-number">44.6</span> Which group is biggest?</a></li>
+  <li><a href="#two-groups-back-to-back" id="toc-two-groups-back-to-back" class="nav-link" data-scroll-target="#two-groups-back-to-back"><span class="header-section-number">44.7</span> Two groups, back to back</a></li>
+  <li><a href="#what-this-section-refuses" id="toc-what-this-section-refuses" class="nav-link" data-scroll-target="#what-this-section-refuses"><span class="header-section-number">44.8</span> What this section refuses</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../parts/cookbook.html">The cookbook</a></li><li class="breadcrumb-item"><a href="../cookbook/groups.html"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Many groups</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Many groups</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>How do several groups compare? The comparison questions: several groups, one framework. Two families of answer: split the marks <em>inside</em> one panel (<code>color</code>, <code>group</code>), or split the plot <em>into</em> panels (<code>|</code>, <code>/</code>). The recipes run from one to the other.</p>
+<section id="how-do-the-groups-distributions-compare" class="level2" data-number="44.1">
+<h2 data-number="44.1" class="anchored" data-anchor-id="how-do-the-groups-distributions-compare"><span class="header-section-number">44.1</span> How do the groups’ distributions compare?</h2>
+<p>The overlaid histogram: <code>bin</code> cuts one set of intervals for everyone, so the groups sit on shared edges, each a translucent fill under its own solid outline:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="sc">+</span> bar <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(petal_length) <span class="sc">+</span> <span class="fu">color</span>(species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data(iris_flowers) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.petal_length) <span class="op">+</span> color(col.species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="op">+</span> bar <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>petal_length) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(iris_flowers)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">petal_length</span>)<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">species</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-7ixf8nkl7h" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="610.25" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-6470-5567"><rect x="36.76" y="31.36" width="610.25" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="135.61" y1="31.36" x2="135.61" y2="556.72"></line> <line x1="347.17" y1="31.36" x2="347.17" y2="556.72"></line> <line x1="558.74" y1="31.36" x2="558.74" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="443.01" x2="647.01" y2="443.01"></line> <line x1="36.76" y1="329.29" x2="647.01" y2="329.29"></line> <line x1="36.76" y1="215.58" x2="647.01" y2="215.58"></line> <line x1="36.76" y1="101.86" x2="647.01" y2="101.86"></line> </g> <g clip-path="url(#clip-368-314-6470-5567)"> <rect x="29.83" y="56.38" width="69.35" height="500.34" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="99.17" y="488.49" width="69.35" height="68.23" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="237.87" y="488.49" width="69.35" height="68.23" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="307.21" y="363.41" width="69.35" height="193.31" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="376.56" y="272.43" width="69.35" height="284.29" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="445.90" y="533.98" width="69.35" height="22.74" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="376.56" y="488.49" width="69.35" height="68.23" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="445.90" y="340.66" width="69.35" height="216.06" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="515.25" y="340.66" width="69.35" height="216.06" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="584.60" y="488.49" width="69.35" height="68.23" fill="#e15759" fill-opacity="0.400" stroke="#e15759" stroke-width="1.3" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="135.61" y1="556.72" x2="135.61" y2="561.72"></line> <line x1="347.17" y1="556.72" x2="347.17" y2="561.72"></line> <line x1="558.74" y1="556.72" x2="558.74" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="443.01" x2="36.76" y2="443.01"></line> <line x1="31.76" y1="329.29" x2="36.76" y2="329.29"></line> <line x1="31.76" y1="215.58" x2="36.76" y2="215.58"></line> <line x1="31.76" y1="101.86" x2="36.76" y2="101.86"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="135.61" y="573.64">2</text> <text x="347.17" y="573.64">4</text> <text x="558.74" y="573.64">6</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="446.97">10</text> <text x="27.76" y="333.25">20</text> <text x="27.76" y="219.54">30</text> <text x="27.76" y="105.82">40</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="341.88" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Petal Length</text> <rect x="671.01" y="31.36" width="113.80" height="97.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="681.01" y="50.72" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Species</text> <line x1="671.01" y1="55.72" x2="784.81" y2="55.72" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="687.01" y="65.72" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="75.68">setosa</text> <rect x="687.01" y="85.72" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="95.68">versicolor</text> <rect x="687.01" y="105.72" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="115.68">virginica</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-7ixf8nkl7h");
+</script>
+</div>
+</div>
+</div>
+<p><em>“Bars derived by bin: x is petal length, color by species.”</em> The outline is what keeps each species’ silhouette readable where the fills overlap.</p>
+</section>
+<section id="and-when-the-overlap-gets-worse" class="level2" data-number="44.2">
+<h2 data-number="44.2" class="anchored" data-anchor-id="and-when-the-overlap-gets-worse"><span class="header-section-number">44.2</span> And when the overlap gets worse?</h2>
+<p>Drop the fills entirely: <code>step * bin</code> traces each group’s silhouette as an unfilled staircase, so nothing can hide anything:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="sc">+</span> step <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(petal_length) <span class="sc">+</span> <span class="fu">color</span>(species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data(iris_flowers) <span class="op">+</span> step <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.petal_length) <span class="op">+</span> color(col.species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris_flowers) <span class="op">+</span> step <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>petal_length) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>species)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(iris_flowers)<span class="op">,</span> <span class="fu">layer</span>(step<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">petal_length</span>)<span class="op">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">species</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-cqkfrfw8u5" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="610.25" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-6470-5567"><rect x="36.76" y="31.36" width="610.25" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="135.61" y1="31.36" x2="135.61" y2="556.72"></line> <line x1="347.17" y1="31.36" x2="347.17" y2="556.72"></line> <line x1="558.74" y1="31.36" x2="558.74" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="443.01" x2="647.01" y2="443.01"></line> <line x1="36.76" y1="329.29" x2="647.01" y2="329.29"></line> <line x1="36.76" y1="215.58" x2="647.01" y2="215.58"></line> <line x1="36.76" y1="101.86" x2="647.01" y2="101.86"></line> </g> <g clip-path="url(#clip-368-314-6470-5567)"> <polyline points="29.83,556.72 29.83,56.38 99.17,56.38 99.17,488.49 168.52,488.49 168.52,556.72 237.87,556.72 237.87,556.72 307.21,556.72 307.21,556.72 376.56,556.72 376.56,556.72 445.90,556.72 445.90,556.72 515.25,556.72 515.25,556.72 584.60,556.72 584.60,556.72 653.94,556.72 653.94,556.72" stroke="#4e79a7" fill="none" stroke-width="1.5" stroke-opacity="1.000" stroke-linejoin="miter" stroke-linecap="butt"></polyline> <polyline points="29.83,556.72 29.83,556.72 99.17,556.72 99.17,556.72 168.52,556.72 168.52,556.72 237.87,556.72 237.87,488.49 307.21,488.49 307.21,363.41 376.56,363.41 376.56,272.43 445.90,272.43 445.90,533.98 515.25,533.98 515.25,556.72 584.60,556.72 584.60,556.72 653.94,556.72 653.94,556.72" stroke="#f28e2b" fill="none" stroke-width="1.5" stroke-opacity="1.000" stroke-linejoin="miter" stroke-linecap="butt"></polyline> <polyline points="29.83,556.72 29.83,556.72 99.17,556.72 99.17,556.72 168.52,556.72 168.52,556.72 237.87,556.72 237.87,556.72 307.21,556.72 307.21,556.72 376.56,556.72 376.56,488.49 445.90,488.49 445.90,340.66 515.25,340.66 515.25,340.66 584.60,340.66 584.60,488.49 653.94,488.49 653.94,556.72" stroke="#e15759" fill="none" stroke-width="1.5" stroke-opacity="1.000" stroke-linejoin="miter" stroke-linecap="butt"></polyline> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="647.01" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="135.61" y1="556.72" x2="135.61" y2="561.72"></line> <line x1="347.17" y1="556.72" x2="347.17" y2="561.72"></line> <line x1="558.74" y1="556.72" x2="558.74" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="443.01" x2="36.76" y2="443.01"></line> <line x1="31.76" y1="329.29" x2="36.76" y2="329.29"></line> <line x1="31.76" y1="215.58" x2="36.76" y2="215.58"></line> <line x1="31.76" y1="101.86" x2="36.76" y2="101.86"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="135.61" y="573.64">2</text> <text x="347.17" y="573.64">4</text> <text x="558.74" y="573.64">6</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="446.97">10</text> <text x="27.76" y="333.25">20</text> <text x="27.76" y="219.54">30</text> <text x="27.76" y="105.82">40</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="341.88" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Petal Length</text> <rect x="671.01" y="31.36" width="113.80" height="97.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="681.01" y="50.72" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Species</text> <line x1="671.01" y1="55.72" x2="784.81" y2="55.72" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="687.01" y="65.72" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="75.68">setosa</text> <rect x="687.01" y="85.72" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="95.68">versicolor</text> <rect x="687.01" y="105.72" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="711.01" y="115.68">virginica</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-cqkfrfw8u5");
+</script>
+</div>
+</div>
+</div>
+<p>One mark swapped, nothing else. <a href="../marks/step.html">Step</a> owns the staircase.</p>
+</section>
+<section id="split-but-dont-decorate" class="level2" data-number="44.3">
+<h2 data-number="44.3" class="anchored" data-anchor-id="split-but-dont-decorate"><span class="header-section-number">44.3</span> Split, but don’t decorate</h2>
+<p>Sometimes the grouping matters and the identities do not: you want the <em>shape</em> of many series, not a legend naming each. <code>group</code> splits without coloring:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_asia) <span class="sc">+</span> line <span class="sc">+</span> <span class="fu">x</span>(year) <span class="sc">+</span> <span class="fu">y</span>(life) <span class="sc">+</span> <span class="fu">group</span>(country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data(gapminder_asia) <span class="op">+</span> line <span class="op">+</span> x(col.year) <span class="op">+</span> y(col.life) <span class="op">+</span> group(col.country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_asia) <span class="op">+</span> line <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>year) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>life) <span class="op">+</span> <span class="fu">group</span>(<span class="op">:</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_asia)<span class="op">,</span> line<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">year</span>)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">life</span>)<span class="op">,</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group</span>(col<span class="op">.</span><span class="at">country</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-akhgydn344" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="738.48" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7752-5567"><rect x="36.76" y="31.36" width="738.48" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="167.98" y1="31.36" x2="167.98" y2="556.72"></line> <line x1="412.10" y1="31.36" x2="412.10" y2="556.72"></line> <line x1="656.23" y1="31.36" x2="656.23" y2="556.72"></line> <line x1="36.76" y1="505.10" x2="775.24" y2="505.10"></line> <line x1="36.76" y1="399.51" x2="775.24" y2="399.51"></line> <line x1="36.76" y1="293.91" x2="775.24" y2="293.91"></line> <line x1="36.76" y1="188.32" x2="775.24" y2="188.32"></line> <line x1="36.76" y1="82.73" x2="775.24" y2="82.73"></line> </g> <g clip-path="url(#clip-368-314-7752-5567)"> <polyline points="70.33,462.86 131.36,393.71 192.39,457.57 253.42,311.01 314.45,260.98 375.48,252.02 436.52,235.57 497.55,217.10 558.58,202.15 619.61,183.82 680.64,166.91 741.67,157.05" fill="none" stroke="#4e79a7" stroke-width="2" stroke-opacity="1.000" stroke-linejoin="round" stroke-linecap="round"></polyline> <polyline points="70.33,532.84 131.36,502.47 192.39,467.03 253.42,429.15 314.45,392.63 375.48,355.07 436.52,329.86 497.55,309.19 558.58,291.56 619.61,275.28 680.64,263.51 741.67,244.31" fill="none" stroke="#4e79a7" stroke-width="2" stroke-opacity="1.000" stroke-linejoin="round" stroke-linecap="round"></polyline> <polyline points="70.33,531.84 131.36,505.97 192.39,478.51 253.42,442.12 314.45,407.92 375.48,370.98 436.52,334.47 497.55,292.47 558.58,265.60 619.61,230.12 680.64,203.23 741.67,181.46" fill="none" stroke="#4e79a7" stroke-width="2" stroke-opacity="1.000" stroke-linejoin="round" stroke-linecap="round"></polyline> <polyline points="70.33,261.92 131.36,235.84 192.39,201.73 253.42,173.22 314.45,152.21 375.48,131.51 436.52,113.24 497.55,96.77 558.58,89.48 619.61,75.44 680.64,61.61 741.67,55.24" fill="none" stroke="#4e79a7" stroke-width="2" stroke-opacity="1.000" stroke-linejoin="round" stroke-linecap="round"></polyline> <polyline points="70.33,426.40 131.36,371.20 192.39,343.63 253.42,318.03 314.45,266.33 375.48,243.59 436.52,218.70 497.55,190.33 558.58,164.62 619.61,139.25 680.64,113.93 741.67,97.27" fill="none" stroke="#4e79a7" stroke-width="2" stroke-opacity="1.000" stroke-linejoin="round" stroke-linecap="round"></polyline> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="775.24" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="167.98" y1="556.72" x2="167.98" y2="561.72"></line> <line x1="412.10" y1="556.72" x2="412.10" y2="561.72"></line> <line x1="656.23" y1="556.72" x2="656.23" y2="561.72"></line> <line x1="31.76" y1="505.10" x2="36.76" y2="505.10"></line> <line x1="31.76" y1="399.51" x2="36.76" y2="399.51"></line> <line x1="31.76" y1="293.91" x2="36.76" y2="293.91"></line> <line x1="31.76" y1="188.32" x2="36.76" y2="188.32"></line> <line x1="31.76" y1="82.73" x2="36.76" y2="82.73"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="167.98" y="573.64">1960</text> <text x="412.10" y="573.64">1980</text> <text x="656.23" y="573.64">2000</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="509.06">40</text> <text x="27.76" y="403.47">50</text> <text x="27.76" y="297.87">60</text> <text x="27.76" y="192.28">70</text> <text x="27.76" y="86.69">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="406.00" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Year</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-akhgydn344");
+</script>
+</div>
+</div>
+</div>
+<p>Five countries, five lines, no legend: the shape of the bundle is the answer. Bind <a href="../channels.html"><code>color</code></a> instead when the reader needs to know which is which.</p>
+</section>
+<section id="one-panel-per-group" class="level2" data-number="44.4">
+<h2 data-number="44.4" class="anchored" data-anchor-id="one-panel-per-group"><span class="header-section-number">44.4</span> One panel per group</h2>
+<p>When each group deserves its own pair of axes, multiply the plot instead of the marks. Statistics run <em>within</em> each panel; the scale stays shared so panels stay comparable:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> bin <span class="sc">+</span> <span class="fu">x</span>(life) <span class="sc">|</span> <span class="fu">facet</span>(continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">bin</span> <span class="op">+</span> x(col.life) <span class="op">|</span> facet(col.continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> bin <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>life) <span class="op">|</span> <span class="fu">facet</span>(<span class="op">:</span>continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> bin)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">life</span>)<span class="op">,</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">across</span>(col<span class="op">.</span><span class="at">continent</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-8qty4o1t8i" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="51.36" width="142.572" height="505.36" fill="#f5f5f8"></rect> <clippath id="clip-368-514-1793-5567"><rect x="36.76" y="51.36" width="142.572" height="505.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="70.37" y1="51.36" x2="70.37" y2="556.72"></line> <line x1="104.29" y1="51.36" x2="104.29" y2="556.72"></line> <line x1="138.21" y1="51.36" x2="138.21" y2="556.72"></line> <line x1="172.12" y1="51.36" x2="172.12" y2="556.72"></line> <line x1="36.76" y1="556.72" x2="179.33" y2="556.72"></line> <line x1="36.76" y1="423.03" x2="179.33" y2="423.03"></line> <line x1="36.76" y1="289.33" x2="179.33" y2="289.33"></line> <line x1="36.76" y1="155.64" x2="179.33" y2="155.64"></line> </g> <g clip-path="url(#clip-368-514-1793-5567)"> <rect x="35.14" y="529.98" width="16.20" height="26.74" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="99.95" y="449.77" width="16.20" height="106.95" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="116.15" y="396.29" width="16.20" height="160.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="132.35" y="316.07" width="16.20" height="240.65" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="148.55" y="369.55" width="16.20" height="187.17" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="164.75" y="396.29" width="16.20" height="160.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="179.33" y2="556.72"></line> <line x1="36.76" y1="51.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="70.37" y1="556.72" x2="70.37" y2="561.72"></line> <line x1="104.29" y1="556.72" x2="104.29" y2="561.72"></line> <line x1="138.21" y1="556.72" x2="138.21" y2="561.72"></line> <line x1="172.12" y1="556.72" x2="172.12" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="423.03" x2="36.76" y2="423.03"></line> <line x1="31.76" y1="289.33" x2="36.76" y2="289.33"></line> <line x1="31.76" y1="155.64" x2="36.76" y2="155.64"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="70.37" y="573.64">50</text> <text x="104.29" y="573.64">60</text> <text x="138.21" y="573.64">70</text> <text x="172.12" y="573.64">80</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="426.99">5</text> <text x="27.76" y="293.29">10</text> <text x="27.76" y="159.60">15</text> </g> <rect x="187.332" y="51.36" width="142.572" height="505.36" fill="#f5f5f8"></rect> <clippath id="clip-1873-514-3299-5567"><rect x="187.332" y="51.36" width="142.572" height="505.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="220.94" y1="51.36" x2="220.94" y2="556.72"></line> <line x1="254.86" y1="51.36" x2="254.86" y2="556.72"></line> <line x1="288.78" y1="51.36" x2="288.78" y2="556.72"></line> <line x1="322.70" y1="51.36" x2="322.70" y2="556.72"></line> <line x1="187.33" y1="556.72" x2="329.90" y2="556.72"></line> <line x1="187.33" y1="423.03" x2="329.90" y2="423.03"></line> <line x1="187.33" y1="289.33" x2="329.90" y2="289.33"></line> <line x1="187.33" y1="155.64" x2="329.90" y2="155.64"></line> </g> <g clip-path="url(#clip-1873-514-3299-5567)"> <rect x="282.92" y="476.50" width="16.20" height="80.22" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="299.12" y="316.07" width="16.20" height="240.65" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="315.32" y="75.42" width="16.20" height="481.30" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="187.33" y1="556.72" x2="329.90" y2="556.72"></line> <line x1="187.33" y1="51.36" x2="187.33" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="220.94" y1="556.72" x2="220.94" y2="561.72"></line> <line x1="254.86" y1="556.72" x2="254.86" y2="561.72"></line> <line x1="288.78" y1="556.72" x2="288.78" y2="561.72"></line> <line x1="322.70" y1="556.72" x2="322.70" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="220.94" y="573.64">50</text> <text x="254.86" y="573.64">60</text> <text x="288.78" y="573.64">70</text> <text x="322.70" y="573.64">80</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="337.904" y="51.36" width="142.572" height="505.36" fill="#f5f5f8"></rect> <clippath id="clip-3379-514-4805-5567"><rect x="337.904" y="51.36" width="142.572" height="505.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="371.51" y1="51.36" x2="371.51" y2="556.72"></line> <line x1="405.43" y1="51.36" x2="405.43" y2="556.72"></line> <line x1="439.35" y1="51.36" x2="439.35" y2="556.72"></line> <line x1="473.27" y1="51.36" x2="473.27" y2="556.72"></line> <line x1="337.90" y1="556.72" x2="480.48" y2="556.72"></line> <line x1="337.90" y1="423.03" x2="480.48" y2="423.03"></line> <line x1="337.90" y1="289.33" x2="480.48" y2="289.33"></line> <line x1="337.90" y1="155.64" x2="480.48" y2="155.64"></line> </g> <g clip-path="url(#clip-3379-514-4805-5567)"> <rect x="336.28" y="369.55" width="16.20" height="187.17" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="352.49" y="316.07" width="16.20" height="240.65" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="368.69" y="262.60" width="16.20" height="294.12" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="384.89" y="262.60" width="16.20" height="294.12" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="401.09" y="449.77" width="16.20" height="106.95" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="417.29" y="476.50" width="16.20" height="80.22" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="433.49" y="449.77" width="16.20" height="106.95" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="449.69" y="476.50" width="16.20" height="80.22" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="337.90" y1="556.72" x2="480.48" y2="556.72"></line> <line x1="337.90" y1="51.36" x2="337.90" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="371.51" y1="556.72" x2="371.51" y2="561.72"></line> <line x1="405.43" y1="556.72" x2="405.43" y2="561.72"></line> <line x1="439.35" y1="556.72" x2="439.35" y2="561.72"></line> <line x1="473.27" y1="556.72" x2="473.27" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="371.51" y="573.64">50</text> <text x="405.43" y="573.64">60</text> <text x="439.35" y="573.64">70</text> <text x="473.27" y="573.64">80</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="488.476" y="51.36" width="142.572" height="505.36" fill="#f5f5f8"></rect> <clippath id="clip-4885-514-6310-5567"><rect x="488.476" y="51.36" width="142.572" height="505.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="522.09" y1="51.36" x2="522.09" y2="556.72"></line> <line x1="556.00" y1="51.36" x2="556.00" y2="556.72"></line> <line x1="589.92" y1="51.36" x2="589.92" y2="556.72"></line> <line x1="623.84" y1="51.36" x2="623.84" y2="556.72"></line> <line x1="488.48" y1="556.72" x2="631.05" y2="556.72"></line> <line x1="488.48" y1="423.03" x2="631.05" y2="423.03"></line> <line x1="488.48" y1="289.33" x2="631.05" y2="289.33"></line> <line x1="488.48" y1="155.64" x2="631.05" y2="155.64"></line> </g> <g clip-path="url(#clip-4885-514-6310-5567)"> <rect x="551.66" y="529.98" width="16.20" height="26.74" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="567.86" y="529.98" width="16.20" height="26.74" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="584.06" y="262.60" width="16.20" height="294.12" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="600.27" y="396.29" width="16.20" height="160.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="616.47" y="396.29" width="16.20" height="160.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="488.48" y1="556.72" x2="631.05" y2="556.72"></line> <line x1="488.48" y1="51.36" x2="488.48" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="522.09" y1="556.72" x2="522.09" y2="561.72"></line> <line x1="556.00" y1="556.72" x2="556.00" y2="561.72"></line> <line x1="589.92" y1="556.72" x2="589.92" y2="561.72"></line> <line x1="623.84" y1="556.72" x2="623.84" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="522.09" y="573.64">50</text> <text x="556.00" y="573.64">60</text> <text x="589.92" y="573.64">70</text> <text x="623.84" y="573.64">80</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="639.048" y="51.36" width="142.572" height="505.36" fill="#f5f5f8"></rect> <clippath id="clip-6390-514-7816-5567"><rect x="639.048" y="51.36" width="142.572" height="505.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="672.66" y1="51.36" x2="672.66" y2="556.72"></line> <line x1="706.58" y1="51.36" x2="706.58" y2="556.72"></line> <line x1="740.49" y1="51.36" x2="740.49" y2="556.72"></line> <line x1="774.41" y1="51.36" x2="774.41" y2="556.72"></line> <line x1="639.05" y1="556.72" x2="781.62" y2="556.72"></line> <line x1="639.05" y1="423.03" x2="781.62" y2="423.03"></line> <line x1="639.05" y1="289.33" x2="781.62" y2="289.33"></line> <line x1="639.05" y1="155.64" x2="781.62" y2="155.64"></line> </g> <g clip-path="url(#clip-6390-514-7816-5567)"> <rect x="767.04" y="503.24" width="16.20" height="53.48" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="639.05" y1="556.72" x2="781.62" y2="556.72"></line> <line x1="639.05" y1="51.36" x2="639.05" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="672.66" y1="556.72" x2="672.66" y2="561.72"></line> <line x1="706.58" y1="556.72" x2="706.58" y2="561.72"></line> <line x1="740.49" y1="556.72" x2="740.49" y2="561.72"></line> <line x1="774.41" y1="556.72" x2="774.41" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="672.66" y="573.64">50</text> <text x="706.58" y="573.64">60</text> <text x="740.49" y="573.64">70</text> <text x="774.41" y="573.64">80</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <rect x="36.76" y="31.36" width="142.57" height="16.00" fill="#e4e4ec"></rect> <text x="108.05" y="43.32">Asia</text> <rect x="187.33" y="31.36" width="142.57" height="16.00" fill="#e4e4ec"></rect> <text x="258.62" y="43.32">Europe</text> <rect x="337.90" y="31.36" width="142.57" height="16.00" fill="#e4e4ec"></rect> <text x="409.19" y="43.32">Africa</text> <rect x="488.48" y="31.36" width="142.57" height="16.00" fill="#e4e4ec"></rect> <text x="559.76" y="43.32">Americas</text> <rect x="639.05" y="31.36" width="142.57" height="16.00" fill="#e4e4ec"></rect> <text x="710.33" y="43.32">Oceania</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="409.19" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Life</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-8qty4o1t8i");
+</script>
+</div>
+</div>
+</div>
+<p>Five distributions on one common axis, cut into one common set of bins and counted continent by continent. Compare the shapes column by column: Africa’s bars sit left, Europe’s right, and because every bar covers the same span of years the heights mean the same thing in each panel. <a href="../faceting.html">Faceting</a> owns the rules, including why the cut is shared when the count is not.</p>
+</section>
+<section id="two-grouping-variables-at-once" class="level2" data-number="44.5">
+<h2 data-number="44.5" class="anchored" data-anchor-id="two-grouping-variables-at-once"><span class="header-section-number">44.5</span> Two grouping variables at once</h2>
+<p><code>|</code> splits into panel columns, <code>/</code> into panel rows; written together they cross into a grid. Every combination gets a panel:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gm_years <span class="ot">&lt;-</span> gm_all[gm_all<span class="sc">$</span>year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1957</span>, <span class="dv">2007</span>), ]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>gm_years<span class="sc">$</span>period <span class="ot">&lt;-</span> <span class="fu">as.character</span>(gm_years<span class="sc">$</span>year)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gm_years) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp, <span class="at">scale =</span> <span class="st">"log"</span>) <span class="sc">+</span> <span class="fu">y</span>(life) <span class="sc">|</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet</span>(continent) <span class="sc">/</span> <span class="fu">facet</span>(period)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-4l8afkcxoa" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="51.36" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-368-514-1741-3000"><rect x="36.76" y="51.36" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="69.60" y1="51.36" x2="69.60" y2="300.04"></line> <line x1="117.39" y1="51.36" x2="117.39" y2="300.04"></line> <line x1="165.18" y1="51.36" x2="165.18" y2="300.04"></line> <line x1="36.76" y1="246.92" x2="174.06" y2="246.92"></line> <line x1="36.76" y1="160.42" x2="174.06" y2="160.42"></line> <line x1="36.76" y1="73.92" x2="174.06" y2="73.92"></line> </g> <g clip-path="url(#clip-368-514-1741-3000)"> <circle cx="65.51" cy="288.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="120.54" cy="187.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="61.03" cy="249.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="52.28" cy="241.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="58.15" cy="201.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="96.36" cy="139.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="58.65" cy="245.85" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="66.45" cy="247.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.32" cy="215.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="107.57" cy="210.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="104.55" cy="126.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="99.96" cy="136.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="82.77" cy="222.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.98" cy="186.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.85" cy="192.08" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="167.82" cy="168.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="107.10" cy="162.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.92" cy="194.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="67.71" cy="224.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="47.81" cy="238.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="58.93" cy="256.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.37" cy="246.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="63.55" cy="222.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.67" cy="197.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="113.17" cy="234.52" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="91.29" cy="146.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="71.06" cy="154.12" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="85.17" cy="211.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.13" cy="150.04" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="64.80" cy="187.97" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="61.49" cy="234.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="82.11" cy="222.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="65.10" cy="273.00" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="300.04" x2="174.06" y2="300.04"></line> <line x1="36.76" y1="51.36" x2="36.76" y2="300.04"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="31.76" y1="246.92" x2="36.76" y2="246.92"></line> <line x1="31.76" y1="160.42" x2="36.76" y2="160.42"></line> <line x1="31.76" y1="73.92" x2="36.76" y2="73.92"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="250.88">40</text> <text x="27.76" y="164.38">60</text> <text x="27.76" y="77.88">80</text> </g> <rect x="182.05599999999998" y="51.36" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-1821-514-3194-3000"><rect x="182.05599999999998" y="51.36" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="214.90" y1="51.36" x2="214.90" y2="300.04"></line> <line x1="262.69" y1="51.36" x2="262.69" y2="300.04"></line> <line x1="310.48" y1="51.36" x2="310.48" y2="300.04"></line> <line x1="182.06" y1="246.92" x2="319.35" y2="246.92"></line> <line x1="182.06" y1="160.42" x2="319.35" y2="160.42"></line> <line x1="182.06" y1="73.92" x2="319.35" y2="73.92"></line> </g> <g clip-path="url(#clip-1821-514-3194-3000)"> <circle cx="228.68" cy="163.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="260.14" cy="128.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="262.09" cy="120.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="221.19" cy="167.13" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="237.76" cy="131.83" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="245.36" cy="139.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="258.71" cy="121.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="264.85" cy="109.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="256.84" cy="128.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="259.71" cy="121.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="263.08" cy="121.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="247.95" cy="126.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="252.23" cy="132.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="261.06" cy="102.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="250.65" cy="121.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="252.93" cy="126.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="241.95" cy="154.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="265.18" cy="104.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="265.87" cy="102.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="247.17" cy="135.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="242.47" cy="153.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="243.38" cy="142.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="248.22" cy="153.13" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="252.41" cy="128.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="251.60" cy="126.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="246.41" cy="131.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="262.51" cy="106.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="274.78" cy="114.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="231.44" cy="211.98" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="265.19" cy="115.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="182.06" y1="300.04" x2="319.35" y2="300.04"></line> <line x1="182.06" y1="51.36" x2="182.06" y2="300.04"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="327.352" y="51.36" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-3274-514-4646-3000"><rect x="327.352" y="51.36" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="360.20" y1="51.36" x2="360.20" y2="300.04"></line> <line x1="407.99" y1="51.36" x2="407.99" y2="300.04"></line> <line x1="455.77" y1="51.36" x2="455.77" y2="300.04"></line> <line x1="327.35" y1="246.92" x2="464.65" y2="246.92"></line> <line x1="327.35" y1="160.42" x2="464.65" y2="160.42"></line> <line x1="327.35" y1="73.92" x2="464.65" y2="73.92"></line> </g> <g clip-path="url(#clip-3274-514-4646-3000)"> <circle cx="383.09" cy="222.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="388.05" cy="281.53" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="359.34" cy="245.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="358.42" cy="205.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="350.18" cy="268.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="340.09" cy="244.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="365.85" cy="245.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="363.82" cy="257.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="365.78" cy="247.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.17" cy="236.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="358.14" cy="244.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="377.62" cy="225.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="368.62" cy="236.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="382.04" cy="258.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="368.03" cy="227.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="342.49" cy="264.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="338.06" cy="255.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="340.05" cy="261.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="393.50" cy="251.25" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="346.66" cy="281.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="361.08" cy="226.25" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="348.76" cy="270.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="342.76" cy="275.08" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="359.01" cy="226.66" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="337.56" cy="225.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="350.31" cy="249.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="385.89" cy="224.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="369.81" cy="251.83" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="342.01" cy="259.00" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="345.41" cy="267.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="356.73" cy="236.81" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="374.93" cy="168.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="370.49" cy="223.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="345.63" cy="273.83" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="380.20" cy="224.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="356.47" cy="252.99" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="362.18" cy="256.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="381.34" cy="181.66" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="347.42" cy="240.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="357.08" cy="208.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="369.53" cy="249.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="360.29" cy="283.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.96" cy="268.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="395.53" cy="212.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="372.05" cy="248.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.74" cy="232.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="352.75" cy="234.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="358.60" cy="241.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="367.11" cy="216.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="354.89" cy="235.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="365.83" cy="229.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="346.57" cy="201.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="327.35" y1="300.04" x2="464.65" y2="300.04"></line> <line x1="327.35" y1="51.36" x2="327.35" y2="300.04"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="472.64799999999997" y="51.36" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-4726-514-6099-3000"><rect x="472.64799999999997" y="51.36" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="505.49" y1="51.36" x2="505.49" y2="300.04"></line> <line x1="553.28" y1="51.36" x2="553.28" y2="300.04"></line> <line x1="601.07" y1="51.36" x2="601.07" y2="300.04"></line> <line x1="472.65" y1="246.92" x2="609.94" y2="246.92"></line> <line x1="472.65" y1="160.42" x2="609.94" y2="160.42"></line> <line x1="472.65" y1="73.92" x2="609.94" y2="73.92"></line> </g> <g clip-path="url(#clip-4726-514-6099-3000)"> <circle cx="545.45" cy="141.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="521.16" cy="238.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="524.40" cy="189.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="557.90" cy="117.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="535.84" cy="177.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.99" cy="181.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="528.22" cy="160.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="543.00" cy="150.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="514.51" cy="204.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="533.09" cy="197.81" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.02" cy="209.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="525.46" cy="229.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="516.83" cy="243.91" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.05" cy="226.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="537.86" cy="149.13" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="534.94" cy="181.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.24" cy="223.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="528.03" cy="163.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="520.35" cy="146.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="535.50" cy="219.83" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="533.78" cy="123.49" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="534.78" cy="152.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="561.48" cy="119.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="543.19" cy="129.96" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="552.87" cy="169.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="472.65" y1="300.04" x2="609.94" y2="300.04"></line> <line x1="472.65" y1="51.36" x2="472.65" y2="300.04"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="617.944" y="51.36" width="137.29600000000005" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-6179-514-7552-3000"><rect x="617.944" y="51.36" width="137.29600000000005" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="650.79" y1="51.36" x2="650.79" y2="300.04"></line> <line x1="698.58" y1="51.36" x2="698.58" y2="300.04"></line> <line x1="746.37" y1="51.36" x2="746.37" y2="300.04"></line> <line x1="617.94" y1="246.92" x2="755.24" y2="246.92"></line> <line x1="617.94" y1="160.42" x2="755.24" y2="160.42"></line> <line x1="617.94" y1="73.92" x2="755.24" y2="73.92"></line> </g> <g clip-path="url(#clip-6179-514-7552-3000)"> <circle cx="700.46" cy="115.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="702.78" cy="116.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="617.94" y1="300.04" x2="755.24" y2="300.04"></line> <line x1="617.94" y1="51.36" x2="617.94" y2="300.04"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="36.76" y="308.04" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-368-3080-1741-5567"><rect x="36.76" y="308.04" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="69.60" y1="308.04" x2="69.60" y2="556.72"></line> <line x1="117.39" y1="308.04" x2="117.39" y2="556.72"></line> <line x1="165.18" y1="308.04" x2="165.18" y2="556.72"></line> <line x1="36.76" y1="503.60" x2="174.06" y2="503.60"></line> <line x1="36.76" y1="417.10" x2="174.06" y2="417.10"></line> <line x1="36.76" y1="330.60" x2="174.06" y2="330.60"></line> </g> <g clip-path="url(#clip-368-3080-1741-5567)"> <circle cx="69.07" cy="487.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="140.05" cy="349.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.46" cy="399.53" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.78" cy="418.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.84" cy="361.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="146.02" cy="321.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.22" cy="396.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="95.84" cy="371.04" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="120.48" cy="369.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.69" cy="419.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="136.84" cy="327.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="141.31" cy="319.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.91" cy="362.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.27" cy="385.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="134.99" cy="336.56" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="149.65" cy="341.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="118.33" cy="365.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.94" cy="355.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="93.06" cy="387.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="68.41" cy="408.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="71.42" cy="400.73" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="134.05" cy="349.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="89.48" cy="393.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="93.68" cy="366.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="133.43" cy="361.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="149.58" cy="330.72" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="98.22" cy="363.49" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="99.31" cy="355.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="139.29" cy="337.52" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="111.31" cy="371.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.13" cy="355.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="92.58" cy="359.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.72" cy="405.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="174.06" y2="556.72"></line> <line x1="36.76" y1="308.04" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="69.60" y1="556.72" x2="69.60" y2="561.72"></line> <line x1="117.39" y1="556.72" x2="117.39" y2="561.72"></line> <line x1="165.18" y1="556.72" x2="165.18" y2="561.72"></line> <line x1="31.76" y1="503.60" x2="36.76" y2="503.60"></line> <line x1="31.76" y1="417.10" x2="36.76" y2="417.10"></line> <line x1="31.76" y1="330.60" x2="36.76" y2="330.60"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="69.60" y="573.64">1K</text> <text x="117.39" y="573.64">10K</text> <text x="165.18" y="573.64" text-anchor="end">100K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="507.56">40</text> <text x="27.76" y="421.06">60</text> <text x="27.76" y="334.56">80</text> </g> <rect x="182.05599999999998" y="308.04" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-1821-3080-3194-5567"><rect x="182.05599999999998" y="308.04" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="214.90" y1="308.04" x2="214.90" y2="556.72"></line> <line x1="262.69" y1="308.04" x2="262.69" y2="556.72"></line> <line x1="310.48" y1="308.04" x2="310.48" y2="556.72"></line> <line x1="182.06" y1="503.60" x2="319.35" y2="503.60"></line> <line x1="182.06" y1="417.10" x2="319.35" y2="417.10"></line> <line x1="182.06" y1="330.60" x2="319.35" y2="330.60"></line> </g> <g clip-path="url(#clip-1821-3080-3194-5567)"> <circle cx="251.87" cy="346.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="289.35" cy="331.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="287.90" cy="333.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="256.57" cy="352.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="264.06" cy="360.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="270.57" cy="348.99" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="279.82" cy="345.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="288.85" cy="337.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="287.60" cy="333.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="285.81" cy="327.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="286.94" cy="333.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="283.71" cy="332.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="274.90" cy="359.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="289.38" cy="323.00" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="291.81" cy="335.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="284.48" cy="328.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="261.08" cy="354.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="289.73" cy="331.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="295.82" cy="329.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="271.64" cy="349.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="277.60" cy="338.83" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="264.30" cy="363.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="262.24" cy="356.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="275.66" cy="353.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="282.33" cy="339.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="284.66" cy="326.53" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="288.00" cy="326.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="290.13" cy="323.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="259.21" cy="366.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="287.60" cy="333.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="182.06" y1="556.72" x2="319.35" y2="556.72"></line> <line x1="182.06" y1="308.04" x2="182.06" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="214.90" y1="556.72" x2="214.90" y2="561.72"></line> <line x1="262.69" y1="556.72" x2="262.69" y2="561.72"></line> <line x1="310.48" y1="556.72" x2="310.48" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="214.90" y="573.64">1K</text> <text x="262.69" y="573.64">10K</text> <text x="310.48" y="573.64" text-anchor="end">100K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="327.352" y="308.04" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-3274-3080-4646-5567"><rect x="327.352" y="308.04" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="360.20" y1="308.04" x2="360.20" y2="556.72"></line> <line x1="407.99" y1="308.04" x2="407.99" y2="556.72"></line> <line x1="455.77" y1="308.04" x2="455.77" y2="556.72"></line> <line x1="327.35" y1="503.60" x2="464.65" y2="503.60"></line> <line x1="327.35" y1="417.10" x2="464.65" y2="417.10"></line> <line x1="327.35" y1="330.60" x2="464.65" y2="330.60"></line> </g> <g clip-path="url(#clip-3274-3080-4646-5567)"> <circle cx="398.14" cy="363.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="392.74" cy="491.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="367.78" cy="431.25" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="412.73" cy="457.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.27" cy="450.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="342.68" cy="462.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="375.01" cy="458.49" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="352.97" cy="483.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="371.26" cy="457.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="359.91" cy="394.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="333.59" cy="475.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="386.97" cy="437.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="369.22" cy="467.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="375.42" cy="439.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="395.88" cy="368.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="412.03" cy="453.52" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="350.98" cy="425.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="352.52" cy="447.61" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="413.76" cy="431.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="354.30" cy="419.49" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="366.08" cy="417.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="358.97" cy="434.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="348.86" cy="475.97" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="368.10" cy="442.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="369.55" cy="492.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="341.92" cy="479.04" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="411.87" cy="356.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="361.10" cy="419.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="354.48" cy="467.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="361.06" cy="441.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="372.43" cy="399.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="409.88" cy="361.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="388.01" cy="368.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="356.17" cy="494.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="392.80" cy="447.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="350.26" cy="430.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="374.73" cy="473.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="402.48" cy="345.99" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="357.14" cy="476.61" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="369.93" cy="393.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="371.36" cy="403.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="357.13" cy="492.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="358.60" cy="468.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="406.41" cy="463.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="380.05" cy="423.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="391.47" cy="505.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="362.31" cy="449.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="357.61" cy="423.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="400.86" cy="356.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="361.33" cy="453.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="365.18" cy="493.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="344.51" cy="488.52" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="327.35" y1="556.72" x2="464.65" y2="556.72"></line> <line x1="327.35" y1="308.04" x2="327.35" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="360.20" y1="556.72" x2="360.20" y2="561.72"></line> <line x1="407.99" y1="556.72" x2="407.99" y2="561.72"></line> <line x1="455.77" y1="556.72" x2="455.77" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="360.20" y="573.64">1K</text> <text x="407.99" y="573.64">10K</text> <text x="455.77" y="573.64" text-anchor="end">100K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="472.64799999999997" y="308.04" width="137.296" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-4726-3080-6099-5567"><rect x="472.64799999999997" y="308.04" width="137.296" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="505.49" y1="308.04" x2="505.49" y2="556.72"></line> <line x1="553.28" y1="308.04" x2="553.28" y2="556.72"></line> <line x1="601.07" y1="308.04" x2="601.07" y2="556.72"></line> <line x1="472.65" y1="503.60" x2="609.94" y2="503.60"></line> <line x1="472.65" y1="417.10" x2="609.94" y2="417.10"></line> <line x1="472.65" y1="330.60" x2="609.94" y2="330.60"></line> </g> <g clip-path="url(#clip-4726-3080-6099-5567)"> <circle cx="558.37" cy="350.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="533.32" cy="393.08" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="551.25" cy="363.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="580.05" cy="327.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="559.00" cy="336.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="545.90" cy="361.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="552.53" cy="335.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="550.97" cy="338.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="542.77" cy="364.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="545.50" cy="352.25" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="541.72" cy="365.73" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.65" cy="372.73" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="509.30" cy="413.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.78" cy="373.00" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="546.81" cy="362.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="557.03" cy="347.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="526.48" cy="361.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="552.88" cy="349.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="535.14" cy="366.27" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="547.06" cy="367.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="566.96" cy="336.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="565.49" cy="374.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="583.53" cy="338.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="554.51" cy="346.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="556.03" cy="357.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="472.65" y1="556.72" x2="609.94" y2="556.72"></line> <line x1="472.65" y1="308.04" x2="472.65" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="505.49" y1="556.72" x2="505.49" y2="561.72"></line> <line x1="553.28" y1="556.72" x2="553.28" y2="561.72"></line> <line x1="601.07" y1="556.72" x2="601.07" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="505.49" y="573.64">1K</text> <text x="553.28" y="573.64">10K</text> <text x="601.07" y="573.64" text-anchor="end">100K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <rect x="617.944" y="308.04" width="137.29600000000005" height="248.68" fill="#f5f5f8"></rect> <clippath id="clip-6179-3080-7552-5567"><rect x="617.944" y="308.04" width="137.29600000000005" height="248.68"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="650.79" y1="308.04" x2="650.79" y2="556.72"></line> <line x1="698.58" y1="308.04" x2="698.58" y2="556.72"></line> <line x1="746.37" y1="308.04" x2="746.37" y2="556.72"></line> <line x1="617.94" y1="503.60" x2="755.24" y2="503.60"></line> <line x1="617.94" y1="417.10" x2="755.24" y2="417.10"></line> <line x1="617.94" y1="330.60" x2="755.24" y2="330.60"></line> </g> <g clip-path="url(#clip-6179-3080-7552-5567)"> <circle cx="724.24" cy="325.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="717.75" cy="329.72" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="617.94" y1="556.72" x2="755.24" y2="556.72"></line> <line x1="617.94" y1="308.04" x2="617.94" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="650.79" y1="556.72" x2="650.79" y2="561.72"></line> <line x1="698.58" y1="556.72" x2="698.58" y2="561.72"></line> <line x1="746.37" y1="556.72" x2="746.37" y2="561.72"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="650.79" y="573.64">1K</text> <text x="698.58" y="573.64">10K</text> <text x="746.37" y="573.64" text-anchor="end">100K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <rect x="36.76" y="31.36" width="137.30" height="16.00" fill="#e4e4ec"></rect> <text x="105.41" y="43.32">Asia</text> <rect x="182.06" y="31.36" width="137.30" height="16.00" fill="#e4e4ec"></rect> <text x="250.70" y="43.32">Europe</text> <rect x="327.35" y="31.36" width="137.30" height="16.00" fill="#e4e4ec"></rect> <text x="396.00" y="43.32">Africa</text> <rect x="472.65" y="31.36" width="137.30" height="16.00" fill="#e4e4ec"></rect> <text x="541.30" y="43.32">Americas</text> <rect x="617.94" y="31.36" width="137.30" height="16.00" fill="#e4e4ec"></rect> <text x="686.59" y="43.32">Oceania</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <rect x="759.24" y="51.36" width="16.00" height="248.68" fill="#e4e4ec"></rect> <text x="763.28" y="175.70" transform="rotate(90 763.28 175.70)">1957</text> <rect x="759.24" y="308.04" width="16.00" height="248.68" fill="#e4e4ec"></rect> <text x="763.28" y="432.38" transform="rotate(90 763.28 432.38)">2007</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="406.00" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-4l8afkcxoa");
+</script>
+</div>
+</div>
+</div>
+<p>Fifty years of change, read down each continent’s column. The <code>period</code> column exists because a facet variable names panels, which is also what the <a href="../cookbook/over-time.html">Over time</a> refusal is about.</p>
+</section>
+<section id="which-group-is-biggest" class="level2" data-number="44.6">
+<h2 data-number="44.6" class="anchored" data-anchor-id="which-group-is-biggest"><span class="header-section-number">44.6</span> Which group is biggest?</h2>
+<p>A comparison is easiest to read when it is sorted, and no bare text column can say “order me by value”; that is what <code>order()</code> is for:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(medals) <span class="sc">+</span> bar <span class="sc">+</span> <span class="fu">x</span>(country) <span class="sc">+</span> <span class="fu">y</span>(gold) <span class="sc">+</span> <span class="fu">order</span>(gold, <span class="at">desc =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data(medals) <span class="op">+</span> bar <span class="op">+</span> x(col.country) <span class="op">+</span> y(col.gold) <span class="op">+</span> order(col.gold, desc <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(medals) <span class="op">+</span> bar <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>country) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>gold) <span class="op">+</span> <span class="fu">order</span>(<span class="op">:</span>gold, desc <span class="op">=</span> <span class="cn">true</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(medals)<span class="op">,</span> bar<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">country</span>)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">gold</span>)<span class="op">,</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(col<span class="op">.</span><span class="at">gold</span><span class="op">,</span> { <span class="dt">desc</span><span class="op">:</span> <span class="kw">true</span> }))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-igjnm0mqeo" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="728.91" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7657-5567"><rect x="36.76" y="31.36" width="728.91" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="36.76" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="36.76" y1="447.95" x2="765.67" y2="447.95"></line> <line x1="36.76" y1="339.18" x2="765.67" y2="339.18"></line> <line x1="36.76" y1="230.41" x2="765.67" y2="230.41"></line> <line x1="36.76" y1="121.64" x2="765.67" y2="121.64"></line> </g> <g clip-path="url(#clip-368-314-7657-5567)"> <rect x="51.34" y="56.38" width="116.63" height="500.34" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="197.12" y="143.39" width="116.63" height="413.33" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="342.90" y="241.29" width="116.63" height="315.43" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="488.68" y="350.06" width="116.63" height="206.66" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="634.47" y="371.81" width="116.63" height="184.91" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="109.65" y1="556.72" x2="109.65" y2="561.72"></line> <line x1="255.43" y1="556.72" x2="255.43" y2="561.72"></line> <line x1="401.21" y1="556.72" x2="401.21" y2="561.72"></line> <line x1="547.00" y1="556.72" x2="547.00" y2="561.72"></line> <line x1="692.78" y1="556.72" x2="692.78" y2="561.72"></line> <line x1="31.76" y1="556.72" x2="36.76" y2="556.72"></line> <line x1="31.76" y1="447.95" x2="36.76" y2="447.95"></line> <line x1="31.76" y1="339.18" x2="36.76" y2="339.18"></line> <line x1="31.76" y1="230.41" x2="36.76" y2="230.41"></line> <line x1="31.76" y1="121.64" x2="36.76" y2="121.64"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="109.65" y="573.64">USA</text> <text x="255.43" y="573.64">China</text> <text x="401.21" y="573.64">Great Britain</text> <text x="547.00" y="573.64">Russia</text> <text x="692.78" y="573.64">Germany</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="560.68">0</text> <text x="27.76" y="451.91">10</text> <text x="27.76" y="343.14">20</text> <text x="27.76" y="234.37">30</text> <text x="27.76" y="125.60">40</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Gold</text> <text x="401.21" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Country</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-igjnm0mqeo");
+</script>
+</div>
+</div>
+</div>
+<p><strong>One atom away.</strong> <code>desc = FALSE</code> (the default) for ascending; naming a column other than the axis’s own, as here, also overrides a <a href="../data.html">factor’s declared levels</a>.</p>
+</section>
+<section id="two-groups-back-to-back" class="level2" data-number="44.7">
+<h2 data-number="44.7" class="anchored" data-anchor-id="two-groups-back-to-back"><span class="header-section-number">44.7</span> Two groups, back to back</h2>
+<p>A <strong>population pyramid</strong> is a named chart type, and nothing in the kernel knows its name. It follows from rules that were already there, for other reasons.</p>
+<p>The <code>census</code> table holds 36 rows: an <code>age</code> band, a <code>city</code> (Busan or Seoul), and a <code>population</code> for each of 18 bands per city. It is invented data, shaped like a census.</p>
+<p>The mirror comes from a minus sign: one city’s populations are negated so its bars grow the other way. That is arithmetic, so it happens in the table, before the sentence:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mirrored <span class="ot">&lt;-</span> census</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mirrored<span class="sc">$</span>population <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mirrored<span class="sc">$</span>city <span class="sc">==</span> <span class="st">"Busan"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                              <span class="sc">-</span>mirrored<span class="sc">$</span>population, mirrored<span class="sc">$</span>population)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The arithmetic is written in R, because it is R’s job, and the other three bindings negate a column the same way. What follows is the sentence, and it has four spellings like every other:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mirrored) <span class="sc">+</span> bar <span class="sc">+</span> <span class="fu">y</span>(age) <span class="sc">+</span> <span class="fu">x</span>(population) <span class="sc">+</span> <span class="fu">color</span>(city) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(age, <span class="at">desc =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(data(mirrored) <span class="op">+</span> bar <span class="op">+</span> y(col.age) <span class="op">+</span> x(col.population) <span class="op">+</span> color(col.city) <span class="op">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  order(col.age, desc <span class="op">=</span> <span class="va">True</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mirrored) <span class="op">+</span> bar <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>age) <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>population) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>city) <span class="op">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(<span class="op">:</span>age, desc <span class="op">=</span> <span class="cn">true</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(mirrored)<span class="op">,</span> bar<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">age</span>)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span> <span class="fu">color</span>(col<span class="op">.</span><span class="at">city</span>)<span class="op">,</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(col<span class="op">.</span><span class="at">age</span><span class="op">,</span> { <span class="dt">desc</span><span class="op">:</span> <span class="kw">true</span> }))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-nz1vjq7q8j" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="635.77" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-6725-5567"><rect x="36.76" y="31.36" width="635.77" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="58.15" y1="31.36" x2="58.15" y2="556.72"></line> <line x1="194.63" y1="31.36" x2="194.63" y2="556.72"></line> <line x1="331.10" y1="31.36" x2="331.10" y2="556.72"></line> <line x1="467.58" y1="31.36" x2="467.58" y2="556.72"></line> <line x1="604.05" y1="31.36" x2="604.05" y2="556.72"></line> </g> <g clip-path="url(#clip-368-314-6725-5567)"> <rect x="295.62" y="530.45" width="35.48" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="309.95" y="501.27" width="21.15" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="313.36" y="472.08" width="17.74" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="269.69" y="442.89" width="61.41" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="68.39" y="413.71" width="262.71" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="65.66" y="384.52" width="265.44" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="153.69" y="355.33" width="177.42" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="227.38" y="326.15" width="103.72" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="271.74" y="296.96" width="59.37" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="284.70" y="267.77" width="46.40" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="288.11" y="238.59" width="42.99" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="291.53" y="209.40" width="39.58" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="296.30" y="180.21" width="34.80" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="302.44" y="151.03" width="28.66" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="307.90" y="121.84" width="23.20" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="316.09" y="92.65" width="15.01" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="322.23" y="63.47" width="8.87" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="324.96" y="34.28" width="6.14" height="23.35" fill="#4e79a7" fill-opacity="0.400" stroke="#4e79a7" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="530.45" width="63.46" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="501.27" width="34.80" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="472.08" width="25.93" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="442.89" width="51.86" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="413.71" width="218.36" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="384.52" width="312.53" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="355.33" width="261.35" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="326.15" width="171.96" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="296.96" width="107.82" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="267.77" width="87.34" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="238.59" width="75.06" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="209.40" width="74.38" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="180.21" width="70.97" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="151.03" width="62.10" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="121.84" width="51.18" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="92.65" width="43.67" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="63.47" width="26.61" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> <rect x="331.10" y="34.28" width="17.74" height="23.35" fill="#f28e2b" fill-opacity="0.400" stroke="#f28e2b" stroke-width="1.3" stroke-opacity="1"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="672.53" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="58.15" y1="556.72" x2="58.15" y2="561.72"></line> <line x1="194.63" y1="556.72" x2="194.63" y2="561.72"></line> <line x1="331.10" y1="556.72" x2="331.10" y2="561.72"></line> <line x1="467.58" y1="556.72" x2="467.58" y2="561.72"></line> <line x1="604.05" y1="556.72" x2="604.05" y2="561.72"></line> <line x1="31.76" y1="542.13" x2="36.76" y2="542.13"></line> <line x1="31.76" y1="512.94" x2="36.76" y2="512.94"></line> <line x1="31.76" y1="483.75" x2="36.76" y2="483.75"></line> <line x1="31.76" y1="454.57" x2="36.76" y2="454.57"></line> <line x1="31.76" y1="425.38" x2="36.76" y2="425.38"></line> <line x1="31.76" y1="396.19" x2="36.76" y2="396.19"></line> <line x1="31.76" y1="367.01" x2="36.76" y2="367.01"></line> <line x1="31.76" y1="337.82" x2="36.76" y2="337.82"></line> <line x1="31.76" y1="308.63" x2="36.76" y2="308.63"></line> <line x1="31.76" y1="279.45" x2="36.76" y2="279.45"></line> <line x1="31.76" y1="250.26" x2="36.76" y2="250.26"></line> <line x1="31.76" y1="221.07" x2="36.76" y2="221.07"></line> <line x1="31.76" y1="191.89" x2="36.76" y2="191.89"></line> <line x1="31.76" y1="162.70" x2="36.76" y2="162.70"></line> <line x1="31.76" y1="133.51" x2="36.76" y2="133.51"></line> <line x1="31.76" y1="104.33" x2="36.76" y2="104.33"></line> <line x1="31.76" y1="75.14" x2="36.76" y2="75.14"></line> <line x1="31.76" y1="45.95" x2="36.76" y2="45.95"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="58.15" y="573.64">-40K</text> <text x="194.63" y="573.64">-20K</text> <text x="331.10" y="573.64">0K</text> <text x="467.58" y="573.64">20K</text> <text x="604.05" y="573.64">40K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="546.09">0</text> <text x="27.76" y="516.90">5</text> <text x="27.76" y="487.71">10</text> <text x="27.76" y="458.53">15</text> <text x="27.76" y="429.34">20</text> <text x="27.76" y="400.15">25</text> <text x="27.76" y="370.97">30</text> <text x="27.76" y="341.78">35</text> <text x="27.76" y="312.59">40</text> <text x="27.76" y="283.41">45</text> <text x="27.76" y="254.22">50</text> <text x="27.76" y="225.03">55</text> <text x="27.76" y="195.85">60</text> <text x="27.76" y="166.66">65</text> <text x="27.76" y="137.47">70</text> <text x="27.76" y="108.29">75</text> <text x="27.76" y="79.10">80</text> <text x="27.76" y="49.91">85</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Age</text> <text x="354.64" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Population</text> <rect x="696.53" y="31.36" width="81.90" height="77.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="706.53" y="50.72" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">City</text> <line x1="696.53" y1="55.72" x2="778.43" y2="55.72" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="712.53" y="65.72" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="736.53" y="75.68">Busan</text> <rect x="712.53" y="85.72" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="736.53" y="95.68">Seoul</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-nz1vjq7q8j");
+</script>
+</div>
+</div>
+</div>
+<p>No new atom, and none was needed. Three rules the grammar already stated met here on their own. Orientation is read off the bindings, so <code>y(age)</code> being a category is what lays the bars down, and there is no <code>flip</code> atom because that would be a second way to say one thing. A bar runs from the zero baseline to its value in whichever direction that value sits, so a negative bar is not a special case; it is the same rectangle pointing the other way. And <code>stack</code> is something you ask for rather than something that happens, so two bars sharing one slot sit back to back instead of piling up.</p>
+<p><code>order(age, desc = TRUE)</code> is the atom from the section above, doing exactly what it did there. <code>gog</code> puts the first category at the top of a horizontal chart. A pyramid needs its youngest band at the bottom instead.</p>
+<p>Now look at the left half of that axis. It reads -40K, not 40K.</p>
+<p>This chart is often drawn with the tick text replaced by its absolute value, which hides the minus sign the bars were placed with. <code>gog</code> keeps the coordinates it drew, and this is the clearest case for why. Relabeled, the axis carries two different ticks both reading 40K, and only a reader who knows the convention can see which is which. That reader did not need the help; the one who did has been handed a plot that contradicts its own coordinates. Choosing your own tick text is a capability nothing here has ruled on in either direction, and <a href="../coverage.html">Coverage</a> keeps it on the open list. This is the argument against it.</p>
+</section>
+<section id="what-this-section-refuses" class="level2" data-number="44.8">
+<h2 data-number="44.8" class="anchored" data-anchor-id="what-this-section-refuses"><span class="header-section-number">44.8</span> What this section refuses</h2>
+<p>A bar is a rectangle; it has no glyph to vary, so <code>shape</code> on a <code>bar</code> is refused outright. The table of what each mark accepts is one table, with no per-mark exceptions:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(medals) <span class="sc">+</span> bar <span class="sc">+</span> <span class="fu">x</span>(country) <span class="sc">+</span> <span class="fu">y</span>(gold) <span class="sc">+</span> <span class="fu">shape</span>(country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `shape` cannot be bound to `bar` — a bar has no shape feature. Remove the `country` mapping from `shape`, or use a mark that has one.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Coloring a gog sentence, which nothing ships a rule for.
+//
+// A code block on this site is R, Python, Julia or JavaScript, and Pandoc has a
+// highlighter for each. None of them helps, and the reason is worth stating,
+// because it decides everything below.
+//
+// Take one sentence and read what the four highlighters make of it:
+//
+//                    data      point     x
+//     R              function  nothing   function
+//     Python         nothing   nothing   nothing
+//     Julia          function  nothing   function
+//     JavaScript     function  nothing   function
+//
+// `point` is a bare name to every one of them, so no stylesheet can reach it,
+// and Python's tab would sit flat while the other three lit up. The same
+// sentence would look like four different things, on a site whose whole claim
+// is that it is one. That is why every token was painted a single color here
+// until now.
+//
+// The way out is to stop asking the host language. gog's vocabulary is a closed
+// list of sixty-five ordinary words in eleven kinds, declared in the book's
+// kernel table, so it can be painted as what it is: a source, a mark, a
+// channel, a transform. That reading is the same in all four languages, which is the
+// point of the tabs.
+//
+// This runs in the browser rather than at render time, and that is deliberate.
+// Pandoc has already tokenized the block, and adding to its work keeps the panel,
+// the copy button and the line anchors that Quarto builds around it. Nothing here
+// adds or removes a character, so the copy button still copies what you see. With
+// scripting off the page falls back to the single ink it used before.
+(function () {
+  "use strict";
+
+  // The kernel, one line per kind, exactly as the book's kernel table declares
+  // it. Written out rather than fetched: a highlighter that waits on a second
+  // request paints the page twice, and a reader watches it happen.
+  //
+  // A copy of a list is a copy that stops matching, so this one is compared
+  // against the book on every render by `R/check-kernel.R`, which stops the
+  // render rather than letting the two drift.
+  var KERNEL = {
+    source:    "data query",
+    mark:      "point line area bar step interval box ribbon text path rule zone surface edge",
+    channel:   "x y z color size shape pattern opacity group label play",
+    transform: "bin smooth count density proportion sum mean median max min " +
+               "quantile range confidence deviation bounds partition flow layout cluster dodge stack jitter repel",
+    scale:     "linear log time category order",
+    space:     "flat space polar nest map globe network",
+    setting:   "style theme palette",
+    label:     "title x_label y_label z_label",
+    facet:     "facet",
+    selection: "brush",
+
+    // The kernel table writes the operators as the symbols they are, `+ * | /`,
+    // and JavaScript cannot overload any of them, so it spells them as six
+    // words instead. They belong here because leaving them out is what would
+    // show: an uncolored `plot(` among colored words reads as a function the
+    // reader wrote, on the one tab that can least afford to look different.
+    //
+    // Python's and JavaScript's `col`, and Julia's `:`, are deliberately not
+    // here. Choosing `layer` over `beside` changes the plot, so it is grammar;
+    // `col.` is a fixed prefix in front of a column name, so it is idiom, and
+    // it reads as idiom next to R's bare name. Color the grammar, leave the
+    // idiom.
+    operator:  "plot layer across down beside below"
+  };
+
+  // The palette is the book's own paragraph, not a designer's choice. The
+  // kernel chapter sorts these eleven kinds into two groups and gives the reason
+  // for each: *five kinds build a plot*, and *the other six refine a plot or
+  // arrange it, and none of them is required*. The inks follow that exactly.
+  //
+  // Four of the five builders are words, so each takes a hue of its own. The
+  // fifth, the operator, is punctuation in three of the four languages and is
+  // already visible as itself, so it takes weight rather than a hue; a fifth
+  // color there would make JavaScript the loudest tab rather than the matching
+  // one.
+  //
+  // The six that refine or arrange share one quieter ink, because none of them
+  // is required and together they are one idea. They were folded into the
+  // channel's ink at first, which read well and said something false: `facet()`
+  // and `style()` are not channels, and a rule written down is a rule that has
+  // to survive being read.
+  //
+  // The source kind paints with the ink named "table". An ink's name is a CSS
+  // class on every rendered page and a color command in the PDF preamble, so
+  // it does not follow when a kind's label changes.
+  var INK = {
+    source: "table", mark: "mark", channel: "channel", transform: "transform",
+    scale: "refine", space: "refine", setting: "refine",
+    label: "refine", facet: "refine", selection: "refine",
+    operator: "operator"
+  };
+
+  var kindOf = {};
+  var words = [];
+  Object.keys(KERNEL).forEach(function (kind) {
+    KERNEL[kind].split(" ").forEach(function (word) {
+      if (!word || kindOf[word]) return;
+      kindOf[word] = INK[kind];
+      words.push(word);
+    });
+  });
+  // Longest first, so `x_label` is found before the `x` inside it. The boundary
+  // test below would reject that `x` anyway; the ordering means it is never
+  // offered.
+  words.sort(function (a, b) { return b.length - a.length; });
+  var WORD = new RegExp(words.join("|"), "g");
+
+  // Which blocks are searched at all.
+  //
+  // Every word in the kernel is a common English word, which is the grammar's
+  // best property and this file's only real hazard: `title`, `count`, `mean`,
+  // `text` and `group` appear in almost any code. A post comparing gog with
+  // another library would otherwise have half of that library's call painted as
+  // though it were gog.
+  //
+  // So a block has to name a table before anything in it is read. Every gog
+  // sentence begins with one, and no other library's code says `data(`.
+  var LANGUAGES = /\b(?:r|python|julia|js|javascript)\b/;
+  var A_SENTENCE = /\b(?:data|query)\s*\(/;
+
+  // Text Pandoc has already claimed, and which is therefore not gog's to read.
+  // A string or a comment may hold any word at all. `at` is here for JavaScript,
+  // where `col.gdp` arrives with `gdp` as an attribute, so a column named
+  // `count` is covered by it.
+  //
+  // `bu` is deliberately absent, and it is the one that would have been missed:
+  // Python marks `bin` as a builtin, because `bin()` is one. Sealing builtins
+  // would have left the Python tab short of exactly the word the histogram post
+  // is about.
+  var SEALED = /^(?:st|ss|vs|ch|co|cv|do|an|al|at|im|pp|er|wa)$/;
+
+  // A word counts only when it stands alone. `col.count` and `:count` name a
+  // column called count, `counted` is somebody's variable, and `x_label` is not
+  // an `x`.
+  var GLUED_BEFORE = /[A-Za-z0-9_.$:@]/;
+  var GLUED_AFTER = /[A-Za-z0-9_]/;
+  var ARGUMENT_NAME = /^\s*[:=]/;
+
+  function sealed(node, root) {
+    for (var el = node.parentNode; el && el !== root; el = el.parentNode) {
+      if (el.nodeType === 1 && SEALED.test(el.className || "")) return true;
+    }
+    return false;
+  }
+
+  // The block is read as one string rather than node by node, because Pandoc
+  // splits a line across spans wherever it found a token, and a boundary test
+  // that cannot see past the end of its own node would read `col.` and `count`
+  // as unrelated. Offsets map each match back to the node it came from; a match
+  // straddling two nodes is left alone, since a name Pandoc split in half is not
+  // a name.
+  function paint(code) {
+    var nodes = [];
+    var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) nodes.push(node);
+
+    var text = "";
+    var starts = [];
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      starts.push(text.length);
+      text += nodes[i].nodeValue;
+    }
+    if (!A_SENTENCE.test(text)) return;
+
+    var hits = [];
+    for (i = 0; i < nodes.length; i++) hits.push(null);
+
+    var match;
+    WORD.lastIndex = 0;
+    while ((match = WORD.exec(text))) {
+      var from = match.index;
+      var to = from + match[0].length;
+      if (from > 0 && GLUED_BEFORE.test(text.charAt(from - 1))) continue;
+      if (to < text.length && GLUED_AFTER.test(text.charAt(to))) continue;
+      // A word used as an argument name is not an atom, and five channel words
+      // are argument names somewhere: `style(color = )`, `style(opacity = )`,
+      // `style(size = )`, `style(shape = )`, `style(pattern = )`. The kernel
+      // chapter writes them that way on purpose, because setting and mapping
+      // are the same visual property named two ways. They are still two
+      // different words in a sentence, and only one of them is a channel.
+      //
+      // `:` covers JavaScript, where the same setting arrives in a trailing
+      // options object as `{ color: "tomato" }`. It cannot catch a Julia column
+      // by mistake: there the colon leads, `x(:gdp)`, and is already handled.
+      if (ARGUMENT_NAME.test(text.slice(to, to + 8))) continue;
+
+      var at = -1;
+      for (i = nodes.length - 1; i >= 0; i--) {
+        if (starts[i] <= from) { at = i; break; }
+      }
+      if (at < 0 || to > starts[at] + nodes[at].nodeValue.length) continue;
+      if (sealed(nodes[at], code)) continue;
+
+      if (!hits[at]) hits[at] = [];
+      hits[at].push({
+        from: from - starts[at],
+        to: to - starts[at],
+        ink: kindOf[match[0]]
+      });
+    }
+
+    for (i = 0; i < nodes.length; i++) {
+      if (hits[i]) wrap(nodes[i], hits[i]);
+    }
+  }
+
+  function wrap(node, hits) {
+    var source = node.nodeValue;
+    var out = document.createDocumentFragment();
+    var at = 0;
+    hits.forEach(function (hit) {
+      if (hit.from > at) {
+        out.appendChild(document.createTextNode(source.slice(at, hit.from)));
+      }
+      var span = document.createElement("span");
+      span.className = "gog-" + hit.ink;
+      span.textContent = source.slice(hit.from, hit.to);
+      out.appendChild(span);
+      at = hit.to;
+    });
+    if (at < source.length) {
+      out.appendChild(document.createTextNode(source.slice(at)));
+    }
+    node.parentNode.replaceChild(out, node);
+  }
+
+  function run() {
+    // `div.sourceCode` is what keeps a refusal out, and that is worth knowing
+    // before anyone widens this selector to `pre code`. A refusal renders as
+    // `cell-output-error`, outside the wrapper, and its message names atoms:
+    // "gog: bin needs a continuous column". Painting those would color the
+    // engine's own prose as though it were a specification, and the tinted
+    // panel already carries what a refusal means.
+    var blocks = document.querySelectorAll("div.sourceCode pre code");
+    for (var i = 0; i < blocks.length; i++) {
+      if (LANGUAGES.test(blocks[i].className || "")) paint(blocks[i]);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/psychometrician\.github\.io\/gog-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../cookbook/over-time.html" class="pagination-link" aria-label="Over time">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Over time</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../parts/reasons.html" class="pagination-link" aria-label="The reasons">
+        <span class="nav-page-text">The reasons</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="licence">Prose licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</span> <span class="licence">Code samples licensed <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.</span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://hits.sh/psychometrician.github.io/gog-book/"><img src="https://hits.sh/psychometrician.github.io/gog-book.svg?style=flat-square&amp;label=readers&amp;color=ffdba4&amp;labelColor=3a332a" class="img-fluid" alt="Page views of this book, counted by hits.sh"></a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/gogdeveloper" target="_blank">
+      <i class="bi bi-twitter-x" role="img" aria-label="gog on X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/gogdeveloper.bsky.social" target="_blank">
+      <i class="bi bi-bluesky" role="img" aria-label="gog on Bluesky">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/psychometrician" target="_blank">
+      <i class="bi bi-github" role="img" aria-label="psychometrician on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://psychometrician.github.io/" target="_blank">
+      <i class="bi bi-journal-text" role="img" aria-label="psychometrician, the site">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

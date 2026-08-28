@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>46&nbsp; R – gog: A Grammar of Graphics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../bindings/python.html" rel="next">
+<link href="../parts/bindings.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4be3c7e6edf8a534d1baebde36db032a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a24f5478c4e8fbb5a1f6d61d9f2bc96b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-412d429836bc2c0989d64c15587b75d3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-a24f5478c4e8fbb5a1f6d61d9f2bc96b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../gog.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../parts/bindings.html">The host language</a></li><li class="breadcrumb-item"><a href="../bindings/r.html"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">gog: A Grammar of Graphics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/psychometrician/gog-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/morning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A morning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../first-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading practice</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../writing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The letters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../book-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The book’s data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Choosing a mark</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/point.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Point</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/bar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/area.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Area</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/step.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Step</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/box.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Box</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/ribbon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ribbon</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Text</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/path.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Path</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/zone.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Zone</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../marks/edge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Edge</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../scales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Scales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../channels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Channels and legends</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Setting vs mapping</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../transforms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Transforms</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/sentences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The sentences</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../operators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Operators</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../encoding-scope.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Encoding scope</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../faceting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Faceting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../composition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Composition</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Cluster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../polar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Polar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../nest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Nest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../globe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Globe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../network.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Network</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../play.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Play</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Selection</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/cookbook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The cookbook</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/one-variable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">One variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/two-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Two variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/three-or-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">A third variable, and more</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/over-time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Over time</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cookbook/groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Many groups</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/reasons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The reasons</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../design-laws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Design laws</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../parts/bindings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The host language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/r.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bindings/javascript.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">JavaScript</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../afterword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Afterword</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../kernel-card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">The kernel card</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Functions around the grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../combinations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Combinations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chart-names.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Chart names, translated</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phrasebook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">The ggplot2 phrasebook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../coverage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Coverage, both directions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#pipes" id="toc-pipes" class="nav-link active" data-scroll-target="#pipes"><span class="header-section-number">46.1</span> Pipes</a></li>
+  <li><a href="#what-does-to-the-tables-name" id="toc-what-does-to-the-tables-name" class="nav-link" data-scroll-target="#what-does-to-the-tables-name"><span class="header-section-number">46.2</span> What <code>%&gt;%</code> does to the table’s name</a></li>
+  <li><a href="#why-the-name-is-worth-a-warning" id="toc-why-the-name-is-worth-a-warning" class="nav-link" data-scroll-target="#why-the-name-is-worth-a-warning"><span class="header-section-number">46.3</span> Why the name is worth a warning</a></li>
+  <li><a href="#what-the-pipe-does-not-change" id="toc-what-the-pipe-does-not-change" class="nav-link" data-scroll-target="#what-the-pipe-does-not-change"><span class="header-section-number">46.4</span> What the pipe does not change</a></li>
+  <li><a href="#twenty-names-base-r-already-uses" id="toc-twenty-names-base-r-already-uses" class="nav-link" data-scroll-target="#twenty-names-base-r-already-uses"><span class="header-section-number">46.5</span> Twenty names base R already uses</a></li>
+  <li><a href="#five-spellings-that-still-need-a-prefix" id="toc-five-spellings-that-still-need-a-prefix" class="nav-link" data-scroll-target="#five-spellings-that-still-need-a-prefix"><span class="header-section-number">46.6</span> Five spellings that still need a prefix</a></li>
+  <li><a href="#reading-from-a-database" id="toc-reading-from-a-database" class="nav-link" data-scroll-target="#reading-from-a-database"><span class="header-section-number">46.7</span> Reading from a database</a></li>
+  <li><a href="#getting-it" id="toc-getting-it" class="nav-link" data-scroll-target="#getting-it"><span class="header-section-number">46.8</span> Getting it</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../parts/bindings.html">The host language</a></li><li class="breadcrumb-item"><a href="../bindings/r.html"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Every sentence in this book so far was written in R, so this chapter adds nothing to the grammar. What it adds is the four questions only R raises: how the two pipes reach <code>data()</code>, which of <code>gog</code>’s words base R already uses, how a database connection arrives, and how the package installs. What a table is, and how one is passed, is in <a href="../data.html">Data</a>; it needs nothing installed beyond R.</p>
+<p>Every R block below was executed to draw the plot beside it, through the same engine every other chapter uses.</p>
+<section id="pipes" class="level2" data-number="46.1">
+<h2 data-number="46.1" class="anchored" data-anchor-id="pipes"><span class="header-section-number">46.1</span> Pipes</h2>
+<p>R has two pipes in common use, and R users reasonably want to start a plot with a table they already have. The native pipe works, and draws exactly the plot the unpiped form draws.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gapminder_2007 <span class="sc">|&gt;</span> <span class="fu">data</span>() <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-b41zl0x7s3" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="741.67" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7784-5567"><rect x="36.76" y="31.36" width="741.67" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="66.66" y1="31.36" x2="66.66" y2="556.72"></line> <line x1="204.04" y1="31.36" x2="204.04" y2="556.72"></line> <line x1="341.41" y1="31.36" x2="341.41" y2="556.72"></line> <line x1="478.79" y1="31.36" x2="478.79" y2="556.72"></line> <line x1="616.17" y1="31.36" x2="616.17" y2="556.72"></line> <line x1="753.55" y1="31.36" x2="753.55" y2="556.72"></line> <line x1="36.76" y1="528.54" x2="778.43" y2="528.54"></line> <line x1="36.76" y1="417.44" x2="778.43" y2="417.44"></line> <line x1="36.76" y1="306.35" x2="778.43" y2="306.35"></line> <line x1="36.76" y1="195.25" x2="778.43" y2="195.25"></line> <line x1="36.76" y1="84.16" x2="778.43" y2="84.16"></line> </g> <g clip-path="url(#clip-368-314-7784-5567)"> <circle cx="80.05" cy="486.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="148.22" cy="123.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="152.15" cy="169.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.56" cy="498.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="242.22" cy="136.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.72" cy="70.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="562.96" cy="86.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="475.99" cy="132.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="85.77" cy="261.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="529.52" cy="90.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.46" cy="342.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.17" cy="244.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.95" cy="141.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="239.34" cy="409.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="191.20" cy="168.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="213.39" cy="161.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.38" cy="391.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.57" cy="422.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.20" cy="309.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.71" cy="412.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="565.61" cy="76.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.36" cy="475.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.07" cy="410.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="247.61" cy="100.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="134.79" cy="162.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="162.91" cy="163.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.21" cy="249.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="70.47" cy="456.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="116.56" cy="358.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="199.16" cy="97.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="87.88" cy="436.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="267.50" cy="131.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="189.59" cy="103.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="380.34" cy="123.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="551.31" cy="102.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="95.27" cy="364.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="149.43" cy="170.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="161.08" cy="139.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="143.33" cy="180.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="145.35" cy="174.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="233.63" cy="399.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.47" cy="328.12" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.15" cy="384.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.85" cy="91.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="485.25" cy="76.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="248.09" cy="342.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.00" cy="312.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="508.61" cy="90.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.90" cy="306.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="444.98" cy="89.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="137.90" cy="192.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.61" cy="350.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="74.62" cy="457.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.17" cy="296.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.41" cy="193.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="612.39" cy="59.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="158.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="563.70" cy="64.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.35" cy="254.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.30" cy="188.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="226.10" cy="184.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.08" cy="311.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="625.46" cy="96.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="417.29" cy="75.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="459.14" cy="78.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="167.23" cy="166.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="501.54" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.75" cy="167.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.76" cy="371.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.54" cy="225.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="387.41" cy="99.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="716.55" cy="110.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="210.37" cy="173.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.22" cy="499.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.35" cy="465.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="232.30" cy="151.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.01" cy="312.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.09" cy="436.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="237.72" cy="148.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.98" cy="367.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="91.43" cy="260.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="217.18" cy="164.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="231.20" cy="126.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.19" cy="230.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="193.79" cy="144.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.14" cy="182.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.97" cy="505.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.63" cy="283.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.75" cy="385.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.65" cy="264.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="572.18" cy="86.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="412.65" cy="81.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="104.43" cy="163.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.17" cy="341.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.33" cy="452.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="744.72" cy="81.98" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="373.23" cy="132.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.46" cy="245.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.42" cy="133.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="123.98" cy="175.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.44" cy="179.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="110.49" cy="176.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="278.08" cy="133.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="348.42" cy="105.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="332.19" cy="98.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="172.03" cy="123.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="215.14" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.52" cy="459.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.62" cy="244.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.15" cy="164.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.18" cy="272.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.10" cy="150.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.51" cy="500.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="714.30" cy="84.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="323.26" cy="143.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="420.66" cy="107.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.38" cy="437.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="194.00" cy="424.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="462.60" cy="73.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.20" cy="168.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.41" cy="322.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.66" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.82" cy="74.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="581.91" cy="65.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="124.15" cy="149.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="461.18" cy="101.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.87" cy="389.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="169.12" cy="188.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.79" cy="323.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="197.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="164.10" cy="151.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="182.86" cy="175.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.17" cy="400.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.80" cy="90.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="656.72" cy="103.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="212.44" cy="124.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="223.49" cy="153.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.20" cy="148.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="108.22" cy="157.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="97.99" cy="276.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.12" cy="502.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="73.11" cy="489.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="778.43" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="66.66" y1="556.72" x2="66.66" y2="561.72"></line> <line x1="204.04" y1="556.72" x2="204.04" y2="561.72"></line> <line x1="341.41" y1="556.72" x2="341.41" y2="561.72"></line> <line x1="478.79" y1="556.72" x2="478.79" y2="561.72"></line> <line x1="616.17" y1="556.72" x2="616.17" y2="561.72"></line> <line x1="753.55" y1="556.72" x2="753.55" y2="561.72"></line> <line x1="31.76" y1="528.54" x2="36.76" y2="528.54"></line> <line x1="31.76" y1="417.44" x2="36.76" y2="417.44"></line> <line x1="31.76" y1="306.35" x2="36.76" y2="306.35"></line> <line x1="31.76" y1="195.25" x2="36.76" y2="195.25"></line> <line x1="31.76" y1="84.16" x2="36.76" y2="84.16"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="66.66" y="573.64">0K</text> <text x="204.04" y="573.64">10K</text> <text x="341.41" y="573.64">20K</text> <text x="478.79" y="573.64">30K</text> <text x="616.17" y="573.64">40K</text> <text x="753.55" y="573.64">50K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="532.50">40</text> <text x="27.76" y="421.40">50</text> <text x="27.76" y="310.31">60</text> <text x="27.76" y="199.21">70</text> <text x="27.76" y="88.12">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="407.59" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-b41zl0x7s3");
+</script>
+</div>
+</div>
+</div>
+<p>That is not a second way of saying it, and <code>gog</code> does not implement it. By the time the engine sees anything, the two forms are the <em>same expression</em>. You can watch R rewrite one into the other, because <code>quote()</code> shows what the parser built rather than what you typed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quote</span>(gapminder_2007 <span class="sc">|&gt;</span> <span class="fu">data</span>() <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>data(gapminder_2007) + point + x(gdp) + y(life)</code></pre>
+</div>
+</div>
+<p>Two facts about R combine to make that work, and both have to hold.</p>
+<p>The first is precedence. <code>|&gt;</code> binds more tightly than <code>+</code>, so the pipe finishes before the sentence begins: it takes the table into <code>data()</code> and hands the finished result to <code>+</code>. Derivation with <code>*</code> sits between the two, which is where it needs to be, so a transform still binds to its mark first:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gm_all <span class="sc">|&gt;</span> <span class="fu">data</span>() <span class="sc">+</span> bar <span class="sc">*</span> count <span class="sc">+</span> <span class="fu">x</span>(continent)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-45punymb9l" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="43.14" y="31.36" width="722.53" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-431-314-7657-5567"><rect x="43.14" y="31.36" width="722.53" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="43.14" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="43.14" y1="396.35" x2="765.67" y2="396.35"></line> <line x1="43.14" y1="235.99" x2="765.67" y2="235.99"></line> <line x1="43.14" y1="75.62" x2="765.67" y2="75.62"></line> </g> <g clip-path="url(#clip-431-314-7657-5567)"> <rect x="57.59" y="239.19" width="115.60" height="317.53" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="202.10" y="268.06" width="115.60" height="288.66" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="346.60" y="56.38" width="115.60" height="500.34" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="491.11" y="316.17" width="115.60" height="240.55" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="635.61" y="537.48" width="115.60" height="19.24" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="43.14" y1="556.72" x2="765.67" y2="556.72"></line> <line x1="43.14" y1="31.36" x2="43.14" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="115.39" y1="556.72" x2="115.39" y2="561.72"></line> <line x1="259.90" y1="556.72" x2="259.90" y2="561.72"></line> <line x1="404.40" y1="556.72" x2="404.40" y2="561.72"></line> <line x1="548.91" y1="556.72" x2="548.91" y2="561.72"></line> <line x1="693.42" y1="556.72" x2="693.42" y2="561.72"></line> <line x1="38.14" y1="556.72" x2="43.14" y2="556.72"></line> <line x1="38.14" y1="396.35" x2="43.14" y2="396.35"></line> <line x1="38.14" y1="235.99" x2="43.14" y2="235.99"></line> <line x1="38.14" y1="75.62" x2="43.14" y2="75.62"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="115.39" y="573.64">Asia</text> <text x="259.90" y="573.64">Europe</text> <text x="404.40" y="573.64">Africa</text> <text x="548.91" y="573.64">Americas</text> <text x="693.42" y="573.64">Oceania</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="34.14" y="560.68">0</text> <text x="34.14" y="400.31">200</text> <text x="34.14" y="239.95">400</text> <text x="34.14" y="79.58">600</text> </g> <text x="43.14" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Count</text> <text x="404.40" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Continent</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-45punymb9l");
+</script>
+</div>
+</div>
+</div>
+<p>The second is <em>when</em> it happens. The native pipe is a parser transformation: writing <code>df |&gt; data()</code> produces the code <code>data(df)</code> before any of it runs. That timing decides everything, because <code>data()</code> reads the table’s name off the expression you wrote. The pipe leaves it a plain name, so nothing is lost. Naming the table is the whole job of <code>data()</code> (see <a href="../data.html">Data</a>), and it is what a later layer resolves its bare columns against.</p>
+<p>Arguments still land where you would expect, since the piped value fills the first one:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gapminder_2007 <span class="sc">|&gt;</span> <span class="fu">data</span>(<span class="at">name =</span> <span class="st">"gapminder"</span>) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-699o2gqsgm" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="741.67" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7784-5567"><rect x="36.76" y="31.36" width="741.67" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="66.66" y1="31.36" x2="66.66" y2="556.72"></line> <line x1="204.04" y1="31.36" x2="204.04" y2="556.72"></line> <line x1="341.41" y1="31.36" x2="341.41" y2="556.72"></line> <line x1="478.79" y1="31.36" x2="478.79" y2="556.72"></line> <line x1="616.17" y1="31.36" x2="616.17" y2="556.72"></line> <line x1="753.55" y1="31.36" x2="753.55" y2="556.72"></line> <line x1="36.76" y1="528.54" x2="778.43" y2="528.54"></line> <line x1="36.76" y1="417.44" x2="778.43" y2="417.44"></line> <line x1="36.76" y1="306.35" x2="778.43" y2="306.35"></line> <line x1="36.76" y1="195.25" x2="778.43" y2="195.25"></line> <line x1="36.76" y1="84.16" x2="778.43" y2="84.16"></line> </g> <g clip-path="url(#clip-368-314-7784-5567)"> <circle cx="80.05" cy="486.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="148.22" cy="123.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="152.15" cy="169.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.56" cy="498.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="242.22" cy="136.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.72" cy="70.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="562.96" cy="86.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="475.99" cy="132.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="85.77" cy="261.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="529.52" cy="90.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.46" cy="342.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.17" cy="244.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.95" cy="141.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="239.34" cy="409.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="191.20" cy="168.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="213.39" cy="161.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.38" cy="391.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.57" cy="422.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.20" cy="309.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.71" cy="412.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="565.61" cy="76.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.36" cy="475.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.07" cy="410.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="247.61" cy="100.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="134.79" cy="162.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="162.91" cy="163.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.21" cy="249.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="70.47" cy="456.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="116.56" cy="358.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="199.16" cy="97.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="87.88" cy="436.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="267.50" cy="131.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="189.59" cy="103.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="380.34" cy="123.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="551.31" cy="102.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="95.27" cy="364.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="149.43" cy="170.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="161.08" cy="139.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="143.33" cy="180.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="145.35" cy="174.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="233.63" cy="399.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.47" cy="328.12" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.15" cy="384.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.85" cy="91.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="485.25" cy="76.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="248.09" cy="342.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.00" cy="312.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="508.61" cy="90.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.90" cy="306.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="444.98" cy="89.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="137.90" cy="192.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.61" cy="350.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="74.62" cy="457.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.17" cy="296.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.41" cy="193.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="612.39" cy="59.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="158.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="563.70" cy="64.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.35" cy="254.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.30" cy="188.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="226.10" cy="184.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.08" cy="311.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="625.46" cy="96.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="417.29" cy="75.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="459.14" cy="78.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="167.23" cy="166.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="501.54" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.75" cy="167.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.76" cy="371.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.54" cy="225.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="387.41" cy="99.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="716.55" cy="110.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="210.37" cy="173.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.22" cy="499.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.35" cy="465.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="232.30" cy="151.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.01" cy="312.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.09" cy="436.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="237.72" cy="148.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.98" cy="367.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="91.43" cy="260.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="217.18" cy="164.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="231.20" cy="126.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.19" cy="230.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="193.79" cy="144.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.14" cy="182.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.97" cy="505.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.63" cy="283.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.75" cy="385.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.65" cy="264.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="572.18" cy="86.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="412.65" cy="81.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="104.43" cy="163.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.17" cy="341.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.33" cy="452.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="744.72" cy="81.98" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="373.23" cy="132.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.46" cy="245.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.42" cy="133.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="123.98" cy="175.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.44" cy="179.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="110.49" cy="176.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="278.08" cy="133.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="348.42" cy="105.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="332.19" cy="98.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="172.03" cy="123.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="215.14" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.52" cy="459.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.62" cy="244.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.15" cy="164.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.18" cy="272.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.10" cy="150.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.51" cy="500.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="714.30" cy="84.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="323.26" cy="143.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="420.66" cy="107.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.38" cy="437.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="194.00" cy="424.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="462.60" cy="73.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.20" cy="168.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.41" cy="322.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.66" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.82" cy="74.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="581.91" cy="65.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="124.15" cy="149.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="461.18" cy="101.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.87" cy="389.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="169.12" cy="188.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.79" cy="323.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="197.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="164.10" cy="151.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="182.86" cy="175.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.17" cy="400.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.80" cy="90.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="656.72" cy="103.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="212.44" cy="124.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="223.49" cy="153.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.20" cy="148.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="108.22" cy="157.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="97.99" cy="276.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.12" cy="502.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="73.11" cy="489.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="778.43" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="66.66" y1="556.72" x2="66.66" y2="561.72"></line> <line x1="204.04" y1="556.72" x2="204.04" y2="561.72"></line> <line x1="341.41" y1="556.72" x2="341.41" y2="561.72"></line> <line x1="478.79" y1="556.72" x2="478.79" y2="561.72"></line> <line x1="616.17" y1="556.72" x2="616.17" y2="561.72"></line> <line x1="753.55" y1="556.72" x2="753.55" y2="561.72"></line> <line x1="31.76" y1="528.54" x2="36.76" y2="528.54"></line> <line x1="31.76" y1="417.44" x2="36.76" y2="417.44"></line> <line x1="31.76" y1="306.35" x2="36.76" y2="306.35"></line> <line x1="31.76" y1="195.25" x2="36.76" y2="195.25"></line> <line x1="31.76" y1="84.16" x2="36.76" y2="84.16"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="66.66" y="573.64">0K</text> <text x="204.04" y="573.64">10K</text> <text x="341.41" y="573.64">20K</text> <text x="478.79" y="573.64">30K</text> <text x="616.17" y="573.64">40K</text> <text x="753.55" y="573.64">50K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="532.50">40</text> <text x="27.76" y="421.40">50</text> <text x="27.76" y="310.31">60</text> <text x="27.76" y="199.21">70</text> <text x="27.76" y="88.12">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="407.59" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-699o2gqsgm");
+</script>
+</div>
+</div>
+</div>
+</section>
+<section id="what-does-to-the-tables-name" class="level2" data-number="46.2">
+<h2 data-number="46.2" class="anchored" data-anchor-id="what-does-to-the-tables-name"><span class="header-section-number">46.2</span> What <code>%&gt;%</code> does to the table’s name</h2>
+<p>The <code>magrittr</code> pipe, <code>%&gt;%</code>, is the one most R code still uses, and here it behaves differently. It is an ordinary function rather than a parser rule, so it <em>evaluates</em> the left side and passes the value along under its own placeholder, <code>.</code>. The name never reaches <code>data()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gapminder_2007 <span class="sc">%&gt;%</span> <span class="fu">data</span>() <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: gog: magrittr's `%&gt;%` replaced this table with its placeholder `.`
+before `data()` could read the name, so the table is called `data`. A layer
+resolves its bare columns against the nearest table *by name*, so two tables
+piped this way collide. Either name it — `data(name = "...")` — or use R's
+native pipe, which keeps the name: `df |&gt; data()` reads as `data(df)`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="gog-s2q1pdqsrr" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="741.67" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7784-5567"><rect x="36.76" y="31.36" width="741.67" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="66.66" y1="31.36" x2="66.66" y2="556.72"></line> <line x1="204.04" y1="31.36" x2="204.04" y2="556.72"></line> <line x1="341.41" y1="31.36" x2="341.41" y2="556.72"></line> <line x1="478.79" y1="31.36" x2="478.79" y2="556.72"></line> <line x1="616.17" y1="31.36" x2="616.17" y2="556.72"></line> <line x1="753.55" y1="31.36" x2="753.55" y2="556.72"></line> <line x1="36.76" y1="528.54" x2="778.43" y2="528.54"></line> <line x1="36.76" y1="417.44" x2="778.43" y2="417.44"></line> <line x1="36.76" y1="306.35" x2="778.43" y2="306.35"></line> <line x1="36.76" y1="195.25" x2="778.43" y2="195.25"></line> <line x1="36.76" y1="84.16" x2="778.43" y2="84.16"></line> </g> <g clip-path="url(#clip-368-314-7784-5567)"> <circle cx="80.05" cy="486.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="148.22" cy="123.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="152.15" cy="169.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.56" cy="498.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="242.22" cy="136.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.72" cy="70.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="562.96" cy="86.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="475.99" cy="132.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="85.77" cy="261.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="529.52" cy="90.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.46" cy="342.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.17" cy="244.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.95" cy="141.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="239.34" cy="409.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="191.20" cy="168.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="213.39" cy="161.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.38" cy="391.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.57" cy="422.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.20" cy="309.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.71" cy="412.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="565.61" cy="76.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.36" cy="475.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.07" cy="410.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="247.61" cy="100.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="134.79" cy="162.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="162.91" cy="163.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.21" cy="249.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="70.47" cy="456.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="116.56" cy="358.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="199.16" cy="97.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="87.88" cy="436.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="267.50" cy="131.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="189.59" cy="103.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="380.34" cy="123.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="551.31" cy="102.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="95.27" cy="364.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="149.43" cy="170.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="161.08" cy="139.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="143.33" cy="180.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="145.35" cy="174.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="233.63" cy="399.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.47" cy="328.12" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.15" cy="384.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.85" cy="91.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="485.25" cy="76.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="248.09" cy="342.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.00" cy="312.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="508.61" cy="90.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.90" cy="306.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="444.98" cy="89.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="137.90" cy="192.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.61" cy="350.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="74.62" cy="457.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.17" cy="296.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.41" cy="193.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="612.39" cy="59.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="158.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="563.70" cy="64.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.35" cy="254.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.30" cy="188.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="226.10" cy="184.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.08" cy="311.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="625.46" cy="96.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="417.29" cy="75.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="459.14" cy="78.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="167.23" cy="166.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="501.54" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.75" cy="167.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.76" cy="371.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.54" cy="225.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="387.41" cy="99.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="716.55" cy="110.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="210.37" cy="173.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.22" cy="499.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.35" cy="465.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="232.30" cy="151.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.01" cy="312.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.09" cy="436.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="237.72" cy="148.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.98" cy="367.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="91.43" cy="260.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="217.18" cy="164.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="231.20" cy="126.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.19" cy="230.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="193.79" cy="144.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.14" cy="182.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.97" cy="505.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.63" cy="283.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.75" cy="385.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.65" cy="264.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="572.18" cy="86.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="412.65" cy="81.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="104.43" cy="163.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.17" cy="341.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.33" cy="452.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="744.72" cy="81.98" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="373.23" cy="132.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.46" cy="245.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.42" cy="133.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="123.98" cy="175.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.44" cy="179.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="110.49" cy="176.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="278.08" cy="133.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="348.42" cy="105.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="332.19" cy="98.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="172.03" cy="123.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="215.14" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.52" cy="459.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.62" cy="244.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.15" cy="164.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.18" cy="272.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.10" cy="150.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.51" cy="500.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="714.30" cy="84.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="323.26" cy="143.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="420.66" cy="107.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.38" cy="437.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="194.00" cy="424.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="462.60" cy="73.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.20" cy="168.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.41" cy="322.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.66" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.82" cy="74.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="581.91" cy="65.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="124.15" cy="149.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="461.18" cy="101.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.87" cy="389.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="169.12" cy="188.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.79" cy="323.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="197.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="164.10" cy="151.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="182.86" cy="175.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.17" cy="400.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.80" cy="90.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="656.72" cy="103.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="212.44" cy="124.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="223.49" cy="153.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.20" cy="148.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="108.22" cy="157.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="97.99" cy="276.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.12" cy="502.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="73.11" cy="489.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="778.43" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="66.66" y1="556.72" x2="66.66" y2="561.72"></line> <line x1="204.04" y1="556.72" x2="204.04" y2="561.72"></line> <line x1="341.41" y1="556.72" x2="341.41" y2="561.72"></line> <line x1="478.79" y1="556.72" x2="478.79" y2="561.72"></line> <line x1="616.17" y1="556.72" x2="616.17" y2="561.72"></line> <line x1="753.55" y1="556.72" x2="753.55" y2="561.72"></line> <line x1="31.76" y1="528.54" x2="36.76" y2="528.54"></line> <line x1="31.76" y1="417.44" x2="36.76" y2="417.44"></line> <line x1="31.76" y1="306.35" x2="36.76" y2="306.35"></line> <line x1="31.76" y1="195.25" x2="36.76" y2="195.25"></line> <line x1="31.76" y1="84.16" x2="36.76" y2="84.16"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="66.66" y="573.64">0K</text> <text x="204.04" y="573.64">10K</text> <text x="341.41" y="573.64">20K</text> <text x="478.79" y="573.64">30K</text> <text x="616.17" y="573.64">40K</text> <text x="753.55" y="573.64">50K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="532.50">40</text> <text x="27.76" y="421.40">50</text> <text x="27.76" y="310.31">60</text> <text x="27.76" y="199.21">70</text> <text x="27.76" y="88.12">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="407.59" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-s2q1pdqsrr");
+</script>
+</div>
+</div>
+</div>
+<p>The plot is right, and for a single table it stays right. What is gone is the name, so <code>gog</code> says so and tells you how to put it back. Either use the native pipe, or name the table yourself:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gapminder_2007 <span class="sc">%&gt;%</span> <span class="fu">data</span>(<span class="at">name =</span> <span class="st">"gapminder_2007"</span>) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-tj0ybbyn57" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="741.67" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7784-5567"><rect x="36.76" y="31.36" width="741.67" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="66.66" y1="31.36" x2="66.66" y2="556.72"></line> <line x1="204.04" y1="31.36" x2="204.04" y2="556.72"></line> <line x1="341.41" y1="31.36" x2="341.41" y2="556.72"></line> <line x1="478.79" y1="31.36" x2="478.79" y2="556.72"></line> <line x1="616.17" y1="31.36" x2="616.17" y2="556.72"></line> <line x1="753.55" y1="31.36" x2="753.55" y2="556.72"></line> <line x1="36.76" y1="528.54" x2="778.43" y2="528.54"></line> <line x1="36.76" y1="417.44" x2="778.43" y2="417.44"></line> <line x1="36.76" y1="306.35" x2="778.43" y2="306.35"></line> <line x1="36.76" y1="195.25" x2="778.43" y2="195.25"></line> <line x1="36.76" y1="84.16" x2="778.43" y2="84.16"></line> </g> <g clip-path="url(#clip-368-314-7784-5567)"> <circle cx="80.05" cy="486.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="148.22" cy="123.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="152.15" cy="169.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.56" cy="498.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="242.22" cy="136.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.72" cy="70.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="562.96" cy="86.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="475.99" cy="132.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="85.77" cy="261.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="529.52" cy="90.37" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.46" cy="342.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.17" cy="244.65" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.95" cy="141.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="239.34" cy="409.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="191.20" cy="168.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="213.39" cy="161.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.38" cy="391.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.57" cy="422.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.20" cy="309.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.71" cy="412.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="565.61" cy="76.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.36" cy="475.87" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.07" cy="410.21" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="247.61" cy="100.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="134.79" cy="162.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="162.91" cy="163.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.21" cy="249.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="70.47" cy="456.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="116.56" cy="358.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="199.16" cy="97.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="87.88" cy="436.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="267.50" cy="131.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="189.59" cy="103.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="380.34" cy="123.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="551.31" cy="102.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="95.27" cy="364.22" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="149.43" cy="170.42" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="161.08" cy="139.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="143.33" cy="180.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="145.35" cy="174.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="233.63" cy="399.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.47" cy="328.12" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="76.15" cy="384.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.85" cy="91.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="485.25" cy="76.86" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="248.09" cy="342.62" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.00" cy="312.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="508.61" cy="90.76" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.90" cy="306.10" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="444.98" cy="89.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="137.90" cy="192.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.61" cy="350.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="74.62" cy="457.57" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="83.17" cy="296.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.41" cy="193.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="612.39" cy="59.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="158.17" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="563.70" cy="64.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.35" cy="254.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="115.30" cy="188.03" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="226.10" cy="184.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.08" cy="311.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="625.46" cy="96.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="417.29" cy="75.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="459.14" cy="78.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="167.23" cy="166.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="501.54" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.75" cy="167.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="86.76" cy="371.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.54" cy="225.28" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="387.41" cy="99.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="716.55" cy="110.95" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="210.37" cy="173.11" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.22" cy="499.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="72.35" cy="465.46" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="232.30" cy="151.35" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.01" cy="312.54" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.09" cy="436.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="237.72" cy="148.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="80.98" cy="367.82" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="91.43" cy="260.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="217.18" cy="164.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="231.20" cy="126.43" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.19" cy="230.77" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="193.79" cy="144.78" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="119.14" cy="182.32" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="77.97" cy="505.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.63" cy="283.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="132.75" cy="385.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.65" cy="264.30" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="572.18" cy="86.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="412.65" cy="81.89" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="104.43" cy="163.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="75.17" cy="341.16" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="94.33" cy="452.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="744.72" cy="81.98" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="373.23" cy="132.60" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.46" cy="245.44" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.42" cy="133.74" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="123.98" cy="175.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="168.44" cy="179.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="110.49" cy="176.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="278.08" cy="133.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="348.42" cy="105.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="332.19" cy="98.09" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="172.03" cy="123.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="215.14" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.52" cy="459.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="88.62" cy="244.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="364.15" cy="164.40" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="90.18" cy="272.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="201.10" cy="150.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.51" cy="500.01" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="714.30" cy="84.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="323.26" cy="143.45" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="420.66" cy="107.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="79.38" cy="437.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="194.00" cy="424.79" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="462.60" cy="73.70" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.20" cy="168.64" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="102.41" cy="322.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="128.66" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="531.82" cy="74.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="581.91" cy="65.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="124.15" cy="149.23" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="461.18" cy="101.93" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.87" cy="389.48" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="169.12" cy="188.41" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="78.79" cy="323.90" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="314.06" cy="197.26" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="164.10" cy="151.67" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="182.86" cy="175.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="81.17" cy="400.31" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="522.80" cy="90.55" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="656.72" cy="103.69" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="212.44" cy="124.33" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="223.49" cy="153.63" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="100.20" cy="148.05" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="108.22" cy="157.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="97.99" cy="276.38" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="84.12" cy="502.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="73.11" cy="489.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="778.43" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="66.66" y1="556.72" x2="66.66" y2="561.72"></line> <line x1="204.04" y1="556.72" x2="204.04" y2="561.72"></line> <line x1="341.41" y1="556.72" x2="341.41" y2="561.72"></line> <line x1="478.79" y1="556.72" x2="478.79" y2="561.72"></line> <line x1="616.17" y1="556.72" x2="616.17" y2="561.72"></line> <line x1="753.55" y1="556.72" x2="753.55" y2="561.72"></line> <line x1="31.76" y1="528.54" x2="36.76" y2="528.54"></line> <line x1="31.76" y1="417.44" x2="36.76" y2="417.44"></line> <line x1="31.76" y1="306.35" x2="36.76" y2="306.35"></line> <line x1="31.76" y1="195.25" x2="36.76" y2="195.25"></line> <line x1="31.76" y1="84.16" x2="36.76" y2="84.16"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="66.66" y="573.64">0K</text> <text x="204.04" y="573.64">10K</text> <text x="341.41" y="573.64">20K</text> <text x="478.79" y="573.64">30K</text> <text x="616.17" y="573.64">40K</text> <text x="753.55" y="573.64">50K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="532.50">40</text> <text x="27.76" y="421.40">50</text> <text x="27.76" y="310.31">60</text> <text x="27.76" y="199.21">70</text> <text x="27.76" y="88.12">80</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="407.59" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-tj0ybbyn57");
+</script>
+</div>
+</div>
+</div>
+<p>Only the placeholder raises that warning, and it is worth saying what does not. Filtering before <code>data()</code> is the pipe’s most useful form, and it raises no warning. The expression is not a plain name, but it is still distinct, so <code>gog</code> uses it as the table’s name.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gm_all <span class="sc">|&gt;</span> <span class="fu">subset</span>(year <span class="sc">==</span> <span class="dv">2007</span> <span class="sc">&amp;</span> continent <span class="sc">==</span> <span class="st">"Europe"</span>) <span class="sc">|&gt;</span> <span class="fu">data</span>() <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-x0xvot9ijy" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="741.67" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7784-5567"><rect x="36.76" y="31.36" width="741.67" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="133.56" y1="31.36" x2="133.56" y2="556.72"></line> <line x1="288.85" y1="31.36" x2="288.85" y2="556.72"></line> <line x1="444.13" y1="31.36" x2="444.13" y2="556.72"></line> <line x1="599.42" y1="31.36" x2="599.42" y2="556.72"></line> <line x1="754.70" y1="31.36" x2="754.70" y2="556.72"></line> <line x1="36.76" y1="522.17" x2="778.43" y2="522.17"></line> <line x1="36.76" y1="426.46" x2="778.43" y2="426.46"></line> <line x1="36.76" y1="330.75" x2="778.43" y2="330.75"></line> <line x1="36.76" y1="235.03" x2="778.43" y2="235.03"></line> <line x1="36.76" y1="139.32" x2="778.43" y2="139.32"></line> <line x1="36.76" y1="43.61" x2="778.43" y2="43.61"></line> </g> <g clip-path="url(#clip-368-314-7784-5567)"> <circle cx="70.47" cy="310.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.27" cy="147.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="501.47" cy="166.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="93.91" cy="385.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="144.14" cy="474.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="205.29" cy="342.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="332.84" cy="307.49" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="526.10" cy="219.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="493.93" cy="172.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="451.43" cy="107.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="477.83" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="405.91" cy="164.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="257.93" cy="458.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="540.11" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="609.91" cy="192.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="421.92" cy="113.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.98" cy="400.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="549.69" cy="150.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="744.72" cy="129.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="217.26" cy="351.66" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="296.76" cy="230.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="146.12" cy="499.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="130.25" cy="426.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="268.32" cy="394.73" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="378.42" cy="238.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="425.82" cy="94.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="504.07" cy="97.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="560.69" cy="57.92" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.62" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="493.87" cy="166.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="778.43" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="133.56" y1="556.72" x2="133.56" y2="561.72"></line> <line x1="288.85" y1="556.72" x2="288.85" y2="561.72"></line> <line x1="444.13" y1="556.72" x2="444.13" y2="561.72"></line> <line x1="599.42" y1="556.72" x2="599.42" y2="561.72"></line> <line x1="754.70" y1="556.72" x2="754.70" y2="561.72"></line> <line x1="31.76" y1="522.17" x2="36.76" y2="522.17"></line> <line x1="31.76" y1="426.46" x2="36.76" y2="426.46"></line> <line x1="31.76" y1="330.75" x2="36.76" y2="330.75"></line> <line x1="31.76" y1="235.03" x2="36.76" y2="235.03"></line> <line x1="31.76" y1="139.32" x2="36.76" y2="139.32"></line> <line x1="31.76" y1="43.61" x2="36.76" y2="43.61"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="133.56" y="573.64">10K</text> <text x="288.85" y="573.64">20K</text> <text x="444.13" y="573.64">30K</text> <text x="599.42" y="573.64">40K</text> <text x="754.70" y="573.64">50K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="526.13">72</text> <text x="27.76" y="430.42">74</text> <text x="27.76" y="334.71">76</text> <text x="27.76" y="238.99">78</text> <text x="27.76" y="143.28">80</text> <text x="27.76" y="47.57">82</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="407.59" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-x0xvot9ijy");
+</script>
+</div>
+</div>
+</div>
+<p>The table there is called <code>subset(gm_all, year == 2007 &amp; continent == "Europe")</code>, which is ugly and works. <code>name =</code> is available when you would rather read something else, and becomes worth using once a second table is involved:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gm_all <span class="sc">|&gt;</span> <span class="fu">subset</span>(year <span class="sc">==</span> <span class="dv">2007</span> <span class="sc">&amp;</span> continent <span class="sc">==</span> <span class="st">"Europe"</span>) <span class="sc">|&gt;</span> <span class="fu">data</span>(<span class="at">name =</span> <span class="st">"europe"</span>) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="gog-10gbjegz5a" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="36.76" y="31.36" width="741.67" height="525.36" fill="#f5f5f8"></rect> <clippath id="clip-368-314-7784-5567"><rect x="36.76" y="31.36" width="741.67" height="525.36"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="133.56" y1="31.36" x2="133.56" y2="556.72"></line> <line x1="288.85" y1="31.36" x2="288.85" y2="556.72"></line> <line x1="444.13" y1="31.36" x2="444.13" y2="556.72"></line> <line x1="599.42" y1="31.36" x2="599.42" y2="556.72"></line> <line x1="754.70" y1="31.36" x2="754.70" y2="556.72"></line> <line x1="36.76" y1="522.17" x2="778.43" y2="522.17"></line> <line x1="36.76" y1="426.46" x2="778.43" y2="426.46"></line> <line x1="36.76" y1="330.75" x2="778.43" y2="330.75"></line> <line x1="36.76" y1="235.03" x2="778.43" y2="235.03"></line> <line x1="36.76" y1="139.32" x2="778.43" y2="139.32"></line> <line x1="36.76" y1="43.61" x2="778.43" y2="43.61"></line> </g> <g clip-path="url(#clip-368-314-7784-5567)"> <circle cx="70.47" cy="310.50" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="539.27" cy="147.51" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="501.47" cy="166.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="93.91" cy="385.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="144.14" cy="474.07" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="205.29" cy="342.80" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="332.84" cy="307.49" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="526.10" cy="219.15" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="493.93" cy="172.20" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="451.43" cy="107.88" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="477.83" cy="167.75" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="405.91" cy="164.06" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="257.93" cy="458.14" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="540.11" cy="55.24" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="609.91" cy="192.68" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="421.92" cy="113.19" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="121.98" cy="400.47" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="549.69" cy="150.71" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="744.72" cy="129.94" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="217.26" cy="351.66" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="296.76" cy="230.34" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="146.12" cy="499.39" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="130.25" cy="426.36" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="268.32" cy="394.73" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="378.42" cy="238.58" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="425.82" cy="94.29" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="504.07" cy="97.02" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="560.69" cy="57.92" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="109.62" cy="532.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> <circle cx="493.87" cy="166.84" r="4.50" fill="#4e79a7" fill-opacity="0.820"></circle> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="36.76" y1="556.72" x2="778.43" y2="556.72"></line> <line x1="36.76" y1="31.36" x2="36.76" y2="556.72"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="133.56" y1="556.72" x2="133.56" y2="561.72"></line> <line x1="288.85" y1="556.72" x2="288.85" y2="561.72"></line> <line x1="444.13" y1="556.72" x2="444.13" y2="561.72"></line> <line x1="599.42" y1="556.72" x2="599.42" y2="561.72"></line> <line x1="754.70" y1="556.72" x2="754.70" y2="561.72"></line> <line x1="31.76" y1="522.17" x2="36.76" y2="522.17"></line> <line x1="31.76" y1="426.46" x2="36.76" y2="426.46"></line> <line x1="31.76" y1="330.75" x2="36.76" y2="330.75"></line> <line x1="31.76" y1="235.03" x2="36.76" y2="235.03"></line> <line x1="31.76" y1="139.32" x2="36.76" y2="139.32"></line> <line x1="31.76" y1="43.61" x2="36.76" y2="43.61"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> <text x="133.56" y="573.64">10K</text> <text x="288.85" y="573.64">20K</text> <text x="444.13" y="573.64">30K</text> <text x="599.42" y="573.64">40K</text> <text x="754.70" y="573.64">50K</text> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="27.76" y="526.13">72</text> <text x="27.76" y="430.42">74</text> <text x="27.76" y="334.71">76</text> <text x="27.76" y="238.99">78</text> <text x="27.76" y="143.28">80</text> <text x="27.76" y="47.57">82</text> </g> <text x="36.76" y="25.36" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Life</text> <text x="407.59" y="587.00" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="middle">Gdp</text>
+</svg>
+<script type="module">
+import { mountView } from "../view.js";
+mountView("gog-10gbjegz5a");
+</script>
+</div>
+</div>
+</div>
+</section>
+<section id="why-the-name-is-worth-a-warning" class="level2" data-number="46.3">
+<h2 data-number="46.3" class="anchored" data-anchor-id="why-the-name-is-worth-a-warning"><span class="header-section-number">46.3</span> Why the name is worth a warning</h2>
+<p>An unnamed table is fine until there are two of them. A second <code>data()</code> gives a layer its own table, and “nearest table wins” is decided <em>by name</em>, so two tables that both lost theirs leave the rule nothing to choose between:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(actuals, <span class="at">name =</span> <span class="st">"series"</span>) <span class="sc">+</span> <span class="fu">x</span>(year) <span class="sc">+</span> <span class="fu">y</span>(sales) <span class="sc">+</span> line <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(forecast, <span class="at">name =</span> <span class="st">"series"</span>) <span class="sc">+</span> point</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: two different tables are both called `series` — a layer resolves its bare columns against the nearest table by name, so one of these can never be reached. Give them distinct names: `data(name = "...")`.</code></pre>
+</div>
+</div>
+<p>Before the warning existed, that plot did not refuse. It drew the first table twice and reported the second table’s columns as misspellings, which blames the reader for something the binding lost. Two <code>%&gt;%</code> pipes in one expression reached exactly that state, both tables having arrived as <code>.</code>.</p>
+</section>
+<section id="what-the-pipe-does-not-change" class="level2" data-number="46.4">
+<h2 data-number="46.4" class="anchored" data-anchor-id="what-the-pipe-does-not-change"><span class="header-section-number">46.4</span> What the pipe does not change</h2>
+<p>The pipe feeds <code>data()</code>. It does not replace <code>+</code>, and there is no piped form of the rest of the sentence: marks, channels, and transforms compose with <code>+</code> and <code>*</code> as they do everywhere else in this book. <code>gog</code> has no pipe of its own and will not grow one, because that would be a second spelling for something the language already spells.</p>
+<p>This section is about R specifically. Julia’s <code>|&gt;</code> is a function-application operator with different behavior, and Python and JavaScript have no pipe of their own, so the question does not arise in the other three chapters.</p>
+</section>
+<section id="twenty-names-base-r-already-uses" class="level2" data-number="46.5">
+<h2 data-number="46.5" class="anchored" data-anchor-id="twenty-names-base-r-already-uses"><span class="header-section-number">46.5</span> Twenty names base R already uses</h2>
+<p><code>library(gog)</code> prints a long list of masked names, and the list is alarming out of proportion to the problem. Twenty of the package’s exports are also names in the packages R attaches for you:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>from</th>
+<th>names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>stats</code></td>
+<td><code>density</code> <code>line</code> <code>median</code> <code>quantile</code> <code>smooth</code> <code>step</code></td>
+</tr>
+<tr class="even">
+<td><code>graphics</code></td>
+<td><code>box</code> <code>layout</code> <code>text</code> <code>title</code></td>
+</tr>
+<tr class="odd">
+<td><code>grDevices</code></td>
+<td><code>palette</code></td>
+</tr>
+<tr class="even">
+<td><code>utils</code></td>
+<td><code>data</code> <code>stack</code></td>
+</tr>
+<tr class="odd">
+<td><code>base</code></td>
+<td><code>jitter</code> <code>max</code> <code>mean</code> <code>min</code> <code>order</code> <code>range</code> <code>sum</code></td>
+</tr>
+</tbody>
+</table>
+<p>Nine of the twenty cannot affect you, and the reason is a rule in R itself. A mark is an <em>object</em> rather than a function, and so is a transform that takes no parameter. When R evaluates a call, it looks for a function of that name and skips any binding that is not one. So base R still answers, even with <code>gog</code>’s <code>mean</code> sitting closer:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.function</span>(mean)   <span class="co"># gog's `mean` is an object, so a call cannot reach it</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)          <span class="co"># and base R's function answers anyway</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.5</code></pre>
+</div>
+</div>
+<p>That holds for the functions that take another function as an argument, because they resolve the name the same way:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(gapminder_2007[<span class="st">"life"</span>], mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    life 
+67.00742 </code></pre>
+</div>
+</div>
+<p>The other eleven are functions, and a call does reach <code>gog</code>’s: <code>box</code>, <code>data</code>, <code>density</code>, <code>jitter</code>, <code>layout</code>, <code>order</code>, <code>palette</code>, <code>quantile</code>, <code>range</code>, <code>stack</code> and <code>title</code>. Qualify the one you want, and both remain available:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>you write</th>
+<th>you get</th>
+<th>for base R’s, write</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>order(population)</code></td>
+<td>the plot’s sort order</td>
+<td><code>base::order(df$population)</code></td>
+</tr>
+<tr class="even">
+<td><code>data(gapminder_2007)</code></td>
+<td>the plot’s table</td>
+<td><code>utils::data(diamonds)</code></td>
+</tr>
+<tr class="odd">
+<td><code>density(2)</code></td>
+<td>the smoothing transform</td>
+<td><code>stats::density(x)</code></td>
+</tr>
+<tr class="even">
+<td><code>jitter(0.5)</code></td>
+<td>the offset transform</td>
+<td><code>base::jitter(x)</code></td>
+</tr>
+<tr class="odd">
+<td><code>quantile(0.9)</code></td>
+<td>the 90th percentile transform</td>
+<td><code>stats::quantile(df$gdp)</code></td>
+</tr>
+<tr class="even">
+<td><code>range(0.25, 0.75)</code></td>
+<td>the band transform</td>
+<td><code>base::range(df$gdp)</code></td>
+</tr>
+<tr class="odd">
+<td><code>stack(share = TRUE)</code></td>
+<td>the piling transform</td>
+<td><code>utils::stack(df)</code></td>
+</tr>
+<tr class="even">
+<td><code>palette("soft")</code></td>
+<td>the plot’s colors</td>
+<td><code>grDevices::palette()</code></td>
+</tr>
+<tr class="odd">
+<td><code>title("Life expectancy")</code></td>
+<td>the plot’s title</td>
+<td><code>graphics::title(main = "…")</code></td>
+</tr>
+<tr class="even">
+<td><code>box()</code></td>
+<td>the box-and-whisker mark</td>
+<td><code>graphics::box()</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>range</code> is a function because it takes a band, and R finds a function first. That is what writing <code>range(0.25, 0.75)</code> costs you. The refusal reads the argument it was given: a vector where a probability belongs means you wanted base R’s, and the message says so.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `range()` takes the band's two ends, each one number between 0 and 1, e.g. `range(0.25, 0.75)`. It was given 5 numbers. For the smallest and largest of a vector, gog masks that name: use `base::range()`.</code></pre>
+</div>
+</div>
+<p><code>order</code> is the one that used to break. Sorting a data frame beside a plot is ordinary work. <code>gog</code>’s <code>order</code> returns an atom, not the row positions that <code>[</code> expects. So the failure used to arrive far from the line that caused it, and it named neither <code>order</code> nor <code>gog</code>. It now says which function you reached, and how to reach the other one:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>gapminder_2007[<span class="fu">order</span>(gapminder_2007<span class="sc">$</span>population), ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `order(gapminder_2007$population)` is not a column name. gog's `order()` takes a bare column, as in `order(population, desc = TRUE)`. To sort a vector, the base function is still there as `base::order(gapminder_2007$population)`.</code></pre>
+</div>
+</div>
+<p>Qualified, it sorts:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ranked <span class="ot">&lt;-</span> gapminder_2007[base<span class="sc">::</span><span class="fu">order</span>(<span class="sc">-</span>gapminder_2007<span class="sc">$</span>population), ]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ranked[<span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"population"</span>)], <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          country population
+25          China 1318683096
+59          India 1110396331
+135 United States  301139947</code></pre>
+</div>
+</div>
+<p>This book does that in three chapters, for exactly this reason.</p>
+<p>Three of the eleven refuse nothing, because nothing separates the two intentions. <code>data(mtcars)</code> is well formed in both readings. It returns a plot’s table and no complaint, so write <code>utils::data()</code> when you mean to load a dataset. <code>title("...")</code> is the same case: a string is what both want. So is <code>box()</code>, which takes no argument in either language. The other eight all report the mistake, because in each of them the argument you passed is one <code>gog</code> would refuse.</p>
+<p>The names stay as they are. A grammar keeps its own vocabulary, which is Law 3 and a decided question (spec §18). Renaming <code>order</code> to <code>sort_by</code> would replace a word every reader knows with one only this package uses. Where another <em>package</em> owns a name you want, attach <code>gog</code> after it, so R finds <code>gog</code>’s names first, or qualify it as <code>gog::interval</code>. Every language meets this problem, and each one asks you to solve it differently; <a href="../grammar.html#names-the-host-language-already-uses">the grammar chapter</a> compares them.</p>
+</section>
+<section id="five-spellings-that-still-need-a-prefix" class="level2" data-number="46.6">
+<h2 data-number="46.6" class="anchored" data-anchor-id="five-spellings-that-still-need-a-prefix"><span class="header-section-number">46.6</span> Five spellings that still need a prefix</h2>
+<p>The nine objects above are safe in ordinary code, and safe inside <code>sapply()</code>, <code>lapply()</code>, <code>tapply()</code>, <code>mapply()</code>, <code>Map()</code>, <code>Reduce()</code> and <code>apply()</code>. Each of those asks R for a function of the name it was handed, which finds base R’s.</p>
+<p>Five spellings still fail, for two different reasons. The first is a name that travels through two layers before anyone looks it up:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(life <span class="sc">~</span> continent, gapminder_2007, mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `get()`:
+! object 'FUN' of mode 'function' was not found</code></pre>
+</div>
+</div>
+<p>By the time the lookup happens, the name being searched for is <code>FUN</code> and not <code>mean</code>, so the message names neither <code>mean</code> nor <code>gog</code>. <code>by()</code> and <code>ave(..., FUN = mean)</code> fail the same way. Writing <code>base::mean</code> fixes all three. The data frame form of <code>aggregate()</code> looks the name up one layer earlier, so <code>aggregate(gapminder_2007["life"], gapminder_2007["continent"], mean)</code> works unchanged.</p>
+<p>The second reason is a name used as a value rather than called. <code>do.call(sum, list(x))</code> wants a function and receives an object, so write <code>do.call("sum", list(x))</code> or <code>do.call(base::sum, list(x))</code>. And <code>f &lt;- mean</code> copies the object, so <code>f(x)</code> reports that <code>f</code> is not a function.</p>
+<p>That is the whole cost, and it is worth stating as one rule. If you hand one of those nine words to another function <em>by name</em>, and that function hands it on again, write <code>base::</code> in front of it.</p>
+</section>
+<section id="reading-from-a-database" class="level2" data-number="46.7">
+<h2 data-number="46.7" class="anchored" data-anchor-id="reading-from-a-database"><span class="header-section-number">46.7</span> Reading from a database</h2>
+<p><code>query()</code> takes a <strong>DBI</strong> connection. DBI is R’s database standard, so the same call reaches SQLite, Postgres, MariaDB, BigQuery, and anything with an ODBC driver.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">"sales.db"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">query</span>(con, <span class="st">"SELECT status, revenue FROM orders"</span>) <span class="sc">+</span> bar <span class="sc">+</span> <span class="fu">x</span>(status) <span class="sc">+</span> <span class="fu">y</span>(revenue)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>DBI and its drivers are <strong>Suggests</strong>, not hard dependencies. A reader who never writes SQL installs neither. If you do write SQL, install DBI and the one driver your database needs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"DBI"</span>, <span class="st">"RSQLite"</span>))    <span class="co"># or RPostgres, RMariaDB, odbc, bigrquery</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>gog</code> never opens a connection and never stores a password. You connect the way you already do, and hand the open connection over.</p>
+</section>
+<section id="getting-it" class="level2" data-number="46.8">
+<h2 data-number="46.8" class="anchored" data-anchor-id="getting-it"><span class="header-section-number">46.8</span> Getting it</h2>
+<p>A plot is drawn by the engine, which is a compiled Rust binary, so the R package has to be able to find one. An installed copy <strong>carries its own</strong>. The package’s <code>configure</code> script bundles the engine at install time, and refuses to install at all rather than leave you a package that cannot draw.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gog"</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://psychometrician.r-universe.dev"</span>,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"https://cloud.r-project.org"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That command works today. <code>gog</code> is published on <a href="https://psychometrician.r-universe.dev/gog">r-universe</a>. On macOS and Windows it builds a binary with the engine inside it, so installing needs no Rust toolchain.</p>
+<p>On Linux the same command installs from source, and the source build compiles the engine. That needs Rust and a network connection. If the machine does not have Rust, install it first and then run the command above:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span> <span class="at">-s</span> <span class="at">--</span> <span class="at">-y</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="st">"</span><span class="va">$HOME</span><span class="st">/.cargo/env"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The build runs once, while the package installs.</p>
+<p>The <code>repos</code> argument names two addresses because r-universe is not CRAN. The first address is where <code>gog</code> lives. The second is an ordinary CRAN mirror, and it is there so your other packages still install as usual. <code>gog</code> is not on CRAN yet; when it is, the plain <code>install.packages("gog")</code> will work and this line can lose its second half.</p>
+<p>There is another route, and it installs straight from the source repository:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"psychometrician/gog"</span>, <span class="at">subdir =</span> <span class="st">"r-pkg/gog"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A tarball from GitHub carries the engine’s Rust sources, and <code>configure</code> compiles them during the install. So this route does need a Rust toolchain, and the macOS and Windows binaries do not. Take it when you want one particular branch or commit rather than the latest build.</p>
+<p>You can also work from a checkout. Build the engine once, then load the package from where it sits:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cargo</span> build <span class="at">--release</span> <span class="at">-p</span> gog-cli</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pkgload<span class="sc">::</span><span class="fu">load_all</span>(<span class="st">"r-pkg/gog"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Installing from that same checkout is the better test, because it runs <code>configure</code> and proves the bundling works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD INSTALL r-pkg/gog</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The engine is looked for in five places, in this order: the <code>GOG_CLI_PATH</code> environment variable, a <code>target/</code> build in a surrounding checkout, the copy inside the installed package, <code>gog-cli</code> on your <code>PATH</code>, and one last search upward from the working directory. A checkout is searched before the bundled copy on purpose. Inside a checkout the bundled engine is a leftover build, and using it would give a stale engine to the person editing the engine.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// Coloring a gog sentence, which nothing ships a rule for.
+//
+// A code block on this site is R, Python, Julia or JavaScript, and Pandoc has a
+// highlighter for each. None of them helps, and the reason is worth stating,
+// because it decides everything below.
+//
+// Take one sentence and read what the four highlighters make of it:
+//
+//                    data      point     x
+//     R              function  nothing   function
+//     Python         nothing   nothing   nothing
+//     Julia          function  nothing   function
+//     JavaScript     function  nothing   function
+//
+// `point` is a bare name to every one of them, so no stylesheet can reach it,
+// and Python's tab would sit flat while the other three lit up. The same
+// sentence would look like four different things, on a site whose whole claim
+// is that it is one. That is why every token was painted a single color here
+// until now.
+//
+// The way out is to stop asking the host language. gog's vocabulary is a closed
+// list of sixty-five ordinary words in eleven kinds, declared in the book's
+// kernel table, so it can be painted as what it is: a source, a mark, a
+// channel, a transform. That reading is the same in all four languages, which is the
+// point of the tabs.
+//
+// This runs in the browser rather than at render time, and that is deliberate.
+// Pandoc has already tokenized the block, and adding to its work keeps the panel,
+// the copy button and the line anchors that Quarto builds around it. Nothing here
+// adds or removes a character, so the copy button still copies what you see. With
+// scripting off the page falls back to the single ink it used before.
+(function () {
+  "use strict";
+
+  // The kernel, one line per kind, exactly as the book's kernel table declares
+  // it. Written out rather than fetched: a highlighter that waits on a second
+  // request paints the page twice, and a reader watches it happen.
+  //
+  // A copy of a list is a copy that stops matching, so this one is compared
+  // against the book on every render by `R/check-kernel.R`, which stops the
+  // render rather than letting the two drift.
+  var KERNEL = {
+    source:    "data query",
+    mark:      "point line area bar step interval box ribbon text path rule zone surface edge",
+    channel:   "x y z color size shape pattern opacity group label play",
+    transform: "bin smooth count density proportion sum mean median max min " +
+               "quantile range confidence deviation bounds partition flow layout cluster dodge stack jitter repel",
+    scale:     "linear log time category order",
+    space:     "flat space polar nest map globe network",
+    setting:   "style theme palette",
+    label:     "title x_label y_label z_label",
+    facet:     "facet",
+    selection: "brush",
+
+    // The kernel table writes the operators as the symbols they are, `+ * | /`,
+    // and JavaScript cannot overload any of them, so it spells them as six
+    // words instead. They belong here because leaving them out is what would
+    // show: an uncolored `plot(` among colored words reads as a function the
+    // reader wrote, on the one tab that can least afford to look different.
+    //
+    // Python's and JavaScript's `col`, and Julia's `:`, are deliberately not
+    // here. Choosing `layer` over `beside` changes the plot, so it is grammar;
+    // `col.` is a fixed prefix in front of a column name, so it is idiom, and
+    // it reads as idiom next to R's bare name. Color the grammar, leave the
+    // idiom.
+    operator:  "plot layer across down beside below"
+  };
+
+  // The palette is the book's own paragraph, not a designer's choice. The
+  // kernel chapter sorts these eleven kinds into two groups and gives the reason
+  // for each: *five kinds build a plot*, and *the other six refine a plot or
+  // arrange it, and none of them is required*. The inks follow that exactly.
+  //
+  // Four of the five builders are words, so each takes a hue of its own. The
+  // fifth, the operator, is punctuation in three of the four languages and is
+  // already visible as itself, so it takes weight rather than a hue; a fifth
+  // color there would make JavaScript the loudest tab rather than the matching
+  // one.
+  //
+  // The six that refine or arrange share one quieter ink, because none of them
+  // is required and together they are one idea. They were folded into the
+  // channel's ink at first, which read well and said something false: `facet()`
+  // and `style()` are not channels, and a rule written down is a rule that has
+  // to survive being read.
+  //
+  // The source kind paints with the ink named "table". An ink's name is a CSS
+  // class on every rendered page and a color command in the PDF preamble, so
+  // it does not follow when a kind's label changes.
+  var INK = {
+    source: "table", mark: "mark", channel: "channel", transform: "transform",
+    scale: "refine", space: "refine", setting: "refine",
+    label: "refine", facet: "refine", selection: "refine",
+    operator: "operator"
+  };
+
+  var kindOf = {};
+  var words = [];
+  Object.keys(KERNEL).forEach(function (kind) {
+    KERNEL[kind].split(" ").forEach(function (word) {
+      if (!word || kindOf[word]) return;
+      kindOf[word] = INK[kind];
+      words.push(word);
+    });
+  });
+  // Longest first, so `x_label` is found before the `x` inside it. The boundary
+  // test below would reject that `x` anyway; the ordering means it is never
+  // offered.
+  words.sort(function (a, b) { return b.length - a.length; });
+  var WORD = new RegExp(words.join("|"), "g");
+
+  // Which blocks are searched at all.
+  //
+  // Every word in the kernel is a common English word, which is the grammar's
+  // best property and this file's only real hazard: `title`, `count`, `mean`,
+  // `text` and `group` appear in almost any code. A post comparing gog with
+  // another library would otherwise have half of that library's call painted as
+  // though it were gog.
+  //
+  // So a block has to name a table before anything in it is read. Every gog
+  // sentence begins with one, and no other library's code says `data(`.
+  var LANGUAGES = /\b(?:r|python|julia|js|javascript)\b/;
+  var A_SENTENCE = /\b(?:data|query)\s*\(/;
+
+  // Text Pandoc has already claimed, and which is therefore not gog's to read.
+  // A string or a comment may hold any word at all. `at` is here for JavaScript,
+  // where `col.gdp` arrives with `gdp` as an attribute, so a column named
+  // `count` is covered by it.
+  //
+  // `bu` is deliberately absent, and it is the one that would have been missed:
+  // Python marks `bin` as a builtin, because `bin()` is one. Sealing builtins
+  // would have left the Python tab short of exactly the word the histogram post
+  // is about.
+  var SEALED = /^(?:st|ss|vs|ch|co|cv|do|an|al|at|im|pp|er|wa)$/;
+
+  // A word counts only when it stands alone. `col.count` and `:count` name a
+  // column called count, `counted` is somebody's variable, and `x_label` is not
+  // an `x`.
+  var GLUED_BEFORE = /[A-Za-z0-9_.$:@]/;
+  var GLUED_AFTER = /[A-Za-z0-9_]/;
+  var ARGUMENT_NAME = /^\s*[:=]/;
+
+  function sealed(node, root) {
+    for (var el = node.parentNode; el && el !== root; el = el.parentNode) {
+      if (el.nodeType === 1 && SEALED.test(el.className || "")) return true;
+    }
+    return false;
+  }
+
+  // The block is read as one string rather than node by node, because Pandoc
+  // splits a line across spans wherever it found a token, and a boundary test
+  // that cannot see past the end of its own node would read `col.` and `count`
+  // as unrelated. Offsets map each match back to the node it came from; a match
+  // straddling two nodes is left alone, since a name Pandoc split in half is not
+  // a name.
+  function paint(code) {
+    var nodes = [];
+    var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) nodes.push(node);
+
+    var text = "";
+    var starts = [];
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      starts.push(text.length);
+      text += nodes[i].nodeValue;
+    }
+    if (!A_SENTENCE.test(text)) return;
+
+    var hits = [];
+    for (i = 0; i < nodes.length; i++) hits.push(null);
+
+    var match;
+    WORD.lastIndex = 0;
+    while ((match = WORD.exec(text))) {
+      var from = match.index;
+      var to = from + match[0].length;
+      if (from > 0 && GLUED_BEFORE.test(text.charAt(from - 1))) continue;
+      if (to < text.length && GLUED_AFTER.test(text.charAt(to))) continue;
+      // A word used as an argument name is not an atom, and five channel words
+      // are argument names somewhere: `style(color = )`, `style(opacity = )`,
+      // `style(size = )`, `style(shape = )`, `style(pattern = )`. The kernel
+      // chapter writes them that way on purpose, because setting and mapping
+      // are the same visual property named two ways. They are still two
+      // different words in a sentence, and only one of them is a channel.
+      //
+      // `:` covers JavaScript, where the same setting arrives in a trailing
+      // options object as `{ color: "tomato" }`. It cannot catch a Julia column
+      // by mistake: there the colon leads, `x(:gdp)`, and is already handled.
+      if (ARGUMENT_NAME.test(text.slice(to, to + 8))) continue;
+
+      var at = -1;
+      for (i = nodes.length - 1; i >= 0; i--) {
+        if (starts[i] <= from) { at = i; break; }
+      }
+      if (at < 0 || to > starts[at] + nodes[at].nodeValue.length) continue;
+      if (sealed(nodes[at], code)) continue;
+
+      if (!hits[at]) hits[at] = [];
+      hits[at].push({
+        from: from - starts[at],
+        to: to - starts[at],
+        ink: kindOf[match[0]]
+      });
+    }
+
+    for (i = 0; i < nodes.length; i++) {
+      if (hits[i]) wrap(nodes[i], hits[i]);
+    }
+  }
+
+  function wrap(node, hits) {
+    var source = node.nodeValue;
+    var out = document.createDocumentFragment();
+    var at = 0;
+    hits.forEach(function (hit) {
+      if (hit.from > at) {
+        out.appendChild(document.createTextNode(source.slice(at, hit.from)));
+      }
+      var span = document.createElement("span");
+      span.className = "gog-" + hit.ink;
+      span.textContent = source.slice(hit.from, hit.to);
+      out.appendChild(span);
+      at = hit.to;
+    });
+    if (at < source.length) {
+      out.appendChild(document.createTextNode(source.slice(at)));
+    }
+    node.parentNode.replaceChild(out, node);
+  }
+
+  function run() {
+    // `div.sourceCode` is what keeps a refusal out, and that is worth knowing
+    // before anyone widens this selector to `pre code`. A refusal renders as
+    // `cell-output-error`, outside the wrapper, and its message names atoms:
+    // "gog: bin needs a continuous column". Painting those would color the
+    // engine's own prose as though it were a specification, and the tinted
+    // panel already carries what a refusal means.
+    var blocks = document.querySelectorAll("div.sourceCode pre code");
+    for (var i = 0; i < blocks.length; i++) {
+      if (LANGUAGES.test(blocks[i].className || "")) paint(blocks[i]);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/psychometrician\.github\.io\/gog-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../parts/bindings.html" class="pagination-link" aria-label="The host language">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">The host language</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../bindings/python.html" class="pagination-link" aria-label="Python">
+        <span class="nav-page-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Python</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="licence">Prose licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</span> <span class="licence">Code samples licensed <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.</span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://hits.sh/psychometrician.github.io/gog-book/"><img src="https://hits.sh/psychometrician.github.io/gog-book.svg?style=flat-square&amp;label=readers&amp;color=ffdba4&amp;labelColor=3a332a" class="img-fluid" alt="Page views of this book, counted by hits.sh"></a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/gogdeveloper" target="_blank">
+      <i class="bi bi-twitter-x" role="img" aria-label="gog on X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/gogdeveloper.bsky.social" target="_blank">
+      <i class="bi bi-bluesky" role="img" aria-label="gog on Bluesky">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/psychometrician" target="_blank">
+      <i class="bi bi-github" role="img" aria-label="psychometrician on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://psychometrician.github.io/" target="_blank">
+      <i class="bi bi-journal-text" role="img" aria-label="psychometrician, the site">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

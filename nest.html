@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>34&nbsp; Nest – gog: A Grammar of Graphics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./map.html" rel="next">
+<link href="./polar.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4be3c7e6edf8a534d1baebde36db032a.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c9f428bdfcb254f3adbe66c40cb8578.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a24f5478c4e8fbb5a1f6d61d9f2bc96b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-412d429836bc2c0989d64c15587b75d3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-a24f5478c4e8fbb5a1f6d61d9f2bc96b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="gog.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parts/sentences.html">The sentences</a></li><li class="breadcrumb-item"><a href="./nest.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Nest</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">gog: A Grammar of Graphics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/psychometrician/gog-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/morning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A morning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./first-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A first plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading practice</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./writing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Writing practice</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/letters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The letters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./book-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The book’s data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Choosing a mark</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/point.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Point</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/line.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Line</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/bar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/area.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Area</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/step.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Step</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Interval</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/box.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Box</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/ribbon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ribbon</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Text</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/path.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Path</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Rule</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/zone.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Zone</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/surface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Surface</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marks/edge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Edge</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Scales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./channels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Channels and legends</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Setting vs mapping</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transforms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Transforms</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/sentences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The sentences</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./operators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Operators</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./encoding-scope.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Encoding scope</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./faceting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Faceting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./composition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Composition</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./flow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Cluster</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./polar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Polar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nest.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Nest</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./globe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Globe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./network.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Network</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./play.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Play</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Selection</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/cookbook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The cookbook</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/one-variable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">One variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/two-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Two variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/three-or-more.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">A third variable, and more</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/over-time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Over time</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cookbook/groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Many groups</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/reasons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The reasons</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design-laws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Design laws</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./parts/bindings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The host language</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/julia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Julia</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bindings/javascript.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">JavaScript</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./afterword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Afterword</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./kernel-card.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">The kernel card</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./utilities.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Functions around the grammar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./combinations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Combinations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chart-names.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Chart names, translated</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./phrasebook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">The ggplot2 phrasebook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coverage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Coverage, both directions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#one-sentence-three-spaces" id="toc-one-sentence-three-spaces" class="nav-link active" data-scroll-target="#one-sentence-three-spaces"><span class="header-section-number">34.1</span> One sentence, three spaces</a></li>
+  <li><a href="#why-area-when-a-column-already-worked" id="toc-why-area-when-a-column-already-worked" class="nav-link" data-scroll-target="#why-area-when-a-column-already-worked"><span class="header-section-number">34.2</span> Why area, when a column already worked</a></li>
+  <li><a href="#two-levels-from-a-position" id="toc-two-levels-from-a-position" class="nav-link" data-scroll-target="#two-levels-from-a-position"><span class="header-section-number">34.3</span> Two levels, from a position</a></li>
+  <li><a href="#what-a-packed-panel-does-not-have" id="toc-what-a-packed-panel-does-not-have" class="nav-link" data-scroll-target="#what-a-packed-panel-does-not-have"><span class="header-section-number">34.4</span> What a packed panel does not have</a></li>
+  <li><a href="#naming-the-regions" id="toc-naming-the-regions" class="nav-link" data-scroll-target="#naming-the-regions"><span class="header-section-number">34.5</span> Naming the regions</a></li>
+  <li><a href="#the-other-refusals" id="toc-the-other-refusals" class="nav-link" data-scroll-target="#the-other-refusals"><span class="header-section-number">34.6</span> The other refusals</a></li>
+  <li><a href="#the-order-is-yours" id="toc-the-order-is-yours" class="nav-link" data-scroll-target="#the-order-is-yours"><span class="header-section-number">34.7</span> The order is yours</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parts/sentences.html">The sentences</a></li><li class="breadcrumb-item"><a href="./nest.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Nest</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Nest</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>How much of the whole does each part take? A share of a whole has to be carried by something you can see. Flat, it is a <strong>length</strong>: a segment’s height as a fraction of the column it sits in. Bent into a circle, it is an <strong>angle</strong>, and the column becomes a pie. There is a third answer, and it is the one that fits the most categories into the least space: <strong>area</strong>.</p>
+<p>That is what <code>nest()</code> draws. Each row’s measure becomes the size of a region, and the regions partition the panel. The plot has a name, treemap, and as with the pie there is no atom that spells it.</p>
+<p>That name has an exact and ordinary origin. Ben Shneiderman’s 80-megabyte hard disk was full in 1990, and a directory listing could not tell him what was filling it, so he wrote a display that packs a rectangle with nested rectangles sized by what they hold <span class="citation" data-cites="shneiderman1992">(<a href="references.html#ref-shneiderman1992" role="doc-biblioref">Shneiderman, 1992</a>)</span>. It is now the usual way to draw a share of a whole when there are more categories than a pie has room for. That is where this chapter started.</p>
+<section id="one-sentence-three-spaces" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="one-sentence-three-spaces"><span class="header-section-number">34.1</span> One sentence, three spaces</h2>
+<p>Here is the population of each continent as a single column, divided into its parts:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">*</span> stack <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(continent) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"A column divided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">sum</span> <span class="op">*</span> stack <span class="op">+</span> y(col.population) <span class="op">+</span> color(col.continent) <span class="op">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  title(<span class="st">"A column divided"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> sum <span class="op">*</span> stack <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>population) <span class="op">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">title</span>(<span class="st">"A column divided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> sum<span class="op">,</span> stack)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">title</span>(<span class="st">"A column divided"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-unoycqbks0" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="55.9" y="54.879999999999995" width="607.0600000000001" height="535.12" fill="#f5f5f8"></rect> <clippath id="clip-559-549-6630-5900"><rect x="55.9" y="54.879999999999995" width="607.0600000000001" height="535.12"></rect></clippath> <g stroke="#d2d2da" stroke-width="1"> <line x1="55.90" y1="590.00" x2="662.96" y2="590.00"></line> <line x1="55.90" y1="426.94" x2="662.96" y2="426.94"></line> <line x1="55.90" y1="263.88" x2="662.96" y2="263.88"></line> <line x1="55.90" y1="100.83" x2="662.96" y2="100.83"></line> </g> <g clip-path="url(#clip-559-549-6630-5900)"> <rect x="298.72" y="279.22" width="121.41" height="310.78" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="298.72" y="231.43" width="121.41" height="47.78" fill="#f28e2b" fill-opacity="0.820" stroke="#f28e2b" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="298.72" y="155.65" width="121.41" height="75.78" fill="#e15759" fill-opacity="0.820" stroke="#e15759" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="298.72" y="82.36" width="121.41" height="73.28" fill="#76b7b2" fill-opacity="0.820" stroke="#76b7b2" stroke-width="0.5" stroke-opacity="0.5"></rect> <rect x="298.72" y="80.36" width="121.41" height="2.00" fill="#59a14f" fill-opacity="0.820" stroke="#59a14f" stroke-width="0.5" stroke-opacity="0.5"></rect> </g> <g stroke="#5a5a64" stroke-width="1.5" fill="none"> <line x1="55.90" y1="590.00" x2="662.96" y2="590.00"></line> <line x1="55.90" y1="54.88" x2="55.90" y2="590.00"></line> </g> <g stroke="#5a5a64" stroke-width="1" fill="none"> <line x1="50.90" y1="590.00" x2="55.90" y2="590.00"></line> <line x1="50.90" y1="426.94" x2="55.90" y2="426.94"></line> <line x1="50.90" y1="263.88" x2="55.90" y2="263.88"></line> <line x1="50.90" y1="100.83" x2="55.90" y2="100.83"></line> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="middle"> </g> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46" text-anchor="end"> <text x="46.90" y="593.96">0M</text> <text x="46.90" y="430.90">2000M</text> <text x="46.90" y="267.84">4000M</text> <text x="46.90" y="104.79">6000M</text> </g> <text x="359.43" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">A column divided</text> <text x="55.90" y="48.88" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Population</text> <rect x="686.96" y="54.88" width="101.04" height="137.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="696.96" y="74.24" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Continent</text> <line x1="686.96" y1="79.24" x2="788.00" y2="79.24" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="702.96" y="89.24" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="99.20">Asia</text> <rect x="702.96" y="109.24" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="119.20">Europe</text> <rect x="702.96" y="129.24" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="139.20">Africa</text> <rect x="702.96" y="149.24" width="12.00" height="12.00" fill="#76b7b2" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="159.20">Americas</text> <rect x="702.96" y="169.24" width="12.00" height="12.00" fill="#59a14f" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="179.20">Oceania</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-unoycqbks0");
+</script>
+</div>
+</div>
+</div>
+<p><em>“Given gapminder 2007: bars derived by sum and stack, y is population, color by continent.”</em></p>
+<p>Now the same sentence in the circle. The column’s height becomes the whole turn, and each segment’s share of the height becomes its slice’s share of the circle:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">*</span> stack <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(continent) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">polar</span>() <span class="sc">+</span> <span class="fu">title</span>(<span class="st">"The same shares, as angles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">sum</span> <span class="op">*</span> stack <span class="op">+</span> y(col.population) <span class="op">+</span> color(col.continent) <span class="op">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  polar() <span class="op">+</span> title(<span class="st">"The same shares, as angles"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> sum <span class="op">*</span> stack <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>population) <span class="op">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">polar</span>() <span class="op">+</span> <span class="fu">title</span>(<span class="st">"The same shares, as angles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> sum<span class="op">,</span> stack)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">polar</span>()<span class="op">,</span> <span class="fu">title</span>(<span class="st">"The same shares, as angles"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-wbtvzck0cw" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <circle cx="343.48" cy="322.44" r="267.56" fill="#f5f5f8"></circle> <clippath id="clip-240-549-6630-5900"><circle cx="343.48" cy="322.44" r="275.56"></circle></clippath> <circle cx="343.48" cy="322.44" r="267.56" fill="none" stroke="#5a5a64" stroke-width="1.5"></circle> <g clip-path="url(#clip-240-549-6630-5900)"> <path d="M 343.48 54.88 A 267.56 267.56 0 1 1 173.17 528.80 L 343.48 322.44 Z" fill="#4e79a7" fill-opacity="0.820" stroke="#4e79a7" stroke-width="0.5" stroke-opacity="0.5"></path> <path d="M 173.17 528.80 A 267.56 267.56 0 0 1 87.22 399.39 L 343.48 322.44 Z" fill="#f28e2b" fill-opacity="0.820" stroke="#f28e2b" stroke-width="0.5" stroke-opacity="0.5"></path> <path d="M 87.22 399.39 A 267.56 267.56 0 0 1 129.29 162.09 L 343.48 322.44 Z" fill="#e15759" fill-opacity="0.820" stroke="#e15759" stroke-width="0.5" stroke-opacity="0.5"></path> <path d="M 129.29 162.09 A 267.56 267.56 0 0 1 336.88 54.96 L 343.48 322.44 Z" fill="#76b7b2" fill-opacity="0.820" stroke="#76b7b2" stroke-width="0.5" stroke-opacity="0.5"></path> <path d="M 336.88 54.96 A 267.56 267.56 0 0 1 343.48 54.88 L 343.48 322.44 Z" fill="#59a14f" fill-opacity="0.820" stroke="#59a14f" stroke-width="0.5" stroke-opacity="0.5"></path> </g> <text x="343.48" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">The same shares, as angles</text> <text x="24.00" y="48.88" font-family="system-ui,sans-serif" font-size="13" fill="#28283a" text-anchor="start">Population</text> <rect x="686.96" y="54.88" width="101.04" height="137.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="696.96" y="74.24" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Continent</text> <line x1="686.96" y1="79.24" x2="788.00" y2="79.24" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="702.96" y="89.24" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="99.20">Asia</text> <rect x="702.96" y="109.24" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="119.20">Europe</text> <rect x="702.96" y="129.24" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="139.20">Africa</text> <rect x="702.96" y="149.24" width="12.00" height="12.00" fill="#76b7b2" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="159.20">Americas</text> <rect x="702.96" y="169.24" width="12.00" height="12.00" fill="#59a14f" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="179.20">Oceania</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-wbtvzck0cw");
+</script>
+</div>
+</div>
+</div>
+<p>And the same sentence again, packed (one word is gone, and the paragraph below says why):</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(continent) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">+</span> <span class="fu">title</span>(<span class="st">"The same shares, as areas"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(data(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">sum</span> <span class="op">+</span> y(col.population) <span class="op">+</span> color(col.continent) <span class="op">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  nest() <span class="op">+</span> title(<span class="st">"The same shares, as areas"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">*</span> sum <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>population) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>continent) <span class="op">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="op">+</span> <span class="fu">title</span>(<span class="st">"The same shares, as areas"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> sum)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">nest</span>()<span class="op">,</span> <span class="fu">title</span>(<span class="st">"The same shares, as areas"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-v22lts3566" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="24" y="39.519999999999996" width="638.96" height="550.48" fill="#f5f5f8"></rect> <clippath id="clip-240-395-6630-5900"><rect x="24" y="39.519999999999996" width="638.96" height="550.48"></rect></clippath> <g clip-path="url(#clip-240-395-6630-5900)"> <rect x="24.00" y="39.52" width="389.65" height="550.48" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="39.52" width="249.31" height="132.28" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="171.80" width="249.31" height="209.79" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="381.59" width="242.69" height="208.41" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="656.33" y="381.59" width="6.63" height="208.41" fill="#59a14f" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> </g> <text x="343.48" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">The same shares, as areas</text> <rect x="686.96" y="39.52" width="101.04" height="137.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="696.96" y="58.88" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Continent</text> <line x1="686.96" y1="63.88" x2="788.00" y2="63.88" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="702.96" y="73.88" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="83.84">Asia</text> <rect x="702.96" y="93.88" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="103.84">Europe</text> <rect x="702.96" y="113.88" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="123.84">Africa</text> <rect x="702.96" y="133.88" width="12.00" height="12.00" fill="#76b7b2" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="143.84">Americas</text> <rect x="702.96" y="153.88" width="12.00" height="12.00" fill="#59a14f" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="163.84">Oceania</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-v22lts3566");
+</script>
+</div>
+</div>
+</div>
+<p>Three pictures, one grammar. Nothing in any of them names a chart: a bar, summed, colored by continent, and then a word for the space. Asia is three fifths of the world’s population in all three, and you can check that against the column, the pie and the treemap in turn.</p>
+<p>One word did change, and it is worth explaining: the flat and polar forms carry <code>stack</code> and the packed form does not. <code>stack</code> decides what happens when two marks land in the same place, and that assumes they can. A packing gives every region a place of its own, so there is no collision left to resolve, and <code>gog</code> refuses <code>stack</code> here rather than accepting a word with nothing to do.</p>
+</section>
+<section id="why-area-when-a-column-already-worked" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="why-area-when-a-column-already-worked"><span class="header-section-number">34.2</span> Why area, when a column already worked</h2>
+<p>Read the column again and look for Oceania. At 0.4% of the world it is about <strong>two pixels</strong> tall, so nearly half of it is the border drawn around it. In the packing the same share is a region about <strong>six pixels</strong> wide, because a column has only its length to divide, and a packing divides both width and height.</p>
+<p>The packing gives Oceania three times more room, and the share it reports is unchanged. With five parts a packing gains little; the gain grows with the number of parts, because a column can only ever get longer while a panel gets subdivided in both directions at once. A packing is for the case where there are <em>many</em> shares and the question is which of them are large. A column would have run out of pixels long before it ran out of categories.</p>
+<p>Area has one weakness, the same one the pie has: two lengths can be compared exactly, and two areas cannot. If the comparison has to be precise, draw the flat column.</p>
+</section>
+<section id="two-levels-from-a-position" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="two-levels-from-a-position"><span class="header-section-number">34.3</span> Two levels, from a position</h2>
+<p>Bind a position and the packing gains a level. Each category gets a region sized by its own total, and the rows inside it are packed into that region:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gm_eras) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">x</span>(continent) <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(era) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">+</span> <span class="fu">title</span>(<span class="st">"Two eras, inside each continent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(data(gm_eras) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">sum</span> <span class="op">+</span> x(col.continent) <span class="op">+</span> y(col.population) <span class="op">+</span> color(col.era) <span class="op">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  nest() <span class="op">+</span> title(<span class="st">"Two eras, inside each continent"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gm_eras) <span class="op">+</span> bar <span class="op">*</span> sum <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>population) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>era) <span class="op">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="op">+</span> <span class="fu">title</span>(<span class="st">"Two eras, inside each continent"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gm_eras)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> sum)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">era</span>)<span class="op">,</span> <span class="fu">nest</span>()<span class="op">,</span> <span class="fu">title</span>(<span class="st">"Two eras, inside each continent"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-2kzz399axa" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="24" y="39.519999999999996" width="664.48" height="550.48" fill="#f5f5f8"></rect> <clippath id="clip-240-395-6885-5900"><rect x="24" y="39.519999999999996" width="664.48" height="550.48"></rect></clippath> <g clip-path="url(#clip-240-395-6885-5900)"> <rect x="24.00" y="39.52" width="400.59" height="160.06" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="424.59" y="39.52" width="112.85" height="159.20" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="424.59" y="198.72" width="58.51" height="185.69" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="424.59" y="384.42" width="77.22" height="205.58" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="681.20" y="384.42" width="7.28" height="67.28" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="199.58" width="400.59" height="390.42" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="537.44" y="39.52" width="151.04" height="159.20" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="483.10" y="198.72" width="205.38" height="185.69" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="501.81" y="384.42" width="179.39" height="205.58" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="681.20" y="451.69" width="7.28" height="138.31" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="39.52" width="400.59" height="550.48" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="424.59" y="39.52" width="263.89" height="159.20" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="424.59" y="198.72" width="263.89" height="185.69" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="424.59" y="384.42" width="256.61" height="205.58" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="681.20" y="384.42" width="7.28" height="205.58" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> </g> <text x="356.24" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">Two eras, inside each continent</text> <rect x="712.48" y="39.52" width="75.52" height="77.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="722.48" y="58.88" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Era</text> <line x1="712.48" y1="63.88" x2="788.00" y2="63.88" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="728.48" y="73.88" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="752.48" y="83.84">1957</text> <rect x="728.48" y="93.88" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="752.48" y="103.84">2007</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-2kzz399axa");
+</script>
+</div>
+</div>
+</div>
+<p>Each continent is a region sized by its total across both eras, and inside it the two eras are packed against each other. The heavier lines are the continents; the thinner ones divide what is inside them. Africa’s region is the most lopsided: more than three quarters of it is the 2007 half.</p>
+<p>The nesting is not new vocabulary. Wilkinson makes the point directly <span class="citation" data-cites="wilkinson2005">(<a href="references.html#ref-wilkinson2005" role="doc-biblioref">Wilkinson, 2005</a>)</span>: a <strong>dimension hierarchy</strong> (his name for levels inside levels) <em>is</em> a nested facet. So <code>x</code> here is doing what the outer level of a facet does, with the panel divided by share instead of into equal boxes.</p>
+<p>The inner level comes from <code>color</code>, and the legend is what decodes it. So the second level needs few enough values to read down the side of the plot. Countries inside continents, the treemap most often printed, would be a legend of 142 entries, and the section after next names the regions in place instead.</p>
+</section>
+<section id="what-a-packed-panel-does-not-have" class="level2" data-number="34.4">
+<h2 data-number="34.4" class="anchored" data-anchor-id="what-a-packed-panel-does-not-have"><span class="header-section-number">34.4</span> What a packed panel does not have</h2>
+<p>Look for the axes. There are none, and that is the space’s defining property rather than a setting you could switch back on.</p>
+<p>A flat panel’s horizontal direction <em>means</em> something: it is a variable, and a tick is a place on it. In a packing neither direction is a variable. Wilkinson puts it plainly: the two dimensions of a treemap “have no intrinsic meaning related to the data because they can be reordered without changing the metric properties of the tree” <span class="citation" data-cites="wilkinson2005">(<a href="references.html#ref-wilkinson2005" role="doc-biblioref">Wilkinson, 2005</a>)</span>. Two regions that touch are not near each other in the data. Moving one to the other side of the panel would not change a single share the plot reports.</p>
+<p>So there is nothing to tick and nothing to label, and <code>gog</code> refuses to pretend otherwise:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(continent) <span class="sc">+</span> <span class="fu">nest</span>() <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">x_label</span>(<span class="st">"Population"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `x_label()` names an axis, and a `nest()` plot has none — its two directions carry no variable and can be reordered without changing what the plot says. Use `title()` for the plot's own name, and the color legend to say what the regions are.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>What decodes a packed panel is the color legend, exactly as it decodes a pie.</p>
+</section>
+<section id="naming-the-regions" class="level2" data-number="34.5">
+<h2 data-number="34.5" class="anchored" data-anchor-id="naming-the-regions"><span class="header-section-number">34.5</span> Naming the regions</h2>
+<p>A legend works while there are few enough entries to scan. With more entries it becomes a second thing to read, and 142 countries are far too many. So put the name where the region is:</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-4" role="tab" aria-controls="tabset-5-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">+</span> <span class="fu">x</span>(continent) <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(continent) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  text <span class="sc">+</span> <span class="fu">label</span>(country) <span class="sc">+</span> <span class="fu">style</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span> <span class="fu">nest</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"Countries inside continents"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(data(gapminder_2007) <span class="op">+</span> bar <span class="op">+</span> x(col.continent) <span class="op">+</span> y(col.population) <span class="op">+</span> color(col.continent) <span class="op">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  text <span class="op">+</span> label(col.country) <span class="op">+</span> style(color <span class="op">=</span> <span class="st">"white"</span>) <span class="op">+</span> nest() <span class="op">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  title(<span class="st">"Countries inside continents"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="op">+</span> bar <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>population) <span class="op">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(<span class="op">:</span>continent) <span class="op">+</span> text <span class="op">+</span> <span class="fu">label</span>(<span class="op">:</span>country) <span class="op">+</span> <span class="fu">style</span>(color <span class="op">=</span> <span class="st">"white"</span>) <span class="op">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="op">+</span> <span class="fu">title</span>(<span class="st">"Countries inside continents"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gapminder_2007)<span class="op">,</span> bar<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> text<span class="op">,</span> <span class="fu">label</span>(col<span class="op">.</span><span class="at">country</span>)<span class="op">,</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style</span>({ <span class="dt">color</span><span class="op">:</span> <span class="st">"white"</span> })<span class="op">,</span> <span class="fu">nest</span>()<span class="op">,</span> <span class="fu">title</span>(<span class="st">"Countries inside continents"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>gog: 25 of 142 labels are drawn — 116 are wider than the region they name, and one share is too small to have a region at all. The packing drew every share, so the names are what is missing. Fewer categories, a larger plot (`theme(width =, height =)`) or a smaller `style(size = )` fits more of them in.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="gog-niko438nfh" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="24" y="39.519999999999996" width="638.96" height="550.48" fill="#f5f5f8"></rect> <clippath id="clip-240-395-6630-5900"><rect x="24" y="39.519999999999996" width="638.96" height="550.48"></rect></clippath> <g clip-path="url(#clip-240-395-6630-5900)"> <rect x="24.00" y="39.52" width="67.88" height="26.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="39.52" width="20.75" height="9.76" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="171.80" width="20.97" height="89.44" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="261.24" width="20.97" height="33.33" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="381.59" width="64.64" height="35.08" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="656.33" y="381.59" width="6.63" height="173.47" fill="#59a14f" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="49.28" width="20.75" height="22.23" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="91.88" y="39.52" width="1.51" height="26.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="93.39" y="39.52" width="320.26" height="26.43" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="71.51" width="20.75" height="28.18" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="294.56" width="20.97" height="21.68" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="416.67" width="64.64" height="7.94" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="99.69" width="20.75" height="12.34" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="316.24" width="20.97" height="4.40" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="424.61" width="64.64" height="165.39" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="112.03" width="20.75" height="19.85" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="320.64" width="20.97" height="38.44" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="359.08" width="20.97" height="22.51" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="65.95" width="4.13" height="192.47" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.62" y="171.80" width="8.86" height="112.45" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="478.29" y="381.59" width="63.31" height="29.68" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.62" y="284.25" width="8.86" height="27.76" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.62" y="312.01" width="8.86" height="65.06" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="541.60" y="381.59" width="30.88" height="29.68" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="28.13" y="65.95" width="385.52" height="192.47" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="572.48" y="381.59" width="83.86" height="29.68" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.62" y="377.07" width="8.86" height="4.52" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="443.47" y="171.80" width="23.18" height="156.84" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="443.47" y="328.64" width="23.18" height="9.23" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="478.29" y="411.27" width="11.04" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="443.47" y="337.86" width="23.18" height="43.73" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="131.88" width="20.75" height="12.18" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="489.33" y="411.27" width="30.50" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="413.65" y="144.07" width="20.75" height="27.73" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.40" y="39.52" width="30.54" height="10.08" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="466.65" y="171.80" width="1.21" height="23.15" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="519.84" y="411.27" width="24.90" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="544.74" y="411.27" width="36.75" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="467.86" y="171.80" width="195.10" height="23.15" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="581.49" y="411.27" width="18.54" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="466.65" y="194.95" width="24.71" height="1.26" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="466.65" y="196.20" width="24.71" height="11.17" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="466.65" y="207.37" width="24.71" height="174.22" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.40" y="49.60" width="30.54" height="9.65" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="434.40" y="59.25" width="30.54" height="112.55" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="194.95" width="3.42" height="23.95" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="494.78" y="194.95" width="3.97" height="23.95" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="464.94" y="39.52" width="39.61" height="117.07" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="498.75" y="194.95" width="53.73" height="23.95" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="464.94" y="156.59" width="39.61" height="15.21" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="600.03" y="411.27" width="33.59" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="552.48" y="194.95" width="23.37" height="23.95" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="575.85" y="194.95" width="3.46" height="23.95" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="633.62" y="411.27" width="22.72" height="21.06" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="478.29" y="432.33" width="42.46" height="9.92" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="258.42" width="189.62" height="2.07" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="504.54" y="39.52" width="6.11" height="91.67" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="504.54" y="131.19" width="6.11" height="2.78" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="260.50" width="189.62" height="329.50" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="213.62" y="258.42" width="152.61" height="82.42" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="366.23" y="258.42" width="47.42" height="82.42" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="213.62" y="340.85" width="34.08" height="45.40" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="504.54" y="133.97" width="6.11" height="37.83" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="247.70" y="340.85" width="7.97" height="45.40" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="510.66" y="39.52" width="24.73" height="132.28" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="478.29" y="442.25" width="42.46" height="3.68" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="255.67" y="340.85" width="157.98" height="45.40" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="213.62" y="386.25" width="14.27" height="23.86" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="579.31" y="194.95" width="83.65" height="23.95" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="227.89" y="386.25" width="54.95" height="23.86" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="282.84" y="386.25" width="115.65" height="23.86" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="398.49" y="386.25" width="5.91" height="23.86" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="404.40" y="386.25" width="9.25" height="23.86" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="218.90" width="19.29" height="5.87" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="224.77" width="19.29" height="9.32" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="234.09" width="19.29" height="17.61" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="251.70" width="19.29" height="55.91" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="307.61" width="19.29" height="38.88" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="213.62" y="410.11" width="23.60" height="59.17" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="491.36" y="346.49" width="19.29" height="35.10" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="510.65" y="218.90" width="8.55" height="21.51" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="519.21" y="218.90" width="3.27" height="21.51" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="478.29" y="445.93" width="42.46" height="144.07" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="213.62" y="469.28" width="23.60" height="6.85" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="535.39" y="39.52" width="3.99" height="9.65" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="522.48" y="218.90" width="88.30" height="21.51" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="610.77" y="218.90" width="52.19" height="21.51" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="213.62" y="476.13" width="23.60" height="113.87" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="510.65" y="240.41" width="5.96" height="19.41" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="237.22" y="410.11" width="158.81" height="10.24" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="539.38" y="39.52" width="96.60" height="9.65" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="656.33" y="555.06" width="6.63" height="34.94" fill="#59a14f" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="520.75" y="432.33" width="15.96" height="20.00" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="510.65" y="259.82" width="5.96" height="121.77" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="516.61" y="240.41" width="53.82" height="141.18" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="635.98" y="39.52" width="26.98" height="9.65" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="396.04" y="410.11" width="17.61" height="10.24" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="237.22" y="420.35" width="86.35" height="110.30" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="536.71" y="432.33" width="9.12" height="20.00" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="545.83" y="432.33" width="18.75" height="20.00" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="564.58" y="432.33" width="80.66" height="20.00" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="237.22" y="530.65" width="86.35" height="59.35" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="535.39" y="49.17" width="32.78" height="66.12" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="535.39" y="115.29" width="32.78" height="18.27" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="645.24" y="432.33" width="11.09" height="20.00" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="570.43" y="240.41" width="7.49" height="5.99" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="535.39" y="133.56" width="32.78" height="38.24" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="577.92" y="240.41" width="83.17" height="5.99" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="661.09" y="240.41" width="1.87" height="5.99" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="323.57" y="420.35" width="77.32" height="20.09" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="570.43" y="246.41" width="41.23" height="16.74" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="568.17" y="49.17" width="54.65" height="10.45" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="611.66" y="246.41" width="20.65" height="16.74" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="400.89" y="420.35" width="12.75" height="20.09" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="622.82" y="49.17" width="29.33" height="10.45" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="652.14" y="49.17" width="10.82" height="10.45" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="632.31" y="246.41" width="30.65" height="16.74" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="570.43" y="263.15" width="47.18" height="52.47" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="568.17" y="59.62" width="77.49" height="29.37" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="323.57" y="440.43" width="29.20" height="39.27" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="617.61" y="263.15" width="45.35" height="52.47" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="570.43" y="315.62" width="33.50" height="1.90" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="645.66" y="59.62" width="17.30" height="29.37" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="568.17" y="89.00" width="53.49" height="7.95" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="352.77" y="440.43" width="27.67" height="39.27" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="380.44" y="440.43" width="33.20" height="39.27" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="570.43" y="317.53" width="33.50" height="64.06" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="323.57" y="479.71" width="90.08" height="40.65" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="603.93" y="315.62" width="21.06" height="15.23" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="624.99" y="315.62" width="37.97" height="15.23" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="568.17" y="96.94" width="53.49" height="74.86" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="603.93" y="330.85" width="32.35" height="50.74" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="621.66" y="89.00" width="41.30" height="82.80" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="521.22" y="452.33" width="135.11" height="125.41" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="520.75" y="577.74" width="15.83" height="12.26" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="536.57" y="577.74" width="119.76" height="12.26" fill="#76b7b2" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="323.57" y="520.35" width="68.88" height="69.65" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="392.46" y="520.35" width="21.19" height="10.67" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="392.46" y="531.02" width="21.19" height="58.98" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="636.28" y="330.85" width="26.68" height="24.77" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="636.28" y="355.63" width="26.68" height="25.96" fill="#e15759" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="39.52" width="389.65" height="550.48" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="413.65" y="39.52" width="249.31" height="132.28" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="413.65" y="171.80" width="249.31" height="209.79" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="413.65" y="381.59" width="242.69" height="208.41" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="656.33" y="381.59" width="6.63" height="208.41" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> </g> <g clip-path="url(#clip-240-395-6630-5900)" font-family="system-ui,sans-serif" font-size="13" text-anchor="middle"> <text x="253.52" y="57.42" fill="white" fill-opacity="1.000">Bangladesh</text> <text x="445.97" y="511.98" fill="white" fill-opacity="1.000">Brazil</text> <text x="509.94" y="401.11" fill="white" fill-opacity="1.000">Canada</text> <text x="220.89" y="166.87" fill="white" fill-opacity="1.000">China</text> <text x="614.40" y="401.11" fill="white" fill-opacity="1.000">Colombia</text> <text x="565.41" y="188.05" fill="white" fill-opacity="1.000">Egypt</text> <text x="525.61" y="211.60" fill="white" fill-opacity="1.000">Ghana</text> <text x="118.81" y="429.93" fill="white" fill-opacity="1.000">India</text> <text x="289.93" y="304.31" fill="white" fill-opacity="1.000">Indonesia</text> <text x="389.94" y="304.31" fill="white" fill-opacity="1.000">Iran</text> <text x="230.66" y="368.23" fill="white" fill-opacity="1.000">Iraq</text> <text x="334.66" y="368.23" fill="white" fill-opacity="1.000">Japan</text> <text x="621.13" y="211.60" fill="white" fill-opacity="1.000">Kenya</text> <text x="340.67" y="402.86" fill="white" fill-opacity="1.000">Korea, Rep.</text> <text x="566.63" y="234.34" fill="white" fill-opacity="1.000">Morocco</text> <text x="280.40" y="480.18" fill="white" fill-opacity="1.000">Pakistan</text> <text x="604.91" y="447.01" fill="white" fill-opacity="1.000">Peru</text> <text x="280.40" y="565.01" fill="white" fill-opacity="1.000">Philippines</text> <text x="606.91" y="78.99" fill="white" fill-opacity="1.000">Spain</text> <text x="640.28" y="294.07" fill="white" fill-opacity="1.000">Sudan</text> <text x="368.61" y="504.71" fill="white" fill-opacity="1.000">Thailand</text> <text x="594.92" y="139.05" fill="white" fill-opacity="1.000">Turkey</text> <text x="588.78" y="519.72" fill="white" fill-opacity="1.000">United States</text> <text x="596.45" y="588.55" fill="white" fill-opacity="1.000">Venezuela</text> <text x="358.01" y="559.86" fill="white" fill-opacity="1.000">Vietnam</text> </g> <text x="343.48" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">Countries inside continents</text> <rect x="686.96" y="39.52" width="101.04" height="137.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="696.96" y="58.88" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Continent</text> <line x1="686.96" y1="63.88" x2="788.00" y2="63.88" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="702.96" y="73.88" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="83.84">Asia</text> <rect x="702.96" y="93.88" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="103.84">Europe</text> <rect x="702.96" y="113.88" width="12.00" height="12.00" fill="#e15759" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="123.84">Africa</text> <rect x="702.96" y="133.88" width="12.00" height="12.00" fill="#76b7b2" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="143.84">Americas</text> <rect x="702.96" y="153.88" width="12.00" height="12.00" fill="#59a14f" fill-opacity="0.82" rx="2"></rect> <text x="726.96" y="163.84">Oceania</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-niko438nfh");
+</script>
+</div>
+</div>
+</div>
+<p>Two layers, and the second is the ordinary <code>text</code> mark: <code>label</code> says which column supplies the string, exactly as it does on a scatter. What it does <em>not</em> say is where to put it, because in this space nothing does. A label goes to the center of the region its own row was packed into. That is the region the bar drew, so both marks read one packing and no name is drawn in another country’s region.</p>
+<p>Notice what is missing from that sentence: there is no <code>x</code> on the text layer and no <code>y</code> either, and the plot’s own <code>y(population)</code> is doing both jobs at once. It sizes the regions, and sizing them is what places the labels. Everywhere else in this book a <code>text</code> mark needs two positions before it can be drawn at all. Here it needs a measure and a string, and the packing places it.</p>
+<p>Count the names and there are far fewer than 142, which is what the message above the plot is for. Most of the world’s countries have a share narrower than their own name, so a label that does not fit its rectangle is not drawn. The engine says how many names it drew and why the rest are missing, rather than letting you read the named countries as though they were all of them. Egypt and Sudan are named and most of Africa is not. Every one of those unnamed countries still has a region exactly as wide as its share of the world. The picture is complete and the labeling is not, and the count above the plot is the one you can check against the names.</p>
+<p>That message is why the missing names are safe: a treemap that printed only the names that fit, and said nothing, would read as a complete list.</p>
+<p>Three things move the number, and each is a change you have already met: fewer categories, a larger plot with <code>theme(width =, height =)</code>, or smaller type with <code>style(size = )</code>. None of them is a setting for <em>labels</em> in particular, and none of them will make a name fit a region narrower than the word.</p>
+</section>
+<section id="the-other-refusals" class="level2" data-number="34.6">
+<h2 data-number="34.6" class="anchored" data-anchor-id="the-other-refusals"><span class="header-section-number">34.6</span> The other refusals</h2>
+<p>A packing cannot hold a mark that is placed by a position, because it has no positions to place one at:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> point <span class="sc">+</span> <span class="fu">x</span>(gdp) <span class="sc">+</span> <span class="fu">y</span>(life) <span class="sc">+</span> <span class="fu">nest</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `point` is placed by a position, and a packing has none to give it — its two directions are not axes, and two neighboring regions are not near each other in the data (Wilkinson §13.3.4.1). Drop `nest()` to draw `point` flat, or use `bar` or `text`.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>An area cannot be negative, so a measure that runs below zero has no packing. On the flat page, a bar below the baseline points down, and the reader can see the sign. A region has no direction to point in, and its parts would no longer sum to the whole.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(cashflow) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">y</span>(delta) <span class="sc">+</span> <span class="fu">color</span>(step) <span class="sc">+</span> <span class="fu">nest</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `delta` has negative values, and a `nest()` plot turns a measure into an **area**, which cannot be negative. Flat, a bar below the baseline reads as a loss; a region has no direction to run in. Filter or offset the column, or draw it flat where the sign is readable.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>A log scale is refused too, and the reason is the one worth remembering: a region’s size is its <strong>share of the total</strong>, which is arithmetic on the values themselves. Re-spacing them changes what a distance means, and a packing has no distances. Accepting the scale would draw exactly the same picture, and <code>gog</code> refuses a word that changes nothing.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">y</span>(population, <span class="at">scale =</span> <span class="st">"log"</span>) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(continent) <span class="sc">+</span> <span class="fu">nest</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `y(scale = "log")` with `nest()` — a packed region's size is its **share of the total**, which is arithmetic on the values themselves, so a log scale would change nothing about the picture. Drop the scale, or drop `nest()` to read the values against a log axis.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>One more thing is not offered. The packing is <em>squarified</em>, after Bruls, Huizing and van Wijk <span class="citation" data-cites="bruls2000">(<a href="references.html#ref-bruls2000" role="doc-biblioref"><span class="nocase">Bruls et al.</span>, 2000</a>)</span>: each group of regions is placed so its rectangles come out as close to square as they can. The simpler method divides one direction at a time, which makes long thin regions, and a long thin area is the hardest kind to judge. <code>gog</code> offers no choice here, because a second layout would add a word that draws nothing new.</p>
+</section>
+<section id="the-order-is-yours" class="level2" data-number="34.7">
+<h2 data-number="34.7" class="anchored" data-anchor-id="the-order-is-yours"><span class="header-section-number">34.7</span> The order is yours</h2>
+<p>Published treemaps usually sort by size, largest first, because the packing produces squarer rectangles that way. <code>gog</code> does not do it for you: the regions follow the order the categorical axis already has, so the sort is something you write, not something the layout decides for you.</p>
+<div class="cell">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Python</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">JavaScript</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gm_eras) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">x</span>(continent) <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(era) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(population, <span class="at">desc =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">nest</span>() <span class="sc">+</span> <span class="fu">title</span>(<span class="st">"Largest continent first"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(data(gm_eras) <span class="op">+</span> bar <span class="op">*</span> <span class="bu">sum</span> <span class="op">+</span> x(col.continent) <span class="op">+</span> y(col.population) <span class="op">+</span> color(col.era) <span class="op">+</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  order(col.population, desc <span class="op">=</span> <span class="va">True</span>) <span class="op">+</span> nest() <span class="op">+</span> title(<span class="st">"Largest continent first"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gm_eras) <span class="op">+</span> bar <span class="op">*</span> sum <span class="op">+</span> <span class="fu">x</span>(<span class="op">:</span>continent) <span class="op">+</span> <span class="fu">y</span>(<span class="op">:</span>population) <span class="op">+</span> <span class="fu">color</span>(<span class="op">:</span>era) <span class="op">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(<span class="op">:</span>population, desc <span class="op">=</span> <span class="cn">true</span>) <span class="op">+</span> <span class="fu">nest</span>() <span class="op">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"Largest continent first"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">data</span>(gm_eras)<span class="op">,</span> <span class="fu">layer</span>(bar<span class="op">,</span> sum)<span class="op">,</span> <span class="fu">x</span>(col<span class="op">.</span><span class="at">continent</span>)<span class="op">,</span> <span class="fu">y</span>(col<span class="op">.</span><span class="at">population</span>)<span class="op">,</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">color</span>(col<span class="op">.</span><span class="at">era</span>)<span class="op">,</span> <span class="fu">order</span>(col<span class="op">.</span><span class="at">population</span><span class="op">,</span> { <span class="dt">desc</span><span class="op">:</span> <span class="kw">true</span> })<span class="op">,</span> <span class="fu">nest</span>()<span class="op">,</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="st">"Largest continent first"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="gog-r1ld30tkd4" class="gog-plot" style="text-align:center;">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" style="max-width:100%;height:auto;" viewbox="0 0 800 600">
+<rect width="800" height="600" fill="white"></rect> <rect x="24" y="39.519999999999996" width="664.48" height="550.48" fill="#f5f5f8"></rect> <clippath id="clip-240-395-6885-5900"><rect x="24" y="39.519999999999996" width="664.48" height="550.48"></rect></clippath> <g clip-path="url(#clip-240-395-6885-5900)"> <rect x="24.00" y="39.52" width="400.59" height="160.06" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="424.59" y="39.52" width="112.85" height="159.20" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="424.59" y="398.63" width="56.78" height="191.37" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="424.59" y="198.72" width="79.42" height="199.91" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="680.66" y="398.63" width="7.82" height="62.62" fill="#4e79a7" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="199.58" width="400.59" height="390.42" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="537.44" y="39.52" width="151.04" height="159.20" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="481.37" y="398.63" width="199.29" height="191.37" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="504.00" y="198.72" width="184.48" height="199.91" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="680.66" y="461.26" width="7.82" height="128.74" fill="#f28e2b" fill-opacity="0.820" stroke="#f5f5f8" stroke-width="1" stroke-opacity="1"></rect> <rect x="24.00" y="39.52" width="400.59" height="550.48" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="424.59" y="39.52" width="263.89" height="159.20" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="424.59" y="198.72" width="263.89" height="199.91" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="424.59" y="398.63" width="256.07" height="191.37" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> <rect x="680.66" y="398.63" width="7.82" height="191.37" fill="none" stroke="#f5f5f8" stroke-width="3"></rect> </g> <text x="356.24" y="28.06" font-family="system-ui,sans-serif" font-size="16" font-weight="600" fill="#0f0f19" text-anchor="middle">Largest continent first</text> <rect x="712.48" y="39.52" width="75.52" height="77.36" fill="white" stroke="#d2d2da" stroke-width="1" rx="4"></rect> <text x="722.48" y="58.88" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#28283a">Era</text> <line x1="712.48" y1="63.88" x2="788.00" y2="63.88" stroke="#d2d2da" stroke-width="1"></line> <g font-family="system-ui,sans-serif" font-size="11" fill="#3c3c46"> <rect x="728.48" y="73.88" width="12.00" height="12.00" fill="#4e79a7" fill-opacity="0.82" rx="2"></rect> <text x="752.48" y="83.84">1957</text> <rect x="728.48" y="93.88" width="12.00" height="12.00" fill="#f28e2b" fill-opacity="0.82" rx="2"></rect> <text x="752.48" y="103.84">2007</text> </g>
+</svg>
+<script type="module">
+import { mountView } from "./view.js";
+mountView("gog-r1ld30tkd4");
+</script>
+</div>
+</div>
+</div>
+<p>That is the same <code>order()</code> that reorders a bar chart, doing the same job here. Had the packing sorted on its own, <code>order()</code> would have been a word with no effect here, and the atom would have quietly meant less than it says.</p>
+<p>It sorts a categorical <em>position</em> axis, so it needs one. The one-level treemap above binds no position at all, and there the atom has nothing to sort:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(gapminder_2007) <span class="sc">+</span> bar <span class="sc">*</span> sum <span class="sc">+</span> <span class="fu">y</span>(population) <span class="sc">+</span> <span class="fu">color</span>(continent) <span class="sc">+</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(population, <span class="at">desc =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">nest</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error:
+! gog: `order(population)` sorts a **categorical position axis**, and this plot has none — so there is nothing for it to put in order. Bind a category to `x` or `y`, or, if what you meant was the order of a color split, set the column's factor levels where the data lives.
+gog: nothing was rendered. Fix the above, or set GOG_STRICT=0 to draw anyway.</code></pre>
+</div>
+</div>
+<p>That refusal is not the packed space’s. It is <code>order()</code>’s, and it holds in every space.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-bruls2000" class="csl-entry" role="listitem">
+<span class="nocase">Bruls, M., Huizing, K., &amp; van Wijk, J. J.</span> (2000). Squarified treemaps. In W. C. de Leeuw &amp; R. van Liere (Eds.), <em>Data visualization 2000: Proceedings of the joint <span>Eurographics</span> and <span>IEEE TCVG</span> symposium on visualization</em> (pp. 33–42). Springer. <a href="https://doi.org/10.1007/978-3-7091-6783-0_4">https://doi.org/10.1007/978-3-7091-6783-0_4</a>
+</div>
+<div id="ref-shneiderman1992" class="csl-entry" role="listitem">
+Shneiderman, B. (1992). Tree visualization with tree-maps: 2-d space-filling approach. <em>ACM Transactions on Graphics</em>, <em>11</em>(1), 92–99.
+</div>
+<div id="ref-wilkinson2005" class="csl-entry" role="listitem">
+Wilkinson, L. (2005). <em>The grammar of graphics</em> (2nd ed.). Springer. <a href="https://doi.org/10.1007/0-387-28695-0">https://doi.org/10.1007/0-387-28695-0</a>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script>
+// Coloring a gog sentence, which nothing ships a rule for.
+//
+// A code block on this site is R, Python, Julia or JavaScript, and Pandoc has a
+// highlighter for each. None of them helps, and the reason is worth stating,
+// because it decides everything below.
+//
+// Take one sentence and read what the four highlighters make of it:
+//
+//                    data      point     x
+//     R              function  nothing   function
+//     Python         nothing   nothing   nothing
+//     Julia          function  nothing   function
+//     JavaScript     function  nothing   function
+//
+// `point` is a bare name to every one of them, so no stylesheet can reach it,
+// and Python's tab would sit flat while the other three lit up. The same
+// sentence would look like four different things, on a site whose whole claim
+// is that it is one. That is why every token was painted a single color here
+// until now.
+//
+// The way out is to stop asking the host language. gog's vocabulary is a closed
+// list of sixty-five ordinary words in eleven kinds, declared in the book's
+// kernel table, so it can be painted as what it is: a source, a mark, a
+// channel, a transform. That reading is the same in all four languages, which is the
+// point of the tabs.
+//
+// This runs in the browser rather than at render time, and that is deliberate.
+// Pandoc has already tokenized the block, and adding to its work keeps the panel,
+// the copy button and the line anchors that Quarto builds around it. Nothing here
+// adds or removes a character, so the copy button still copies what you see. With
+// scripting off the page falls back to the single ink it used before.
+(function () {
+  "use strict";
+
+  // The kernel, one line per kind, exactly as the book's kernel table declares
+  // it. Written out rather than fetched: a highlighter that waits on a second
+  // request paints the page twice, and a reader watches it happen.
+  //
+  // A copy of a list is a copy that stops matching, so this one is compared
+  // against the book on every render by `R/check-kernel.R`, which stops the
+  // render rather than letting the two drift.
+  var KERNEL = {
+    source:    "data query",
+    mark:      "point line area bar step interval box ribbon text path rule zone surface edge",
+    channel:   "x y z color size shape pattern opacity group label play",
+    transform: "bin smooth count density proportion sum mean median max min " +
+               "quantile range confidence deviation bounds partition flow layout cluster dodge stack jitter repel",
+    scale:     "linear log time category order",
+    space:     "flat space polar nest map globe network",
+    setting:   "style theme palette",
+    label:     "title x_label y_label z_label",
+    facet:     "facet",
+    selection: "brush",
+
+    // The kernel table writes the operators as the symbols they are, `+ * | /`,
+    // and JavaScript cannot overload any of them, so it spells them as six
+    // words instead. They belong here because leaving them out is what would
+    // show: an uncolored `plot(` among colored words reads as a function the
+    // reader wrote, on the one tab that can least afford to look different.
+    //
+    // Python's and JavaScript's `col`, and Julia's `:`, are deliberately not
+    // here. Choosing `layer` over `beside` changes the plot, so it is grammar;
+    // `col.` is a fixed prefix in front of a column name, so it is idiom, and
+    // it reads as idiom next to R's bare name. Color the grammar, leave the
+    // idiom.
+    operator:  "plot layer across down beside below"
+  };
+
+  // The palette is the book's own paragraph, not a designer's choice. The
+  // kernel chapter sorts these eleven kinds into two groups and gives the reason
+  // for each: *five kinds build a plot*, and *the other six refine a plot or
+  // arrange it, and none of them is required*. The inks follow that exactly.
+  //
+  // Four of the five builders are words, so each takes a hue of its own. The
+  // fifth, the operator, is punctuation in three of the four languages and is
+  // already visible as itself, so it takes weight rather than a hue; a fifth
+  // color there would make JavaScript the loudest tab rather than the matching
+  // one.
+  //
+  // The six that refine or arrange share one quieter ink, because none of them
+  // is required and together they are one idea. They were folded into the
+  // channel's ink at first, which read well and said something false: `facet()`
+  // and `style()` are not channels, and a rule written down is a rule that has
+  // to survive being read.
+  //
+  // The source kind paints with the ink named "table". An ink's name is a CSS
+  // class on every rendered page and a color command in the PDF preamble, so
+  // it does not follow when a kind's label changes.
+  var INK = {
+    source: "table", mark: "mark", channel: "channel", transform: "transform",
+    scale: "refine", space: "refine", setting: "refine",
+    label: "refine", facet: "refine", selection: "refine",
+    operator: "operator"
+  };
+
+  var kindOf = {};
+  var words = [];
+  Object.keys(KERNEL).forEach(function (kind) {
+    KERNEL[kind].split(" ").forEach(function (word) {
+      if (!word || kindOf[word]) return;
+      kindOf[word] = INK[kind];
+      words.push(word);
+    });
+  });
+  // Longest first, so `x_label` is found before the `x` inside it. The boundary
+  // test below would reject that `x` anyway; the ordering means it is never
+  // offered.
+  words.sort(function (a, b) { return b.length - a.length; });
+  var WORD = new RegExp(words.join("|"), "g");
+
+  // Which blocks are searched at all.
+  //
+  // Every word in the kernel is a common English word, which is the grammar's
+  // best property and this file's only real hazard: `title`, `count`, `mean`,
+  // `text` and `group` appear in almost any code. A post comparing gog with
+  // another library would otherwise have half of that library's call painted as
+  // though it were gog.
+  //
+  // So a block has to name a table before anything in it is read. Every gog
+  // sentence begins with one, and no other library's code says `data(`.
+  var LANGUAGES = /\b(?:r|python|julia|js|javascript)\b/;
+  var A_SENTENCE = /\b(?:data|query)\s*\(/;
+
+  // Text Pandoc has already claimed, and which is therefore not gog's to read.
+  // A string or a comment may hold any word at all. `at` is here for JavaScript,
+  // where `col.gdp` arrives with `gdp` as an attribute, so a column named
+  // `count` is covered by it.
+  //
+  // `bu` is deliberately absent, and it is the one that would have been missed:
+  // Python marks `bin` as a builtin, because `bin()` is one. Sealing builtins
+  // would have left the Python tab short of exactly the word the histogram post
+  // is about.
+  var SEALED = /^(?:st|ss|vs|ch|co|cv|do|an|al|at|im|pp|er|wa)$/;
+
+  // A word counts only when it stands alone. `col.count` and `:count` name a
+  // column called count, `counted` is somebody's variable, and `x_label` is not
+  // an `x`.
+  var GLUED_BEFORE = /[A-Za-z0-9_.$:@]/;
+  var GLUED_AFTER = /[A-Za-z0-9_]/;
+  var ARGUMENT_NAME = /^\s*[:=]/;
+
+  function sealed(node, root) {
+    for (var el = node.parentNode; el && el !== root; el = el.parentNode) {
+      if (el.nodeType === 1 && SEALED.test(el.className || "")) return true;
+    }
+    return false;
+  }
+
+  // The block is read as one string rather than node by node, because Pandoc
+  // splits a line across spans wherever it found a token, and a boundary test
+  // that cannot see past the end of its own node would read `col.` and `count`
+  // as unrelated. Offsets map each match back to the node it came from; a match
+  // straddling two nodes is left alone, since a name Pandoc split in half is not
+  // a name.
+  function paint(code) {
+    var nodes = [];
+    var walker = document.createTreeWalker(code, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) nodes.push(node);
+
+    var text = "";
+    var starts = [];
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      starts.push(text.length);
+      text += nodes[i].nodeValue;
+    }
+    if (!A_SENTENCE.test(text)) return;
+
+    var hits = [];
+    for (i = 0; i < nodes.length; i++) hits.push(null);
+
+    var match;
+    WORD.lastIndex = 0;
+    while ((match = WORD.exec(text))) {
+      var from = match.index;
+      var to = from + match[0].length;
+      if (from > 0 && GLUED_BEFORE.test(text.charAt(from - 1))) continue;
+      if (to < text.length && GLUED_AFTER.test(text.charAt(to))) continue;
+      // A word used as an argument name is not an atom, and five channel words
+      // are argument names somewhere: `style(color = )`, `style(opacity = )`,
+      // `style(size = )`, `style(shape = )`, `style(pattern = )`. The kernel
+      // chapter writes them that way on purpose, because setting and mapping
+      // are the same visual property named two ways. They are still two
+      // different words in a sentence, and only one of them is a channel.
+      //
+      // `:` covers JavaScript, where the same setting arrives in a trailing
+      // options object as `{ color: "tomato" }`. It cannot catch a Julia column
+      // by mistake: there the colon leads, `x(:gdp)`, and is already handled.
+      if (ARGUMENT_NAME.test(text.slice(to, to + 8))) continue;
+
+      var at = -1;
+      for (i = nodes.length - 1; i >= 0; i--) {
+        if (starts[i] <= from) { at = i; break; }
+      }
+      if (at < 0 || to > starts[at] + nodes[at].nodeValue.length) continue;
+      if (sealed(nodes[at], code)) continue;
+
+      if (!hits[at]) hits[at] = [];
+      hits[at].push({
+        from: from - starts[at],
+        to: to - starts[at],
+        ink: kindOf[match[0]]
+      });
+    }
+
+    for (i = 0; i < nodes.length; i++) {
+      if (hits[i]) wrap(nodes[i], hits[i]);
+    }
+  }
+
+  function wrap(node, hits) {
+    var source = node.nodeValue;
+    var out = document.createDocumentFragment();
+    var at = 0;
+    hits.forEach(function (hit) {
+      if (hit.from > at) {
+        out.appendChild(document.createTextNode(source.slice(at, hit.from)));
+      }
+      var span = document.createElement("span");
+      span.className = "gog-" + hit.ink;
+      span.textContent = source.slice(hit.from, hit.to);
+      out.appendChild(span);
+      at = hit.to;
+    });
+    if (at < source.length) {
+      out.appendChild(document.createTextNode(source.slice(at)));
+    }
+    node.parentNode.replaceChild(out, node);
+  }
+
+  function run() {
+    // `div.sourceCode` is what keeps a refusal out, and that is worth knowing
+    // before anyone widens this selector to `pre code`. A refusal renders as
+    // `cell-output-error`, outside the wrapper, and its message names atoms:
+    // "gog: bin needs a continuous column". Painting those would color the
+    // engine's own prose as though it were a specification, and the tinted
+    // panel already carries what a refusal means.
+    var blocks = document.querySelectorAll("div.sourceCode pre code");
+    for (var i = 0; i < blocks.length; i++) {
+      if (LANGUAGES.test(blocks[i].className || "")) paint(blocks[i]);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/psychometrician\.github\.io\/gog-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./polar.html" class="pagination-link" aria-label="Polar">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Polar</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./map.html" class="pagination-link" aria-label="Map">
+        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Map</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><span class="licence">Prose licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</span> <span class="licence">Code samples licensed <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>.</span></p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="https://hits.sh/psychometrician.github.io/gog-book/"><img src="https://hits.sh/psychometrician.github.io/gog-book.svg?style=flat-square&amp;label=readers&amp;color=ffdba4&amp;labelColor=3a332a" class="img-fluid" alt="Page views of this book, counted by hits.sh"></a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/psychometrician/gog-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/gogdeveloper" target="_blank">
+      <i class="bi bi-twitter-x" role="img" aria-label="gog on X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://bsky.app/profile/gogdeveloper.bsky.social" target="_blank">
+      <i class="bi bi-bluesky" role="img" aria-label="gog on Bluesky">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/psychometrician" target="_blank">
+      <i class="bi bi-github" role="img" aria-label="psychometrician on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://psychometrician.github.io/" target="_blank">
+      <i class="bi bi-journal-text" role="img" aria-label="psychometrician, the site">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
